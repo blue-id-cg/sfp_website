@@ -22,6 +22,84 @@ que de forcer une étape.
 
 ---
 
+## Quelle méthode choisir ?
+
+Il y a deux façons de mettre le site en ligne. Choisissez celle qui correspond à ce que vous avez acheté :
+
+| Vous avez... | Méthode | Section |
+|---|---|---|
+| Un **hébergement mutualisé** (cPanel, offre "hébergement web" classique) | Suivez les étapes 1 à 5 ci-dessous, à la main | [Étape 1](#étape-1--préparer-les-fichiers-du-site-sur-votre-ordinateur) |
+| Un **serveur privé (VPS) tout neuf**, sans rien d'installé dessus | Utilisez le script automatisé fourni | [Déploiement sur un serveur neuf (VPS)](#déploiement-sur-un-serveur-neuf-vps--méthode-automatisée) |
+
+Si vous ne savez pas ce que vous avez acheté : un hébergement où on vous donne accès à un "cPanel" avec
+une interface graphique est un **mutualisé**. Un accès où vous recevez seulement une adresse IP et un mot
+de passe root, sans aucune interface, est un **VPS vierge**.
+
+---
+
+## Déploiement sur un serveur neuf (VPS) — méthode automatisée
+
+Cette méthode s'adresse à un serveur **totalement vide** (ex. une nouvelle instance chez un fournisseur
+comme OVH, Contabo, DigitalOcean, Hetzner...), sous Ubuntu ou Debian, sur lequel rien n'est encore installé.
+Un script fourni dans le projet (`deploy/provision.sh`) automatise toute l'installation.
+
+> Cette étape technique (connexion en root à un serveur Linux) est plus confortable si elle est réalisée
+> par votre développeur ou une personne à l'aise avec un terminal. Une fois faite, les mises à jour
+> suivantes redeviennent simples (voir plus bas).
+
+### Ce que fait le script, en résumé
+
+En une seule exécution, `provision.sh` :
+
+1. Met à jour le système et installe **Nginx** (le serveur web) et **PHP 8.3** avec les extensions requises.
+2. Installe **Composer** (gestionnaire de dépendances PHP) et **Node.js** (pour compiler le CSS/JS).
+3. Récupère les fichiers du site (soit depuis un dépôt Git, soit depuis des fichiers déjà envoyés sur le
+   serveur).
+4. Installe les dépendances du projet et compile les fichiers CSS/JS finaux.
+5. Crée et configure le fichier `.env` (mode production, nom de domaine).
+6. Configure les bonnes permissions de fichiers.
+7. Crée la configuration Nginx pour votre nom de domaine, pointée automatiquement vers le bon dossier
+   (`public/`).
+8. Installe un certificat **HTTPS gratuit** (Let's Encrypt) pour votre domaine.
+
+À la fin, le site est en ligne, en HTTPS, à l'adresse de votre domaine.
+
+### Prérequis avant de lancer le script
+
+1. Un serveur Ubuntu ou Debian tout neuf, avec un accès `root` par SSH.
+2. Un nom de domaine dont le **DNS (enregistrement A)** pointe déjà vers l'adresse IP de ce serveur —
+   sans ça, l'étape du certificat HTTPS échouera (le script continuera quand même, vous pourrez relancer
+   cette étape plus tard une fois le DNS propagé).
+
+### Utilisation
+
+Connectez-vous en SSH au serveur en `root`, puis :
+
+```bash
+# Si les fichiers du projet sont déjà sur le serveur (ex. envoyés en FTP dans /var/www/sfp_website) :
+sudo bash provision.sh votre-domaine.com
+
+# Ou, si le projet est disponible dans un dépôt Git :
+sudo bash provision.sh votre-domaine.com https://github.com/votre-org/sfp_website.git
+```
+
+Le script affiche sa progression étape par étape (`[1/9]`, `[2/9]`, ...). Une fois terminé, ouvrez
+`https://votre-domaine.com` dans un navigateur.
+
+### Mettre à jour le site après ce premier déploiement
+
+Une fois le serveur provisionné, les mises à jour suivantes n'ont plus besoin du script complet :
+
+```bash
+cd /var/www/sfp_website
+bash deploy/deploy.sh
+```
+
+Ce second script récupère les nouveaux fichiers, réinstalle les dépendances si besoin, recompile les
+assets et vide les caches — sans toucher à la configuration du serveur (Nginx, HTTPS) déjà en place.
+
+---
+
 ## Étape 1 — Préparer les fichiers du site sur votre ordinateur
 
 Cette étape se fait une seule fois (et à refaire à chaque mise à jour du design/contenu en dur dans le code).
