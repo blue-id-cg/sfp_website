@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="split reverse items-center">
             <div class="reveal-right">
-                <span class="kicker" data-index="04">Innovation</span>
+                <span class="kicker" data-index="03">Innovation</span>
                 <h2 class="title-xl">Performance <span class="mark accent">opérationnelle</span> &amp; digitalisation</h2>
                 <p class="lead mt-3">Nous intégrons les technologies les plus avancées pour optimiser chaque phase de nos opérations : de la surveillance en temps réel à l'analyse des données, jusqu'à la modernisation des équipements.</p>
 

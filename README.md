@@ -31,6 +31,10 @@ Aucune base de données n'est requise pour faire fonctionner le site dans son é
 
 Pour mettre le site en ligne chez un hébergeur, suivez le guide pas-à-pas destiné à un non-développeur : **[DEPLOIEMENT.md](DEPLOIEMENT.md)**.
 
+Pour un déploiement automatisé sur un serveur (VPS) neuf, voir les scripts `deploy/provision.sh`
+(installation complète : Nginx, PHP, HTTPS) et `deploy/deploy.sh` (mises à jour), documentés dans
+[DEPLOIEMENT.md](DEPLOIEMENT.md#déploiement-sur-un-serveur-neuf-vps--méthode-automatisée).
+
 ## Charte graphique
 
 Les ressources de marque (logo, charte graphique, plaquette commerciale) se trouvent dans `resources/brand/`.

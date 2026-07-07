@@ -22,9 +22,8 @@
                 <div class="footer-links">
                     <a href="{{ $homeUrl }}#entreprise">À propos</a>
                     <a href="{{ $homeUrl }}#metiers">Nos métiers</a>
-                    <a href="{{ $homeUrl }}#services">Nos services</a>
-                    <a href="{{ $homeUrl }}#realisations">Nos réalisations</a>
                     <a href="{{ $homeUrl }}#innovation">Innovation</a>
+                    <a href="{{ $homeUrl }}#realisations">Nos réalisations</a>
                 </div>
             </div>
 

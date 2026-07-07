@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="careers-cta-inner reveal">
             <div>
-                <span class="kicker on-dark" data-index="10">Carrières</span>
+                <span class="kicker on-dark" data-index="09">Carrières</span>
                 <h2 class="title-xl on-dark">Des métiers d'exigence, une équipe qui progresse</h2>
                 <p class="lead maxw-md mt-2">Formation continue, transmission du savoir-faire et culture de sécurité : découvrez pourquoi rejoindre la SFP, et nos postes actuellement ouverts.</p>
             </div>

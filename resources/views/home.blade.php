@@ -15,7 +15,6 @@
     @include('home.hero')
     @include('home.about')
     @include('home.activities')
-    @include('home.services')
     @include('home.technology')
     @include('home.hse')
     @include('home.equipment')

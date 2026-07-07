@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="05">Santé · Sécurité · Environnement</span>
+                <span class="kicker" data-index="04">Santé · Sécurité · Environnement</span>
                 <h2 class="title-xl">La sécurité <span class="mark accent">avant</span> la performance</h2>
             </div>
             <div class="r reveal">

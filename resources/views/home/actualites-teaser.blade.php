@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="09">Actualités</span>
+                <span class="kicker" data-index="08">Actualités</span>
                 <h2 class="title-xl">Les temps forts<br />de la SFP</h2>
             </div>
             <div class="r reveal">

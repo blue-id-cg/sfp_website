@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="08">Nos réalisations</span>
+                <span class="kicker" data-index="07">Nos réalisations</span>
                 <h2 class="title-xl">Des opérations menées<br />avec exigence</h2>
             </div>
             <div class="r reveal">

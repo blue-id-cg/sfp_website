@@ -27,7 +27,7 @@ que de forcer une étape.
 Il y a deux façons de mettre le site en ligne. Choisissez celle qui correspond à ce que vous avez acheté :
 
 | Vous avez... | Méthode | Section |
-|---|---|---|
+| --- | --- | --- |
 | Un **hébergement mutualisé** (cPanel, offre "hébergement web" classique) | Suivez les étapes 1 à 5 ci-dessous, à la main | [Étape 1](#étape-1--préparer-les-fichiers-du-site-sur-votre-ordinateur) |
 | Un **serveur privé (VPS) tout neuf**, sans rien d'installé dessus | Utilisez le script automatisé fourni | [Déploiement sur un serveur neuf (VPS)](#déploiement-sur-un-serveur-neuf-vps--méthode-automatisée) |
 
