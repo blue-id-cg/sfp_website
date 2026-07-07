@@ -89,6 +89,7 @@
 .hero {
     position: relative; min-height: 100vh; min-height: 100svh;
     display: flex; align-items: flex-end;
+    padding-top: 7.5rem;
     padding-bottom: clamp(3rem, 7vw, 6rem); overflow: hidden;
     background: var(--charcoal);
 }
@@ -246,6 +247,9 @@
 .stat:first-child { border-left: none; }
 .stat .n { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 800; color: var(--yellow); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .stat .l { margin-top: 0.7rem; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+.stat-band.on-light .stat { border-left-color: var(--hairline-strong); }
+.stat-band.on-light .stat .n { color: var(--petrol); }
+.stat-band.on-light .stat .l { color: var(--ink-3); }
 
 /* ============================================================
    HSE  cartes image

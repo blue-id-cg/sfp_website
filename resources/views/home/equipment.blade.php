@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="07">Équipements</span>
+                <span class="kicker" data-index="06">Équipements</span>
                 <h2 class="title-xl">Un parc industriel<br />à la hauteur des enjeux</h2>
             </div>
             <div class="r reveal">

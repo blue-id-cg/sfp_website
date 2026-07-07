@@ -2,7 +2,7 @@
 <section id="galerie" class="section bg-charcoal noise">
     <div class="wrap">
         <div class="sec-head center reveal">
-            <span class="kicker on-dark" data-index="08">Galerie</span>
+            <span class="kicker on-dark" data-index="07">Galerie</span>
             <h2 class="title-xl on-dark">Le forage, en images</h2>
             <p class="lead mx-auto maxw-md">Plateformes, équipements, équipes sur le terrain : des images qui racontent le quotidien et le savoir-faire de la SFP.</p>
         </div>

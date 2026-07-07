@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="split contact-grid">
             <div class="reveal-left">
-                <span class="kicker" data-index="12">Contact</span>
+                <span class="kicker" data-index="11">Contact</span>
                 <h2 class="title-xl">Discutons de vos <span class="mark accent">projets</span></h2>
                 <p class="lead mt-3">Une question, un projet, un partenariat ? Nos équipes sont à votre écoute pour vous accompagner à chaque étape.</p>
 

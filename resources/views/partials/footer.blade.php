@@ -32,7 +32,6 @@
                 <h5>Ressources</h5>
                 <div class="footer-links">
                     <a href="{{ $homeUrl }}#hse">Politique HSE</a>
-                    <a href="{{ $homeUrl }}#rh">Ressources humaines</a>
                     <a href="{{ route('actualites.index') }}">Actualités</a>
                     <a href="{{ route('carrieres.index') }}">Carrières</a>
                     <a href="{{ $homeUrl }}#contact">Contact</a>

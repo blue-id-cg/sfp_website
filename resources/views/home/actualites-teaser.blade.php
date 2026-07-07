@@ -3,11 +3,11 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="10">Actualités</span>
+                <span class="kicker" data-index="09">Actualités</span>
                 <h2 class="title-xl">Les temps forts<br />de la SFP</h2>
             </div>
             <div class="r reveal">
-                <p class="lead">Vie de l'entreprise, opérations, sécurité et innovation : suivez l'actualité de la Société de Forages Pétroliers.</p>
+                <p class="lead">Un aperçu de nos dernières publications. Retrouvez l'ensemble de nos actualités sur la page dédiée.</p>
                 <a href="{{ route('actualites.index') }}" class="link-arrow mt-3">Toutes les actualités <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>

@@ -54,7 +54,7 @@
                 <div class="perk"><i class="fas fa-helmet-safety"></i><h4>Sécurité &amp; bien-être</h4><p>Une culture HSE forte et des conditions de travail encadrées sur chaque site.</p></div>
                 <div class="perk"><i class="fas fa-oil-well"></i><h4>Projets d'envergure</h4><p>Des opérations techniques stimulantes au cœur du secteur pétrolier.</p></div>
                 <div class="perk"><i class="fas fa-people-group"></i><h4>Esprit d'équipe</h4><p>Un collectif soudé où la transmission du savoir-faire est une valeur.</p></div>
-                <div class="perk"><i class="fas fa-hand-holding-heart"></i><h4>Reconnaissance</h4><p>Valorisation de l'engagement et des expertises. Avantages à préciser.<span class="muted"> *</span></p></div>
+                <div class="perk"><i class="fas fa-hand-holding-heart"></i><h4>Reconnaissance</h4><p>Valorisation de l'engagement, des compétences et de la fidélité de chaque collaborateur.</p></div>
                 <div class="perk"><i class="fas fa-earth-africa"></i><h4>Impact &amp; fierté</h4><p>Contribuer au développement énergétique du Congo, avec sens et responsabilité.</p></div>
             </div>
         </div>

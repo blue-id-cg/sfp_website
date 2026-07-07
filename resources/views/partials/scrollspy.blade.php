@@ -3,7 +3,6 @@
     <a href="#accueil" data-spy="accueil"><span class="dot"></span><span class="lbl">Accueil</span></a>
     <a href="#entreprise" data-spy="entreprise"><span class="dot"></span><span class="lbl">Entreprise</span></a>
     <a href="#metiers" data-spy="metiers"><span class="dot"></span><span class="lbl">Métiers</span></a>
-    <a href="#chiffres" data-spy="chiffres"><span class="dot"></span><span class="lbl">Chiffres</span></a>
     <a href="#hse" data-spy="hse"><span class="dot"></span><span class="lbl">HSE</span></a>
     <a href="#equipements" data-spy="equipements"><span class="dot"></span><span class="lbl">Équipements</span></a>
     <a href="#galerie" data-spy="galerie"><span class="dot"></span><span class="lbl">Galerie</span></a>
