@@ -8,7 +8,7 @@
     <nav aria-label="Navigation mobile">
         <a href="{{ route('home') }}" class="mm-link"><span>Accueil</span><span class="idx">01</span></a>
         <a href="{{ $homeUrl }}#entreprise" class="mm-link"><span>Entreprise</span><span class="idx">02</span></a>
-        <a href="{{ $homeUrl }}#metiers" class="mm-link"><span>Métiers &amp; Services</span><span class="idx">03</span></a>
+        <a href="{{ $homeUrl }}#metiers" class="mm-link"><span>Métiers</span><span class="idx">03</span></a>
         <a href="{{ $homeUrl }}#hse" class="mm-link"><span>HSE</span><span class="idx">04</span></a>
         <a href="{{ $homeUrl }}#equipements" class="mm-link"><span>Équipements</span><span class="idx">05</span></a>
         <a href="{{ route('actualites.index') }}" class="mm-link"><span>Actualités</span><span class="idx">06</span></a>
