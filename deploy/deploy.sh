@@ -26,6 +26,11 @@ php artisan route:cache
 php artisan view:cache
 
 echo "==> Permissions"
-chmod -R 775 storage bootstrap/cache
+if ! chmod -R 775 storage bootstrap/cache 2>/dev/null; then
+    echo "Avertissement : certains fichiers dans storage/ appartiennent à un autre utilisateur"
+    echo "(probablement www-data, l'utilisateur du serveur web) et n'ont pas pu être modifiés"
+    echo "par $(whoami). Ce n'est pas bloquant : le site reste à jour. Voir DEPLOIEMENT.md,"
+    echo "section « Permissions », pour corriger ça une bonne fois pour toutes."
+fi
 
 echo "Terminé : le site est à jour."

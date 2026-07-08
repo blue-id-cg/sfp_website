@@ -98,6 +98,25 @@ bash deploy/deploy.sh
 Ce second script récupère les nouveaux fichiers, réinstalle les dépendances si besoin, recompile les
 assets et vide les caches — sans toucher à la configuration du serveur (Nginx, HTTPS) déjà en place.
 
+### Lier un site déjà déployé à GitHub (fichiers envoyés à la main au départ)
+
+Si le site a été mis en ligne en envoyant les fichiers directement (FTP/zip) avant qu'un dépôt GitHub
+soit disponible, on peut relier le dossier existant sans rien perdre — `.env` et `storage/` ne sont
+jamais suivis par Git, ils restent donc intacts :
+
+```bash
+cd /var/www/sfp_website        # le dossier contenant le fichier "artisan"
+
+git init
+git remote add origin https://github.com/<organisation>/<projet>.git
+git fetch origin
+git checkout -f main
+git branch --set-upstream-to=origin/main main
+```
+
+Une fois cette opération faite une seule fois, les mises à jour suivantes se font simplement avec
+`bash deploy/deploy.sh` (voir ci-dessus).
+
 ---
 
 ## Étape 1 — Préparer les fichiers du site sur votre ordinateur
@@ -263,6 +282,28 @@ site est une application **Laravel**.
 **Le formulaire de contact ne semble rien faire**
 Vérifiez que le certificat HTTPS est actif : certains navigateurs bloquent silencieusement l'envoi de
 formulaires sur un site resté en `http://`.
+
+**`bash deploy/deploy.sh` affiche des erreurs `chmod: Operation not permitted` sur des fichiers dans
+`storage/framework/sessions/`**
+C'est normal si vous déployez avec un utilisateur (ex. `sfp-dev`) différent de celui qui fait tourner le
+site (généralement `www-data`) : ces fichiers de session ont été créés par le serveur web, et votre
+utilisateur n'a pas le droit de les modifier. Le script continue quand même et la mise à jour du site
+n'est pas affectée. Pour corriger la cause une bonne fois pour toutes (à faire par la personne ayant un
+accès `root` au serveur, une seule fois) :
+
+```bash
+# à exécuter en root (ou via sudo) sur le serveur
+usermod -a -G www-data sfp-dev
+chown -R sfp-dev:www-data /var/www/sfp_website/storage /var/www/sfp_website/bootstrap/cache
+find /var/www/sfp_website/storage /var/www/sfp_website/bootstrap/cache -type d -exec chmod 2775 {} \;
+find /var/www/sfp_website/storage /var/www/sfp_website/bootstrap/cache -type f -exec chmod 664 {} \;
+```
+
+Remplacez `sfp-dev` par votre utilisateur de déploiement si différent. Le `2775` sur les dossiers fait
+que tout nouveau fichier créé (par le site ou par un futur déploiement) hérite automatiquement du groupe
+`www-data`, ce qui évite que ce conflit ne se reproduise. Après cette commande, l'utilisateur de
+déploiement doit se reconnecter (nouvelle session SSH) pour que l'appartenance au groupe soit prise en
+compte.
 
 ---
 
