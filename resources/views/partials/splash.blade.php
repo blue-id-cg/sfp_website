@@ -1,7 +1,7 @@
 <!-- ===== PRÉCHARGEUR ===== -->
 <div id="splash" class="splash" role="status" aria-label="Chargement">
     <div class="splash-core">
-        <img src="{{ asset('images/logo1.png') }}" alt="SFP" class="splash-logo" id="splashLogo" />
+        <img src="{{ asset('images/logo-inverse.png') }}" alt="SFP" class="splash-logo" id="splashLogo" />
         <div class="splash-logo-fb hide" id="splashLogoFb">SFP<span>.</span></div>
         <div class="splash-name">Société de Forages Pétroliers</div>
         <div class="splash-sub">Profondeur · Précision · Performance</div>

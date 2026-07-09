@@ -7,10 +7,6 @@
     @include('partials.splash')
 @endsection
 
-@section('scrollspy')
-    @include('partials.scrollspy')
-@endsection
-
 @section('content')
     @include('home.hero')
     @include('home.about')
@@ -18,7 +14,7 @@
     @include('home.technology')
     @include('home.hse')
     @include('home.equipment')
-    @include('home.gallery')
+    @include('home.gallery', ['galleryImages' => $galleryImages])
     @include('home.realisations')
     @include('home.actualites-teaser', ['actualites' => $actualites])
     @include('home.careers')

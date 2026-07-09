@@ -18,21 +18,30 @@
 
     <section class="section">
         <div class="wrap">
-            <div class="news-grid">
+            <div class="drill-log">
                 @foreach ($actualites as $actualite)
-                    <article class="news-card">
-                        <div class="thumb">
-                            <span class="pill cat">{{ $actualite['category'] }}</span>
-                            <img src="{{ asset('images/opt/' . $actualite['image'] . '.jpg') }}" alt="{{ $actualite['title'] }}" loading="lazy" />
+                    <article class="drill-log-entry">
+                        <div class="drill-log-axis">
+                            <span class="drill-log-date">{{ $actualite->date_label }}</span>
+                            <span class="drill-log-node"></span>
                         </div>
-                        <div class="body">
-                            <span class="date">{{ $actualite['date'] }}</span>
-                            <h3>{{ $actualite['title'] }}</h3>
-                            <p>{{ $actualite['excerpt'] }}</p>
-                            <a href="{{ route('actualites.show', $actualite['slug']) }}" class="link-arrow">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        <div class="drill-log-card">
+                            <div class="drill-log-thumb">
+                                <img src="{{ $actualite->image_url }}" alt="{{ $actualite->title }}" loading="lazy" />
+                            </div>
+                            <div class="drill-log-body">
+                                <span class="pill cat">{{ $actualite->category }}</span>
+                                <h3>{{ $actualite->title }}</h3>
+                                <p>{{ $actualite->excerpt }}</p>
+                                <a href="{{ route('actualites.show', $actualite) }}" class="link-arrow">Lire l'article <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+                            </div>
                         </div>
                     </article>
                 @endforeach
+            </div>
+
+            <div class="mt-8">
+                {{ $actualites->links() }}
             </div>
         </div>
     </section>

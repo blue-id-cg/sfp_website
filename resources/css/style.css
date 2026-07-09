@@ -37,7 +37,7 @@
     /* ---- Rythme & rayons ---- */
     --wrap: 1240px;
     --gutter: clamp(1.25rem, 4vw, 2.5rem);
-    --section-y: clamp(4.5rem, 9vw, 8.5rem);
+    --section-y: clamp(5rem, 10vw, 9.5rem);
     --r-sm: 10px;
     --r-md: 16px;
     --r-lg: 24px;
@@ -133,6 +133,7 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
     border-radius: 2px;
 }
 .on-dark .mark::after { opacity: 0.85; }
+.on-dark .accent { color: var(--yellow); }
 
 /* Texte dégradé (rare, réservé aux grands chiffres) */
 .text-gradient {
@@ -172,6 +173,7 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
 
 /* Grand numéro « instrument » en fond de section */
 .ghost-index {
+    position: absolute; top: -1rem; right: var(--gutter); z-index: 0;
     font-size: clamp(6rem, 16vw, 13rem);
     font-weight: 800;
     line-height: 0.8;
@@ -183,6 +185,7 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
     -webkit-user-select: none;
     user-select: none;
 }
+.ghost-index.on-dark { color: #fff; opacity: 0.05; }
 
 /* Puce « tick » de mesure */
 .tick { color: var(--yellow); font-weight: 800; }
@@ -190,7 +193,7 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
 /* ============================================================
    LAYOUT PRIMITIVES
    ============================================================ */
-.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.wrap { position: relative; width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
 .wrap-wide { max-width: 1440px; }
 .section { padding-block: var(--section-y); position: relative; }
 .section-tight { padding-block: clamp(3rem, 6vw, 5rem); }
@@ -299,14 +302,14 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
 /* ============================================================
    ANIMATIONS AU SCROLL (état initial ; .is-in = révélé)
    ============================================================ */
-.reveal { opacity: 0; transform: translateY(34px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
-.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
-.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
-.reveal-scale { opacity: 0; transform: scale(0.94); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal { opacity: 0; transform: translateY(34px) scale(0.97); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal-left { opacity: 0; transform: translateX(-40px) rotate(-1.4deg); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal-right { opacity: 0; transform: translateX(40px) rotate(1.4deg); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.reveal-scale { opacity: 0; transform: scale(0.9) rotate(-0.8deg); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
 .is-in { opacity: 1 !important; transform: none !important; }
 
 /* Décalage en cascade */
-.stagger > * { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
+.stagger > * { opacity: 0; transform: translateY(28px) scale(0.96); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
 .stagger.is-in > * { opacity: 1; transform: none; }
 .stagger.is-in > *:nth-child(1) { transition-delay: 0.05s; }
 .stagger.is-in > *:nth-child(2) { transition-delay: 0.13s; }
@@ -337,7 +340,7 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
 .mt-3 { margin-top: 1.3rem; }
 .mt-4 { margin-top: 1.8rem; }
 .mt-5 { margin-top: 2.4rem; }
-.mt-6 { margin-top: 3.2rem; }
+.mt-6 { margin-top: 3.6rem; }
 .mb-3 { margin-bottom: 1.3rem; }
-.mb-4 { margin-bottom: 1.8rem; }
+.mb-4 { margin-bottom: 2.2rem; }
 .text-body { color: var(--ink-2); line-height: 1.8; }

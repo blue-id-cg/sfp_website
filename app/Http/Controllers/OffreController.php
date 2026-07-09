@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\Content\Offres;
+use App\Models\Offre;
 use Illuminate\View\View;
 
 class OffreController extends Controller
 {
-    public function show(string $offre): View
+    public function show(Offre $offre): View
     {
-        $job = Offres::findBySlug($offre);
-
-        abort_if($job === null, 404);
+        abort_unless($offre->published_at?->lessThanOrEqualTo(now()), 404);
 
         return view('offres.show', [
-            'offre' => $job,
+            'offre' => $offre,
         ]);
     }
 }

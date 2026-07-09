@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" />
+    <link rel="stylesheet" href="https://cdn.hugeicons.com/font/hgi-stroke-rounded.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <link rel="icon" type="image/png" href="{{ asset('images/logo1.png') }}" />
@@ -62,10 +63,7 @@
 
     @include('partials.navbar')
     @include('partials.mobile-menu')
-
-    @hasSection('scrollspy')
-        @yield('scrollspy')
-    @endif
+    @include('partials.depth-gauge')
 
     <main>
         @yield('content')
@@ -74,6 +72,7 @@
     @include('partials.footer')
     @include('partials.back-to-top')
     @include('partials.lightbox')
+    @include('partials.cookie-consent')
 
     @stack('scripts')
 </body>

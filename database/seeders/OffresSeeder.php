@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Support\Content;
+namespace Database\Seeders;
 
-/**
- * Offres d'emploi placeholder, en attendant un modèle persisté.
- */
-class Offres
+use App\Models\Offre;
+use Illuminate\Database\Seeder;
+
+class OffresSeeder extends Seeder
 {
     /**
-     * @return array<int, array{slug: string, title: string, tags: array<int, string>, summary: string, missions: array<int, string>, profile: array<int, string>}>
+     * Run the database seeds.
      */
-    public static function all(): array
+    public function run(): void
     {
-        return [
+        $offres = [
             [
                 'slug' => 'ingenieur-forage',
                 'title' => 'Ingénieur forage',
@@ -26,8 +26,9 @@ class Offres
                 'profile' => [
                     "Formation d'ingénieur en forage ou pétrole",
                     'Expérience significative en opérations de forage',
-                    'Rigueur, esprit d\'équipe et culture sécurité',
+                    "Rigueur, esprit d'équipe et culture sécurité",
                 ],
+                'published_at' => now(),
             ],
             [
                 'slug' => 'technicien-mud-logging',
@@ -36,7 +37,7 @@ class Offres
                 'summary' => "Assurer le suivi géologique et l'analyse des données de forage en temps réel.",
                 'missions' => [
                     'Suivre les paramètres géologiques et de forage',
-                    'Produire des rapports quotidiens d\'opération',
+                    "Produire des rapports quotidiens d'opération",
                     "Alerter les équipes en cas d'anomalie",
                 ],
                 'profile' => [
@@ -44,21 +45,12 @@ class Offres
                     'Expérience en mud logging appréciée',
                     'Capacité à travailler en rotation sur site',
                 ],
+                'published_at' => now(),
             ],
         ];
-    }
 
-    /**
-     * @return array{slug: string, title: string, tags: array<int, string>, summary: string, missions: array<int, string>, profile: array<int, string>}|null
-     */
-    public static function findBySlug(string $slug): ?array
-    {
-        foreach (self::all() as $offre) {
-            if ($offre['slug'] === $slug) {
-                return $offre;
-            }
+        foreach ($offres as $offre) {
+            Offre::query()->updateOrCreate(['slug' => $offre['slug']], $offre);
         }
-
-        return null;
     }
 }

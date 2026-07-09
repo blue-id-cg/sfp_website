@@ -1,5 +1,6 @@
 <!-- ===== CONTACT ===== -->
 <section id="contact" class="section">
+    @include('partials.strata-divider', ['color' => '#fff'])
     <div class="wrap">
         <div class="split contact-grid">
             <div class="reveal-left">
@@ -9,19 +10,19 @@
 
                 <div class="grid gap-md mt-5">
                     <div class="contact-item">
-                        <span class="ico"><i class="fas fa-location-dot"></i></span>
+                        <span class="ico"><i class="hgi-stroke hgi-location-01"></i></span>
                         <div><h4>Adresse</h4><p>Avenue du Général de Gaulle, B.P. 622,<br />Pointe-Noire, République du Congo</p></div>
                     </div>
                     <div class="contact-item">
-                        <span class="ico"><i class="fas fa-phone"></i></span>
+                        <span class="ico"><i class="hgi-stroke hgi-call"></i></span>
                         <div><h4>Téléphone</h4><a href="tel:+242065870728">+242 06 587 07 28</a></div>
                     </div>
                     <div class="contact-item">
-                        <span class="ico"><i class="fas fa-envelope"></i></span>
+                        <span class="ico"><i class="hgi-stroke hgi-mail-01"></i></span>
                         <div><h4>E-mail</h4><a href="mailto:contact@snpc-sfp.net">contact@snpc-sfp.net</a></div>
                     </div>
                     <div class="contact-item">
-                        <span class="ico"><i class="fas fa-briefcase"></i></span>
+                        <span class="ico"><i class="hgi-stroke hgi-briefcase-01"></i></span>
                         <div><h4>Recrutement</h4><a href="{{ route('carrieres.index') }}">Consulter nos offres d'emploi</a></div>
                     </div>
                 </div>
@@ -32,7 +33,10 @@
                     <h3 class="title-md mb-3">Envoyez-nous un message</h3>
 
                     @if (session('contact_sent'))
-                        <div class="form-alert ok show"><i class="fas fa-circle-check"></i> <span>Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.</span></div>
+                        <div class="form-alert ok show"><i class="hgi-stroke hgi-checkmark-circle-01"></i> <span>Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.</span></div>
+                        @push('scripts')
+                            <script>document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });</script>
+                        @endpush
                     @endif
 
                     <form method="POST" action="{{ route('contact.store') }}" novalidate>
@@ -66,7 +70,7 @@
                             <textarea id="c-message" name="message" required>{{ old('message') }}</textarea>
                             @error('message') <span class="err">{{ $message }}</span> @enderror
                         </div>
-                        <button type="submit" class="btn btn-dark">Envoyer le message <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" class="btn btn-dark">Envoyer le message <i class="hgi-stroke hgi-sent"></i></button>
                         <p class="form-note">Les champs marqués d'un <span class="req">*</span> sont obligatoires. Vos données ne sont utilisées que pour traiter votre demande.</p>
                     </form>
                 </div>
