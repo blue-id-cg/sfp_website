@@ -8,18 +8,26 @@ use App\Http\Requests\Admin\UpdateOffreRequest;
 use App\Models\Offre;
 use App\Services\OffreService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class OffreController extends Controller
 {
     public function __construct(private readonly OffreService $offres) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Offre::class);
 
+        $search = $request->string('q')->trim()->toString();
+
         return view('admin.offres.index', [
-            'offres' => Offre::query()->latest('published_at')->paginate(15),
+            'offres' => Offre::query()
+                ->when($search !== '', fn ($query) => $query->where('title', 'like', "%{$search}%"))
+                ->latest('published_at')
+                ->paginate(15)
+                ->withQueryString(),
+            'search' => $search,
         ]);
     }
 

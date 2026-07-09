@@ -13,7 +13,7 @@
                     <span>{{ $crumb['label'] }}</span>
                 @endif
                 @unless ($loop->last)
-                    <i class="fas fa-chevron-right"></i>
+                    <i class="hgi-stroke hgi-arrow-right-01"></i>
                 @endunless
             @endforeach
         </nav>

@@ -22,6 +22,7 @@ class StoreContactRequest extends FormRequest
             'phone' => ['nullable', 'string', 'max:30'],
             'subject' => ['nullable', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:5000'],
+            'cv' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
         ];
     }
 }

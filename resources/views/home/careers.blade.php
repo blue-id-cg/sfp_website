@@ -8,7 +8,7 @@
                 <p class="lead maxw-md mt-2">Formation continue, transmission du savoir-faire et culture de sécurité : découvrez pourquoi rejoindre la SFP, et nos postes actuellement ouverts.</p>
             </div>
             <div class="careers-cta-actions">
-                <a href="{{ route('carrieres.index') }}" class="btn btn-primary">Voir les opportunités <i class="fas fa-arrow-right"></i></a>
+                <a href="{{ route('carrieres.index') }}" class="btn btn-primary">Voir les opportunités <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                 <a href="{{ route('carrieres.index') }}#candidature" class="btn btn-ghost-light">Candidature spontanée</a>
             </div>
         </div>

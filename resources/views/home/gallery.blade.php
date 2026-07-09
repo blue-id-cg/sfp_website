@@ -27,7 +27,7 @@
 
     <div class="wrap">
         <div class="center mt-6 reveal">
-            <a href="{{ route('galerie.index') }}" class="btn btn-ghost">Voir plus de photos <i class="fas fa-arrow-right"></i></a>
+            <a href="{{ route('galerie.index') }}" class="btn btn-ghost">Voir plus de photos <i class="hgi-stroke hgi-arrow-right-01"></i></a>
         </div>
     </div>
 </section>

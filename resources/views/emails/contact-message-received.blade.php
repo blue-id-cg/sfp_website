@@ -9,6 +9,9 @@
 @if ($contactMessage->subject)
 **Sujet :** {{ $contactMessage->subject }}
 @endif
+@if ($contactMessage->cv_path)
+**CV :** joint à cet e-mail ({{ $contactMessage->cv_filename }})
+@endif
 
 {{ $contactMessage->message }}
 

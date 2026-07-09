@@ -8,14 +8,14 @@
         <img src="{{ asset('images/opt/rig03-unit.jpg') }}" alt="" aria-hidden="true" data-parallax="0.18" />
         <div class="wrap">
             <nav class="breadcrumb" aria-label="Fil d'Ariane">
-                <a href="{{ route('home') }}">Accueil</a> <i class="fas fa-chevron-right"></i>
-                <a href="{{ route('carrieres.index') }}">Carrières</a> <i class="fas fa-chevron-right"></i>
+                <a href="{{ route('home') }}">Accueil</a> <i class="hgi-stroke hgi-arrow-right-01"></i>
+                <a href="{{ route('carrieres.index') }}">Carrières</a> <i class="hgi-stroke hgi-arrow-right-01"></i>
                 <span>{{ $offre->title }}</span>
             </nav>
             <h1>{{ $offre->title }}</h1>
             <div class="job-tags mt-3">
                 @foreach ($offre->tags ?? [] as $tag)
-                    <span class="job-tag"><i class="fas fa-tag"></i> {{ $tag }}</span>
+                    <span class="job-tag"><i class="hgi-stroke hgi-tag-01"></i> {{ $tag }}</span>
                 @endforeach
             </div>
         </div>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="rule mt-6 mb-4"></div>
-                    <a href="{{ route('carrieres.index') }}#offres" class="link-arrow"><i class="fas fa-arrow-left"></i> Toutes les offres</a>
+                    <a href="{{ route('carrieres.index') }}#offres" class="link-arrow"><i class="hgi-stroke hgi-arrow-left-01"></i> Toutes les offres</a>
                 </div>
 
                 <aside class="reveal-right">

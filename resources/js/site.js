@@ -1,7 +1,24 @@
 // Préchargeur
 const splash = document.getElementById('splash');
 if (splash) {
+    const splashPct = document.getElementById('splashPct');
+    let splashProgress = 0;
+    let splashDone = false;
+
+    const formatPct = (value) => `${String(Math.floor(value)).padStart(2, '0')} %`;
+
+    const tickSplashProgress = () => {
+        if (splashDone) return;
+        splashProgress = Math.min(splashProgress + Math.random() * 8 + 3, 90);
+        if (splashPct) splashPct.textContent = formatPct(splashProgress);
+        if (splashProgress < 90) setTimeout(tickSplashProgress, 150);
+    };
+    tickSplashProgress();
+
     window.addEventListener('load', () => {
+        splashDone = true;
+        splashProgress = 100;
+        if (splashPct) splashPct.textContent = formatPct(100);
         setTimeout(() => splash.classList.add('done'), 300);
     });
 }
@@ -84,6 +101,45 @@ if (nav && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !r
     });
 }
 
+// Machine à écrire (texte d'accroche du hero)
+const typewriterEl = document.getElementById('heroTypewriter');
+if (typewriterEl) {
+    const phrases = JSON.parse(typewriterEl.dataset.typewriter || '[]');
+
+    if (phrases.length && !reducedMotion) {
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
+
+        const tick = () => {
+            const current = phrases[phraseIndex];
+
+            if (!deleting) {
+                charIndex++;
+                typewriterEl.textContent = current.slice(0, charIndex);
+                if (charIndex === current.length) {
+                    deleting = true;
+                    setTimeout(tick, 1900);
+                    return;
+                }
+            } else {
+                charIndex--;
+                typewriterEl.textContent = current.slice(0, charIndex);
+                if (charIndex === 0) {
+                    deleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                }
+            }
+
+            setTimeout(tick, deleting ? 35 : 55);
+        };
+
+        tick();
+    } else if (phrases.length) {
+        typewriterEl.textContent = phrases[0];
+    }
+}
+
 // Menu mobile
 const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
@@ -111,55 +167,6 @@ document.addEventListener('scroll', onScrollTop, { passive: true });
 onScrollTop();
 toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Jauge de profondeur (page d'accueil) : reformule le scroll en mètres forés
-const siteFooter = document.querySelector('.footer');
-const depthGauge = document.getElementById('depthGauge');
-const depthFill = document.getElementById('depthFill');
-const depthBit = document.getElementById('depthBit');
-const depthValueEl = document.getElementById('depthValue');
-const depthLabelEl = document.getElementById('depthLabel');
-
-const DEPTH_SECTIONS = [
-    { id: 'accueil', label: 'Surface', depth: 0 },
-    { id: 'entreprise', label: 'Entreprise', depth: 380 },
-    { id: 'metiers', label: 'Métiers', depth: 860 },
-    { id: 'innovation', label: 'Innovation', depth: 1340 },
-    { id: 'hse', label: 'HSE', depth: 1820 },
-    { id: 'equipements', label: 'Équipements', depth: 2260 },
-    { id: 'galerie', label: 'Galerie', depth: 2620 },
-    { id: 'realisations', label: 'Réalisations', depth: 2940 },
-    { id: 'contact', label: 'Contact', depth: 3200 },
-];
-
-const depthSections = DEPTH_SECTIONS.map((entry) => ({ ...entry, el: document.getElementById(entry.id) })).filter(
-    (entry) => entry.el
-);
-
-if (depthGauge && depthFill && depthBit && depthValueEl && depthLabelEl && depthSections.length) {
-    const maxDepth = depthSections[depthSections.length - 1].depth;
-
-    const onDepthScroll = () => {
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
-        const nearFooter = siteFooter ? siteFooter.getBoundingClientRect().top < window.innerHeight : false;
-
-        depthGauge.classList.toggle('show', window.scrollY > 200 && !nearFooter);
-        depthFill.style.height = `${progress * 100}%`;
-        depthBit.style.top = `${progress * 100}%`;
-
-        const current = depthSections.reduce((active, entry) => {
-            const rect = entry.el.getBoundingClientRect();
-            return rect.top <= window.innerHeight * 0.4 ? entry : active;
-        }, depthSections[0]);
-
-        depthValueEl.textContent = `${Math.round(progress * maxDepth).toLocaleString('fr-FR')} m`;
-        depthLabelEl.textContent = current.label;
-    };
-
-    document.addEventListener('scroll', onDepthScroll, { passive: true });
-    onDepthScroll();
-}
-
 // Galerie « carotte de forage » : défilement horizontal à la souris
 document.querySelectorAll('[data-core-strip]').forEach((strip) => {
     let isDragging = false;
@@ -181,16 +188,13 @@ document.querySelectorAll('[data-core-strip]').forEach((strip) => {
     });
 });
 
-// Animations au scroll
+// Animations au scroll (apparition à l'entrée, disparition à la sortie)
 const revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger');
-if ('IntersectionObserver' in window && revealTargets.length) {
+if ('IntersectionObserver' in window && revealTargets.length && !reducedMotion) {
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-in');
-                    observer.unobserve(entry.target);
-                }
+                entry.target.classList.toggle('is-in', entry.isIntersecting);
             });
         },
         { threshold: 0.15 }
@@ -200,10 +204,59 @@ if ('IntersectionObserver' in window && revealTargets.length) {
     revealTargets.forEach((target) => target.classList.add('is-in'));
 }
 
+// Jauge de profondeur (toutes les pages) : reformule la progression de scroll en mètres forés
+const siteFooter = document.querySelector('.footer');
+const depthGauge = document.getElementById('depthGauge');
+const depthFill = document.getElementById('depthFill');
+const depthBit = document.getElementById('depthBit');
+const depthValueEl = document.getElementById('depthValue');
+
+if (depthGauge && depthFill && depthBit && depthValueEl) {
+    const onDepthScroll = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
+        const nearFooter = siteFooter ? siteFooter.getBoundingClientRect().top < window.innerHeight : false;
+
+        depthGauge.classList.toggle('show', window.scrollY > 200 && !nearFooter);
+        depthFill.style.height = `${progress * 100}%`;
+        depthBit.style.top = `${progress * 100}%`;
+        depthValueEl.textContent = `${Math.round(progress * 3000).toLocaleString('fr-FR')} m`;
+    };
+
+    document.addEventListener('scroll', onDepthScroll, { passive: true });
+    onDepthScroll();
+}
+
+// Zone de dépôt de fichier (CV du formulaire de candidature)
+document.querySelectorAll('[data-file-input]').forEach((input) => {
+    const drop = input.closest('.field')?.querySelector('[data-file-drop]');
+    const nameEl = drop?.querySelector('[data-file-name]');
+    if (!drop || !nameEl) return;
+
+    input.addEventListener('change', () => {
+        if (input.files?.[0]) nameEl.textContent = input.files[0].name;
+    });
+
+    ['dragover', 'dragleave', 'drop'].forEach((eventName) => {
+        drop.addEventListener(eventName, (event) => {
+            event.preventDefault();
+            drop.classList.toggle('drag', eventName === 'dragover');
+        });
+    });
+
+    drop.addEventListener('drop', (event) => {
+        if (event.dataTransfer?.files?.[0]) {
+            input.files = event.dataTransfer.files;
+            nameEl.textContent = event.dataTransfer.files[0].name;
+        }
+    });
+});
+
 // Lightbox (galerie & équipements)
 const lightbox = document.getElementById('lightbox');
 const lbImage = document.getElementById('lbImage');
 const lbCap = document.getElementById('lbCap');
+const lbCount = document.getElementById('lbCount');
 const lightboxTriggers = Array.from(document.querySelectorAll('[data-lightbox]'));
 
 if (lightbox && lbImage && lightboxTriggers.length) {
@@ -219,6 +272,7 @@ if (lightbox && lbImage && lightboxTriggers.length) {
         lbImage.src = sourceFor(el);
         lbImage.alt = captionFor(el);
         if (lbCap) lbCap.textContent = captionFor(el);
+        if (lbCount) lbCount.textContent = `${currentIndex + 1} / ${lightboxTriggers.length}`;
         lightbox.classList.add('open');
     };
 
@@ -273,4 +327,19 @@ if ('IntersectionObserver' in window && counters.length) {
         { threshold: 0.5 }
     );
     counters.forEach((counter) => counterObserver.observe(counter));
+}
+
+// Bandeau de consentement cookies
+const cookieBanner = document.getElementById('cookieBanner');
+if (cookieBanner) {
+    const COOKIE_CONSENT_KEY = 'sfp_cookie_consent';
+
+    if (!window.localStorage.getItem(COOKIE_CONSENT_KEY)) {
+        setTimeout(() => cookieBanner.classList.add('show'), 800);
+    }
+
+    cookieBanner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
+        window.localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
+        cookieBanner.classList.remove('show');
+    });
 }

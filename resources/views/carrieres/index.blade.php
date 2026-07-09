@@ -36,7 +36,7 @@
                     <h2 class="title-xl">Grandir dans un métier <span class="mark accent">d'exigence</span></h2>
                     <p class="lead mt-3">Le forage pétrolier exige compétence, rigueur et esprit d'équipe. À la SFP, vous évoluez au contact d'opérations complexes, aux côtés de professionnels expérimentés, dans un environnement où la sécurité et la transmission du savoir-faire sont essentielles.</p>
                     <p class="mt-2 text-body">Nous investissons dans la formation, le développement des compétences et l'évolution professionnelle de chacun. Ici, l'engagement et les talents sont reconnus et valorisés.</p>
-                    <a href="#offres" class="btn btn-dark mt-4">Voir les offres <i class="fas fa-arrow-right"></i></a>
+                    <a href="#offres" class="btn btn-dark mt-4">Voir les offres <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                 </div>
             </div>
         </div>
@@ -50,12 +50,12 @@
                 <h2 class="title-xl">Ce que nous offrons</h2>
             </div>
             <div class="perks stagger">
-                <div class="perk"><i class="fas fa-graduation-cap"></i><h4>Formation &amp; évolution</h4><p>Développement continu des compétences et parcours d'évolution professionnelle.</p></div>
-                <div class="perk"><i class="fas fa-helmet-safety"></i><h4>Sécurité &amp; bien-être</h4><p>Une culture HSE forte et des conditions de travail encadrées sur chaque site.</p></div>
-                <div class="perk"><i class="fas fa-oil-well"></i><h4>Projets d'envergure</h4><p>Des opérations techniques stimulantes au cœur du secteur pétrolier.</p></div>
-                <div class="perk"><i class="fas fa-people-group"></i><h4>Esprit d'équipe</h4><p>Un collectif soudé où la transmission du savoir-faire est une valeur.</p></div>
-                <div class="perk"><i class="fas fa-hand-holding-heart"></i><h4>Reconnaissance</h4><p>Valorisation de l'engagement, des compétences et de la fidélité de chaque collaborateur.</p></div>
-                <div class="perk"><i class="fas fa-earth-africa"></i><h4>Impact &amp; fierté</h4><p>Contribuer au développement énergétique du Congo, avec sens et responsabilité.</p></div>
+                <div class="perk"><i class="hgi-stroke hgi-graduation-scroll"></i><h4>Formation &amp; évolution</h4><p>Développement continu des compétences et parcours d'évolution professionnelle.</p></div>
+                <div class="perk"><i class="hgi-stroke hgi-vest"></i><h4>Sécurité &amp; bien-être</h4><p>Une culture HSE forte et des conditions de travail encadrées sur chaque site.</p></div>
+                <div class="perk"><i class="hgi-stroke hgi-factory-01"></i><h4>Projets d'envergure</h4><p>Des opérations techniques stimulantes au cœur du secteur pétrolier.</p></div>
+                <div class="perk"><i class="hgi-stroke hgi-user-group"></i><h4>Esprit d'équipe</h4><p>Un collectif soudé où la transmission du savoir-faire est une valeur.</p></div>
+                <div class="perk"><i class="hgi-stroke hgi-award-01"></i><h4>Reconnaissance</h4><p>Valorisation de l'engagement, des compétences et de la fidélité de chaque collaborateur.</p></div>
+                <div class="perk"><i class="hgi-stroke hgi-earth"></i><h4>Impact &amp; fierté</h4><p>Contribuer au développement énergétique du Congo, avec sens et responsabilité.</p></div>
             </div>
         </div>
     </section>
@@ -79,23 +79,23 @@
                         <article class="job-ticket">
                             <div class="job-ticket-mark" aria-hidden="true"></div>
                             <div class="job-ticket-main">
-                                <span class="job-ticket-status"><i class="fas fa-circle"></i> Poste ouvert</span>
+                                <span class="job-ticket-status"><i class="hgi-stroke hgi-circle"></i> Poste ouvert</span>
                                 <h3>{{ $offre->title }}</h3>
                                 <div class="job-tags">
                                     @foreach ($offre->tags ?? [] as $tag)
-                                        <span class="job-tag"><i class="fas fa-tag"></i> {{ $tag }}</span>
+                                        <span class="job-tag"><i class="hgi-stroke hgi-tag-01"></i> {{ $tag }}</span>
                                     @endforeach
                                 </div>
                             </div>
                             <div class="job-cta">
-                                <a href="{{ route('offres.show', $offre) }}" class="btn btn-dark btn-sm">Voir l'offre <i class="fas fa-arrow-right"></i></a>
+                                <a href="{{ route('offres.show', $offre) }}" class="btn btn-dark btn-sm">Voir l'offre <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                             </div>
                         </article>
                     @endforeach
                 </div>
             @else
                 <div class="empty-state">
-                    <div class="ico"><i class="fas fa-briefcase"></i></div>
+                    <div class="ico"><i class="hgi-stroke hgi-briefcase-01"></i></div>
                     <h3>Aucune offre ouverte pour le moment</h3>
                     <p>N'hésitez pas à nous adresser une candidature spontanée, notre équipe RH étudie chaque profil avec attention.</p>
                 </div>
@@ -112,8 +112,8 @@
                     <h2 class="title-xl on-dark">Déposez votre candidature</h2>
                     <p class="lead mt-3">Candidature spontanée ou réponse à une offre : transmettez-nous votre dossier. Chaque profil est étudié avec attention par notre équipe RH.</p>
                     <ul class="feature-list">
-                        <li><span class="ico"><i class="fas fa-file-lines"></i></span><div><h4>CV &amp; lettre de motivation</h4><p>Formats PDF ou Word acceptés.</p></div></li>
-                        <li><span class="ico"><i class="fas fa-lock"></i></span><div><h4>Confidentialité</h4><p>Vos données sont utilisées uniquement pour le traitement de votre candidature.</p></div></li>
+                        <li><span class="ico"><i class="hgi-stroke hgi-file-01"></i></span><div><h4>CV &amp; lettre de motivation</h4><p>Formats PDF ou Word acceptés.</p></div></li>
+                        <li><span class="ico"><i class="hgi-stroke hgi-lock"></i></span><div><h4>Confidentialité</h4><p>Vos données sont utilisées uniquement pour le traitement de votre candidature.</p></div></li>
                     </ul>
                 </div>
 

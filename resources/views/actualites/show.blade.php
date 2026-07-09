@@ -24,7 +24,7 @@
                 <div>{!! $article->body_html !!}</div>
 
                 <div class="rule mt-6 mb-4"></div>
-                <a href="{{ route('actualites.index') }}" class="link-arrow"><i class="fas fa-arrow-left"></i> Toutes les actualités</a>
+                <a href="{{ route('actualites.index') }}" class="link-arrow"><i class="hgi-stroke hgi-arrow-left-01"></i> Toutes les actualités</a>
             </div>
         </div>
     </article>
@@ -47,7 +47,7 @@
                                 <span class="date">{{ $item->date_label }}</span>
                                 <h3>{{ $item->title }}</h3>
                                 <p>{{ $item->excerpt }}</p>
-                                <a href="{{ route('actualites.show', $item) }}" class="link-arrow">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                                <a href="{{ route('actualites.show', $item) }}" class="link-arrow">Lire l'article <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                             </div>
                         </article>
                     @endforeach

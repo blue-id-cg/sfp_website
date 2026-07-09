@@ -20,6 +20,18 @@ test('an authenticated user can list actualites', function () {
     $response->assertOk();
 });
 
+test('the actualites list can be filtered by title', function () {
+    $user = User::factory()->create();
+    Actualite::factory()->create(['title' => 'Forage de puits à Kundji']);
+    Actualite::factory()->create(['title' => 'Nouveau partenariat régional']);
+
+    $response = $this->actingAs($user)->get('/admin/actualites?q=Kundji');
+
+    $response->assertOk();
+    $response->assertSee('Forage de puits à Kundji');
+    $response->assertDontSee('Nouveau partenariat régional');
+});
+
 test('an authenticated user can create an actualite with an image', function () {
     Storage::fake('public');
     $user = User::factory()->create();

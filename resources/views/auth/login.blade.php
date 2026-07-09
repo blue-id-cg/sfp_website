@@ -1,6 +1,6 @@
 <x-guest-layout>
     @if (session('status'))
-        <div class="form-alert ok show"><i class="fas fa-circle-check"></i> <span>{{ session('status') }}</span></div>
+        <div class="form-alert ok show"><i class="hgi-stroke hgi-checkmark-circle-01"></i> <span>{{ session('status') }}</span></div>
     @endif
 
     <form method="POST" action="{{ route('login') }}" novalidate>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-dark">Se connecter <i class="fas fa-arrow-right"></i></button>
+            <button type="submit" class="btn btn-dark">Se connecter <i class="hgi-stroke hgi-arrow-right-01"></i></button>
         </div>
 
         @if (Route::has('password.request'))

@@ -1,0 +1,265 @@
+@import 'tailwindcss';
+
+@source '../../storage/framework/views/*.php';
+@source '../../resources/views/admin/**/*.blade.php';
+@source '../../resources/views/layouts/admin.blade.php';
+@source '../../resources/views/components/admin/**/*.blade.php';
+@source '../../resources/views/vendor/pagination/site.blade.php';
+@source '../js/admin.js';
+
+/* ============================================================
+   SFP ADMIN · design system indépendant du site public
+   ============================================================ */
+:root {
+    --a-ink: #0c0e22;
+    --a-ink-soft: #4b4f6b;
+    --a-muted: #8b8fa8;
+    --a-accent: #fae700;
+    --a-accent-2: #ef7b10;
+    --a-surface: #ffffff;
+    --a-bg: #f4f5fa;
+    --a-border: #e8e9f1;
+    --a-radius: 1rem;
+}
+
+body.admin-shell {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background:
+        radial-gradient(900px 420px at 100% -8%, rgba(250, 231, 0, 0.10), transparent 60%),
+        radial-gradient(700px 380px at -5% 8%, rgba(239, 123, 16, 0.06), transparent 55%),
+        var(--a-bg);
+    color: var(--a-ink);
+}
+
+/* ---- Barre latérale ---- */
+.a-sidebar {
+    background: var(--a-surface);
+    border-right: 1px solid var(--a-border);
+}
+
+.a-nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 0.65rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.875rem;
+    color: var(--a-ink-soft);
+    transition: background 0.2s, color 0.2s;
+}
+
+.a-nav-link:hover {
+    background: #f6f4e4;
+    color: var(--a-ink);
+}
+
+.a-nav-link.active {
+    background: var(--a-ink);
+    color: #fff;
+    font-weight: 600;
+}
+
+.a-nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: -0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--a-accent);
+    border-radius: 2px;
+}
+
+/* ---- Cartes ---- */
+.admin-card {
+    background: var(--a-surface);
+    border: 1px solid var(--a-border);
+    border-radius: var(--a-radius);
+    box-shadow: 0 1px 2px rgba(12, 14, 34, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px -12px rgba(12, 14, 34, 0.16);
+}
+
+.admin-stat {
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-stat::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--admin-stat-color, var(--a-accent)), transparent);
+}
+
+.form-card {
+    background: var(--a-surface);
+    border: 1px solid var(--a-border);
+    border-radius: var(--a-radius);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    box-shadow: 0 1px 2px rgba(12, 14, 34, 0.04);
+}
+
+/* ---- Champs de formulaire ---- */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.15rem;
+}
+
+.field label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--a-ink);
+    letter-spacing: 0.01em;
+}
+
+.field label .req {
+    color: #d64545;
+}
+
+.field input,
+.field select,
+.field textarea {
+    font-family: inherit;
+    font-size: 0.92rem;
+    color: var(--a-ink);
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid var(--a-border);
+    border-radius: 0.6rem;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    outline: none;
+    border-color: var(--a-accent-2);
+    box-shadow: 0 0 0 3px rgba(239, 123, 16, 0.12);
+}
+
+.field input.invalid,
+.field textarea.invalid,
+.field select.invalid {
+    border-color: #d64545;
+    box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.1);
+}
+
+.field .err {
+    font-size: 0.75rem;
+    color: #d64545;
+    min-height: 1em;
+}
+
+.file-drop {
+    display: block;
+    border: 1.5px dashed var(--a-border);
+    border-radius: 0.6rem;
+    padding: 1.3rem;
+    text-align: center;
+    cursor: pointer;
+    color: var(--a-ink-soft);
+    transition: border-color 0.25s, background 0.25s;
+}
+
+.file-drop:hover,
+.file-drop.drag {
+    border-color: var(--a-accent-2);
+    background: #fff8ec;
+}
+
+.file-drop i {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 1.3rem;
+    color: var(--a-accent-2);
+}
+
+.file-drop b {
+    color: var(--a-ink);
+}
+
+.file-drop .fname {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--a-accent-2);
+}
+
+/* ---- Pagination ---- */
+.pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.pager-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--a-border);
+    color: var(--a-ink);
+    font-size: 0.8rem;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.pager-btn:not(.disabled):hover {
+    background: var(--a-ink);
+    border-color: var(--a-ink);
+    color: #fff;
+}
+
+.pager-btn.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.pager-pages {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.pager-page,
+.pager-dots {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--a-ink-soft);
+    transition: background 0.2s, color 0.2s;
+}
+
+.pager-page:hover {
+    background: var(--a-bg);
+    color: var(--a-ink);
+}
+
+.pager-page.active {
+    background: linear-gradient(120deg, var(--a-accent) 0%, var(--a-accent-2) 130%);
+    color: var(--a-ink);
+}

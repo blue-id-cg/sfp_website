@@ -12,7 +12,7 @@ class ContactController extends Controller
 
     public function store(StoreContactRequest $request): RedirectResponse
     {
-        $this->contact->submit($request->validated());
+        $this->contact->submit($request->safe()->except('cv'), $request->file('cv'));
 
         return back()->with('contact_sent', true);
     }

@@ -24,9 +24,16 @@ class SeoController extends Controller
     {
         $urls = [
             ['loc' => route('home'), 'priority' => '1.0'],
+            ['loc' => route('about.index'), 'priority' => '0.7'],
+            ['loc' => route('metiers.index'), 'priority' => '0.7'],
+            ['loc' => route('hse.index'), 'priority' => '0.7'],
+            ['loc' => route('equipements.index'), 'priority' => '0.7'],
             ['loc' => route('actualites.index'), 'priority' => '0.8'],
             ['loc' => route('carrieres.index'), 'priority' => '0.8'],
             ['loc' => route('galerie.index'), 'priority' => '0.5'],
+            ['loc' => route('legal.mentions'), 'priority' => '0.2'],
+            ['loc' => route('legal.privacy'), 'priority' => '0.2'],
+            ['loc' => route('legal.cookies'), 'priority' => '0.2'],
         ];
 
         foreach (Actualite::query()->published()->get() as $actualite) {

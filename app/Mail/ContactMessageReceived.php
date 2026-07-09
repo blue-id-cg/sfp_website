@@ -6,6 +6,7 @@ use App\Models\ContactMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -28,5 +29,20 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
         return new Content(
             markdown: 'emails.contact-message-received',
         );
+    }
+
+    /**
+     * @return array<int, Attachment>
+     */
+    public function attachments(): array
+    {
+        if (! $this->contactMessage->cv_path) {
+            return [];
+        }
+
+        return [
+            Attachment::fromStorageDisk('public', $this->contactMessage->cv_path)
+                ->as($this->contactMessage->cv_filename),
+        ];
     }
 }

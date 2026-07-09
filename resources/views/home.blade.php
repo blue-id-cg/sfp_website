@@ -8,7 +8,6 @@
 @endsection
 
 @section('content')
-    @include('partials.depth-gauge')
     @include('home.hero')
     @include('home.about')
     @include('home.activities')

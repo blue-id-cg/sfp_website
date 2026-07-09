@@ -8,18 +8,26 @@ use App\Http\Requests\Admin\UpdateActualiteRequest;
 use App\Models\Actualite;
 use App\Services\ActualiteService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ActualiteController extends Controller
 {
     public function __construct(private readonly ActualiteService $actualites) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', Actualite::class);
 
+        $search = $request->string('q')->trim()->toString();
+
         return view('admin.actualites.index', [
-            'actualites' => Actualite::query()->latest('published_at')->paginate(15),
+            'actualites' => Actualite::query()
+                ->when($search !== '', fn ($query) => $query->where('title', 'like', "%{$search}%"))
+                ->latest('published_at')
+                ->paginate(15)
+                ->withQueryString(),
+            'search' => $search,
         ]);
     }
 

@@ -19,16 +19,18 @@
 
                 <ul class="feature-list">
                     <li>
-                        <span class="ico"><i class="fas fa-bullseye"></i></span>
+                        <span class="ico"><i class="hgi-stroke hgi-target-01"></i></span>
                         <div><h4>Excellence opérationnelle</h4><p>Des standards élevés, une amélioration continue et une exigence de résultat sur le terrain.</p></div>
                     </li>
                     <li>
-                        <span class="ico"><i class="fas fa-handshake-angle"></i></span>
+                        <span class="ico"><i class="hgi-stroke hgi-agreement-01"></i></span>
                         <div><h4>Fiabilité &amp; transparence</h4><p>Un partenaire de confiance pour des projets pétroliers complexes et exigeants.</p></div>
                     </li>
                 </ul>
 
-                <a href="#metiers" class="link-arrow mt-4">Nos domaines d'expertise <i class="fas fa-arrow-right"></i></a>
+                <div class="mt-4">
+                    <a href="{{ route('about.index') }}" class="btn btn-ghost">En savoir plus sur la SFP <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+                </div>
             </div>
 
             <div class="reveal-right">

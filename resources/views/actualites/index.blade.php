@@ -33,7 +33,7 @@
                                 <span class="pill cat">{{ $actualite->category }}</span>
                                 <h3>{{ $actualite->title }}</h3>
                                 <p>{{ $actualite->excerpt }}</p>
-                                <a href="{{ route('actualites.show', $actualite) }}" class="link-arrow">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                                <a href="{{ route('actualites.show', $actualite) }}" class="link-arrow">Lire l'article <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                             </div>
                         </div>
                     </article>

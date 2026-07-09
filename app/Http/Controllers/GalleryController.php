@@ -11,6 +11,7 @@ class GalleryController extends Controller
     {
         return view('galerie.index', [
             'images' => GalleryImage::query()->orderBy('position')->paginate(24),
+            'totalImages' => GalleryImage::query()->count(),
         ]);
     }
 }

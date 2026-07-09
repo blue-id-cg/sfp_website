@@ -133,6 +133,7 @@ h1, h2, h3, h4 { color: var(--charcoal); letter-spacing: -0.02em; line-height: 1
     border-radius: 2px;
 }
 .on-dark .mark::after { opacity: 0.85; }
+.on-dark .accent { color: var(--yellow); }
 
 /* Texte dégradé (rare, réservé aux grands chiffres) */
 .text-gradient {
