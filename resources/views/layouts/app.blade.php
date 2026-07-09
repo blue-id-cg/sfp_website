@@ -63,10 +63,6 @@
     @include('partials.navbar')
     @include('partials.mobile-menu')
 
-    @hasSection('scrollspy')
-        @yield('scrollspy')
-    @endif
-
     <main>
         @yield('content')
     </main>

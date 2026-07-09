@@ -1,5 +1,6 @@
 <!-- ===== INNOVATION ===== -->
 <section id="innovation" class="section">
+    <span class="ghost-index" aria-hidden="true">03</span>
     <div class="wrap">
         <div class="split reverse items-center">
             <div class="reveal-right">

@@ -1,5 +1,6 @@
 <!-- ===== ENTREPRISE / À PROPOS ===== -->
 <section id="entreprise" class="section">
+    <span class="ghost-index" aria-hidden="true">01</span>
     <div class="wrap">
         <div class="split items-center">
             <div class="reveal-left">

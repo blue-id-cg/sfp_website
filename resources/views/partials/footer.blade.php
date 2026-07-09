@@ -7,7 +7,7 @@
     <div class="wrap">
         <div class="footer-top">
             <div class="footer-brand">
-                <img src="{{ asset('images/logo2.png') }}" alt="SFP · Société de Forages Pétroliers" />
+                <img src="{{ asset('images/logo-inverse.png') }}" alt="SFP · Société de Forages Pétroliers" class="footer-logo" />
                 <p>Société de Forages Pétroliers · expertise congolaise du forage, de la complétion et du work over. Filiale du groupe SNPC, au service de l'énergie et du développement du pays.</p>
                 <div class="socials">
                     <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>

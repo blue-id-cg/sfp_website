@@ -6,9 +6,9 @@
             <img src="{{ asset('images/opt/rig-tall.jpg') }}" alt="Appareil de forage SFP en opération sur un site pétrolier au Congo" fetchpriority="high" width="1650" height="2200" />
         </picture>
     </div>
-    <div class="hero-grid-lines" aria-hidden="true"></div>
+    <div class="hero-grid-lines" data-parallax="0.22" aria-hidden="true"></div>
 
-    <div class="hero-inner wrap">
+    <div class="hero-inner wrap" data-parallax="0.04">
         <span class="hero-eyebrow"><span class="dot"></span> Congo · Groupe SNPC</span>
         <h1>
             Forer plus profond,<br />

@@ -1,5 +1,7 @@
 <!-- ===== RÉALISATIONS ===== -->
 <section id="realisations" class="section">
+    @include('partials.strata-divider', ['color' => '#fff'])
+    <span class="ghost-index" aria-hidden="true">07</span>
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">

@@ -3,7 +3,7 @@
 @endphp
 
 <header class="page-head">
-    <img src="{{ asset('images/opt/' . ($image ?? 'crew-platform') . '.jpg') }}" alt="" aria-hidden="true" />
+    <img src="{{ $imageUrl ?? asset('images/opt/' . ($image ?? 'crew-platform') . '.jpg') }}" alt="" aria-hidden="true" data-parallax="0.18" />
     <div class="wrap">
         <nav class="breadcrumb" aria-label="Fil d'Ariane">
             @foreach ($breadcrumbs as $index => $crumb)

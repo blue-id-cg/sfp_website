@@ -4,58 +4,44 @@
 
 <div class="form-card">
     <h3 class="title-md mb-3">{{ $heading ?? 'Postuler à cette offre' }}</h3>
-    <div class="form-alert ok" data-apply-alert><i class="fas fa-circle-check"></i> <span>Merci ! Votre candidature a bien été envoyée. Notre équipe RH vous recontactera.</span></div>
-    <form data-apply-form novalidate>
+
+    @if (session('contact_sent'))
+        <div class="form-alert ok show"><i class="fas fa-circle-check"></i> <span>Merci ! Votre candidature a bien été envoyée. Notre équipe RH vous recontactera.</span></div>
+    @endif
+
+    <form method="POST" action="{{ route('contact.store') }}" novalidate>
+        @csrf
+        <input type="hidden" name="subject" value="Candidature — {{ $poste ?? 'Candidature spontanée' }}" />
+
         <div class="field-row">
             <div class="field">
-                <label for="a-nom">Nom <span class="req">*</span></label>
-                <input type="text" id="a-nom" name="nom" required autocomplete="family-name" />
-                <span class="err" data-err></span>
+                <label for="a-name">Nom &amp; prénom <span class="req">*</span></label>
+                <input type="text" id="a-name" name="name" value="{{ old('name') }}" required autocomplete="name" />
+                @error('name') <span class="err">{{ $message }}</span> @enderror
             </div>
-            <div class="field">
-                <label for="a-prenom">Prénom <span class="req">*</span></label>
-                <input type="text" id="a-prenom" name="prenom" required autocomplete="given-name" />
-                <span class="err" data-err></span>
-            </div>
-        </div>
-        <div class="field-row">
             <div class="field">
                 <label for="a-email">E-mail <span class="req">*</span></label>
-                <input type="email" id="a-email" name="email" required autocomplete="email" />
-                <span class="err" data-err></span>
+                <input type="email" id="a-email" name="email" value="{{ old('email') }}" required autocomplete="email" />
+                @error('email') <span class="err">{{ $message }}</span> @enderror
+            </div>
+        </div>
+        <div class="field-row">
+            <div class="field">
+                <label for="a-phone">Téléphone <span class="req">*</span></label>
+                <input type="tel" id="a-phone" name="phone" value="{{ old('phone') }}" required autocomplete="tel" />
+                @error('phone') <span class="err">{{ $message }}</span> @enderror
             </div>
             <div class="field">
-                <label for="a-tel">Téléphone <span class="req">*</span></label>
-                <input type="tel" id="a-tel" name="telephone" required autocomplete="tel" />
-                <span class="err" data-err></span>
+                <label for="a-poste">Poste</label>
+                <input type="text" id="a-poste" value="{{ $poste ?? 'Candidature spontanée' }}" readonly />
             </div>
         </div>
         <div class="field">
-            <label for="a-poste">Poste{{ $poste ? '' : ' souhaité' }}</label>
-            <input type="text" id="a-poste" name="poste" value="{{ $poste }}" @if ($poste) readonly @else placeholder="Ex. Ingénieur forage" @endif />
-            <span class="err" data-err></span>
-        </div>
-        <div class="field">
-            <label for="a-cv">CV <span class="req">*</span></label>
-            <div class="file-drop" data-file-drop>
-                <i class="fas fa-cloud-arrow-up"></i>
-                <div><b>Cliquez pour joindre votre CV</b> ou glissez-déposez le fichier</div>
-                <span class="fname"></span>
-            </div>
-            <input type="file" id="a-cv" name="cv" accept=".pdf,.doc,.docx" required class="hide" />
-            <span class="err" data-err></span>
-        </div>
-        <div class="field">
-            <label for="a-lettre">Lettre de motivation</label>
-            <textarea id="a-lettre" name="lettre" placeholder="Vos motivations pour rejoindre la SFP…"></textarea>
-            <span class="err" data-err></span>
-        </div>
-        <div class="field">
-            <label for="a-message">Message complémentaire</label>
-            <textarea id="a-message" name="message" placeholder="Disponibilité, informations utiles…"></textarea>
-            <span class="err" data-err></span>
+            <label for="a-message">Message <span class="req">*</span></label>
+            <textarea id="a-message" name="message" required placeholder="Présentez votre profil et votre expérience. Notre équipe RH vous recontactera pour la suite (CV, entretien...).">{{ old('message') }}</textarea>
+            @error('message') <span class="err">{{ $message }}</span> @enderror
         </div>
         <button type="submit" class="btn btn-primary">Envoyer ma candidature <i class="fas fa-paper-plane"></i></button>
-        <p class="form-note">Les champs marqués d'un <span class="req">*</span> sont obligatoires.</p>
+        <p class="form-note">Les champs marqués d'un <span class="req">*</span> sont obligatoires. Notre équipe RH vous contactera pour vous demander votre CV et lettre de motivation.</p>
     </form>
 </div>

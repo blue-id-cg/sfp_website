@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\Content\Actualites;
-use App\Support\Content\Offres;
+use App\Models\Actualite;
+use App\Models\Offre;
 use Illuminate\Http\Response;
 
 class SeoController extends Controller
@@ -26,14 +26,15 @@ class SeoController extends Controller
             ['loc' => route('home'), 'priority' => '1.0'],
             ['loc' => route('actualites.index'), 'priority' => '0.8'],
             ['loc' => route('carrieres.index'), 'priority' => '0.8'],
+            ['loc' => route('galerie.index'), 'priority' => '0.5'],
         ];
 
-        foreach (Actualites::all() as $actualite) {
-            $urls[] = ['loc' => route('actualites.show', $actualite['slug']), 'priority' => '0.6'];
+        foreach (Actualite::query()->published()->get() as $actualite) {
+            $urls[] = ['loc' => route('actualites.show', $actualite), 'priority' => '0.6'];
         }
 
-        foreach (Offres::all() as $offre) {
-            $urls[] = ['loc' => route('offres.show', $offre['slug']), 'priority' => '0.6'];
+        foreach (Offre::query()->published()->get() as $offre) {
+            $urls[] = ['loc' => route('offres.show', $offre), 'priority' => '0.6'];
         }
 
         $xml = view('sitemap', ['urls' => $urls])->render();

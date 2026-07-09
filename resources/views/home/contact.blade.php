@@ -1,5 +1,6 @@
 <!-- ===== CONTACT ===== -->
 <section id="contact" class="section">
+    @include('partials.strata-divider', ['color' => '#fff'])
     <div class="wrap">
         <div class="split contact-grid">
             <div class="reveal-left">
@@ -33,6 +34,9 @@
 
                     @if (session('contact_sent'))
                         <div class="form-alert ok show"><i class="fas fa-circle-check"></i> <span>Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.</span></div>
+                        @push('scripts')
+                            <script>document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });</script>
+                        @endpush
                     @endif
 
                     <form method="POST" action="{{ route('contact.store') }}" novalidate>

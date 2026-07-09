@@ -76,17 +76,19 @@
             @if (count($offres))
                 <div class="jobs reveal">
                     @foreach ($offres as $offre)
-                        <article class="job">
-                            <div class="job-main">
-                                <h3>{{ $offre['title'] }}</h3>
+                        <article class="job-ticket">
+                            <div class="job-ticket-mark" aria-hidden="true"></div>
+                            <div class="job-ticket-main">
+                                <span class="job-ticket-status"><i class="fas fa-circle"></i> Poste ouvert</span>
+                                <h3>{{ $offre->title }}</h3>
                                 <div class="job-tags">
-                                    @foreach ($offre['tags'] as $tag)
+                                    @foreach ($offre->tags ?? [] as $tag)
                                         <span class="job-tag"><i class="fas fa-tag"></i> {{ $tag }}</span>
                                     @endforeach
                                 </div>
                             </div>
                             <div class="job-cta">
-                                <a href="{{ route('offres.show', $offre['slug']) }}" class="btn btn-ghost btn-sm">Voir l'offre <i class="fas fa-arrow-right"></i></a>
+                                <a href="{{ route('offres.show', $offre) }}" class="btn btn-dark btn-sm">Voir l'offre <i class="fas fa-arrow-right"></i></a>
                             </div>
                         </article>
                     @endforeach

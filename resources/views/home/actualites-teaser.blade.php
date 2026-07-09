@@ -16,14 +16,14 @@
             @foreach ($actualites as $actualite)
                 <article class="news-card">
                     <div class="thumb">
-                        <span class="pill cat">{{ $actualite['category'] }}</span>
-                        <img src="{{ asset('images/opt/' . $actualite['image'] . '.jpg') }}" alt="{{ $actualite['title'] }}" loading="lazy" />
+                        <span class="pill cat">{{ $actualite->category }}</span>
+                        <img src="{{ $actualite->image_url }}" alt="{{ $actualite->title }}" loading="lazy" />
                     </div>
                     <div class="body">
-                        <span class="date">{{ $actualite['date'] }}</span>
-                        <h3>{{ $actualite['title'] }}</h3>
-                        <p>{{ $actualite['excerpt'] }}</p>
-                        <a href="{{ route('actualites.show', $actualite['slug']) }}" class="link-arrow">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        <span class="date">{{ $actualite->date_label }}</span>
+                        <h3>{{ $actualite->title }}</h3>
+                        <p>{{ $actualite->excerpt }}</p>
+                        <a href="{{ route('actualites.show', $actualite) }}" class="link-arrow">Lire l'article <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </article>
             @endforeach

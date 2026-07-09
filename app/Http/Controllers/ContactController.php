@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreContactRequest;
+use App\Services\ContactService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:30'],
-            'subject' => ['nullable', 'string', 'max:255'],
-            'message' => ['required', 'string', 'max:5000'],
-        ]);
+    public function __construct(private readonly ContactService $contact) {}
 
-        return redirect(route('home').'#contact')
-            ->with('contact_sent', true);
+    public function store(StoreContactRequest $request): RedirectResponse
+    {
+        $this->contact->submit($request->validated());
+
+        return back()->with('contact_sent', true);
     }
 }

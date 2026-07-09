@@ -1,5 +1,6 @@
 <!-- ===== ÉQUIPEMENTS ===== -->
 <section id="equipements" class="section">
+    <span class="ghost-index" aria-hidden="true">05</span>
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">

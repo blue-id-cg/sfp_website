@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\Content\Actualites;
+use App\Models\Actualite;
 use Illuminate\View\View;
 
 class ActualiteController extends Controller
@@ -10,19 +10,22 @@ class ActualiteController extends Controller
     public function index(): View
     {
         return view('actualites.index', [
-            'actualites' => Actualites::all(),
+            'actualites' => Actualite::query()->published()->latest('published_at')->paginate(9),
         ]);
     }
 
-    public function show(string $actualite): View
+    public function show(Actualite $actualite): View
     {
-        $article = Actualites::findBySlug($actualite);
-
-        abort_if($article === null, 404);
+        abort_unless($actualite->published_at?->lessThanOrEqualTo(now()), 404);
 
         return view('actualites.show', [
-            'article' => $article,
-            'more' => Actualites::others($actualite),
+            'article' => $actualite,
+            'more' => Actualite::query()
+                ->published()
+                ->whereKeyNot($actualite->id)
+                ->latest('published_at')
+                ->take(3)
+                ->get(),
         ]);
     }
 }

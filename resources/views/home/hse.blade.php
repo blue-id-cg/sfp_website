@@ -1,5 +1,6 @@
 <!-- ===== HSE ===== -->
 <section id="hse" class="section bg-industrial">
+    <span class="ghost-index" aria-hidden="true">04</span>
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
