@@ -1388,6 +1388,171 @@
     .inst-signal i { height: 60%; }
 }
 
+/* ============================================================
+   ÉQUIPEMENTS · Fiches techniques (plaques d'équipement)
+   Signature « nameplate » industrielle : acier brossé, rivets,
+   chiffres gravés — évoque directement le parc industriel.
+   ============================================================ */
+.fleet {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(1.6rem, 3.5vw, 3rem);
+    align-items: stretch;
+}
+
+.fleet-hero { margin: 0; display: flex; }
+.fleet-hero .frame { width: 100%; }
+.fleet-hero .media { height: 100%; }
+
+.fleet-specs {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    align-content: stretch;
+}
+
+.fleet-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Plaque d'équipement (acier brossé) */
+.spec-plate {
+    position: relative;
+    background:
+        repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.5) 0 1px, rgba(20, 21, 44, 0.015) 1px 3px),
+        linear-gradient(150deg, #eef1f5 0%, #dde1e7 100%);
+    border: 1px solid rgba(20, 21, 44, 0.14);
+    border-radius: 16px;
+    padding: 1.6rem 1.7rem;
+    overflow: hidden;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), var(--shadow-sm);
+    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+
+.spec-plate::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--yellow), var(--orange));
+}
+
+.spec-plate:hover {
+    transform: translateY(-4px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), var(--shadow-md);
+}
+
+/* Rivets d'angle */
+.rivet {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffffff, #b9bec6 55%, #868c96);
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(255, 255, 255, 0.6);
+    z-index: 2;
+}
+.rivet-tl { top: 11px; left: 12px; }
+.rivet-tr { top: 11px; right: 12px; }
+.rivet-bl { bottom: 11px; left: 12px; }
+.rivet-br { bottom: 11px; right: 12px; }
+
+.spec-plate-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--petrol-light);
+}
+
+.spec-plate h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--charcoal);
+    margin-top: 0.25rem;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.spec-plate-mini { font-size: 1.5rem; }
+
+.spec-plate-sub {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-3);
+}
+
+/* Grand chiffre gravé */
+.spec-plate-figure {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    margin: 0.4rem 0 0.2rem;
+}
+.spec-plate-figure b {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--charcoal);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.spec-plate-figure span {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--petrol);
+}
+.spec-plate-figure-sm b { font-size: 2.2rem; }
+.spec-plate-figure-sm span { font-size: 0.9rem; }
+
+/* Plaque hero : titre à gauche, chiffre à droite */
+.spec-plate-hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        'head fig'
+        'rows rows';
+    align-items: center;
+    gap: 0.4rem 1.5rem;
+    padding: 1.8rem 2rem;
+}
+.spec-plate-hero .spec-plate-head { grid-area: head; }
+.spec-plate-hero .spec-plate-figure { grid-area: fig; margin: 0; }
+.spec-plate-hero .spec-rows { grid-area: rows; }
+
+.spec-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(20, 21, 44, 0.12);
+}
+.spec-rows div { display: flex; flex-direction: column; gap: 0.1rem; }
+.spec-rows dt {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+}
+.spec-rows dd {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--charcoal);
+}
+
+.spec-plate-base .spec-plate-sub { margin-top: 0.3rem; }
+
 .section-photo {
     position: relative;
     isolation: isolate;
