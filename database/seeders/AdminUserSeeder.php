@@ -15,8 +15,8 @@ class AdminUserSeeder extends Seeder
         User::query()->updateOrCreate(
             ['email' => 'admin@localhost.com'],
             [
-                'name' => 'Aure Kounda',
-                'password' => '136eda23ea38',
+                'name' => 'Jordhy LOUZOLO',
+                'password' => 'password',
             ],
         );
     }
