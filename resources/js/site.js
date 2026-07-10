@@ -371,3 +371,26 @@ if (cookieBanner) {
         cookieBanner.classList.remove('show');
     });
 }
+
+// Nos métiers · Coupe de puits interactive : cliquer/survoler une phase
+// fait descendre le trépan jusqu'à la station correspondante.
+document.querySelectorAll('.wellbore').forEach((wellbore) => {
+    const rows = Array.from(wellbore.querySelectorAll('.phase-row'));
+    const readout = wellbore.querySelector('[data-wb-readout]');
+
+    const activate = (row) => {
+        const phase = row.dataset.phase;
+        if (wellbore.dataset.active === phase) return;
+        wellbore.dataset.active = phase;
+        rows.forEach((r) => r.setAttribute('aria-current', String(r === row)));
+        if (readout) {
+            readout.textContent = row.querySelector('.phase-row-title')?.textContent ?? readout.textContent;
+        }
+    };
+
+    rows.forEach((row) => {
+        row.addEventListener('click', () => activate(row));
+        row.addEventListener('mouseenter', () => activate(row));
+        row.addEventListener('focus', () => activate(row));
+    });
+});

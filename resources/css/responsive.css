@@ -26,10 +26,18 @@
     .split.reverse .split-media { order: 0; }
     .frame .plate { left: 1rem; bottom: 1rem; }
 
+    .entreprise .ent-head { grid-template-columns: 1fr; gap: 1.6rem; align-items: start; }
+    .ent-head-lead .title-xl { max-width: 22ch; }
+    .ent-media { position: static; }
+
     .sec-head-split { grid-template-columns: 1fr; gap: 1rem; }
     .sec-head-split .r { padding-bottom: 0; }
 
     .trade-grid { grid-template-columns: repeat(2, 1fr); }
+    .wellbore { grid-template-columns: 1fr; gap: 2rem; }
+    .wellbore-viz { position: static; max-width: 300px; margin-inline: auto; }
+    .console { grid-template-columns: 1fr; gap: 2rem; }
+    .fleet { grid-template-columns: 1fr; gap: 2rem; }
     .svc-grid { grid-template-columns: repeat(2, 1fr); }
     .hse-grid { grid-template-columns: 1fr; }
     .hse-metrics { grid-template-columns: repeat(2, 1fr); }
@@ -66,12 +74,28 @@
     .hero-cta { width: 100%; }
     .hero-cta .btn { flex: 1; justify-content: center; }
 
+    .ent-stats { grid-template-columns: repeat(3, auto); gap: 1.1rem; }
+    .ent-stat-label { font-size: 0.62rem; }
+    .ent-values { grid-template-columns: 1fr; }
+
     .stat-band { grid-template-columns: repeat(2, 1fr); }
     .stat { border-left: none; padding: 1.2rem 0.8rem; }
     .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.1); }
 
     .trade-grid { grid-template-columns: 1fr; }
     .svc-grid { grid-template-columns: 1fr; }
+
+    .phase-row { grid-template-columns: auto 1fr; gap: 0.9rem; padding: 1.2rem; }
+    .phase-row-ico { display: none; }
+    .phase-row-arrow { display: none; }
+    .phase-row-title { font-size: 1.15rem; }
+
+    .hud { position: static; margin-top: 0.8rem; left: auto; right: auto; bottom: auto; }
+    .hud-metrics span:nth-child(3) { display: none; }
+
+    .fleet-duo { grid-template-columns: 1fr; }
+    .spec-plate-hero { grid-template-columns: 1fr; grid-template-areas: 'head' 'fig' 'rows'; }
+    .spec-plate-hero .spec-plate-figure { justify-content: flex-start; }
     .news-grid { grid-template-columns: 1fr; }
     .core-grid { grid-template-columns: 1fr; }
     .core-strip .core-sample, .core-strip-ruler span { flex-basis: 200px; }
