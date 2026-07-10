@@ -204,16 +204,49 @@ document.querySelectorAll('[data-core-strip]').forEach((strip) => {
     strip.addEventListener('touchstart', pauseAuto, { passive: true });
     strip.addEventListener('touchend', resumeAutoSoon, { passive: true });
 
+    // Diapositive « active » = celle la plus proche du centre du carrousel
+    const samples = Array.from(strip.querySelectorAll('.core-sample'));
+    let activeTicking = false;
+
+    const highlightActive = () => {
+        const stripRect = strip.getBoundingClientRect();
+        const center = stripRect.left + stripRect.width / 2;
+        let best = null;
+        let bestDist = Infinity;
+        samples.forEach((sample) => {
+            const rect = sample.getBoundingClientRect();
+            const dist = Math.abs(rect.left + rect.width / 2 - center);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = sample;
+            }
+        });
+        samples.forEach((sample) => sample.classList.toggle('is-active', sample === best));
+    };
+
+    strip.addEventListener('scroll', () => {
+        if (activeTicking) return;
+        activeTicking = true;
+        requestAnimationFrame(() => {
+            highlightActive();
+            activeTicking = false;
+        });
+    }, { passive: true });
+    window.addEventListener('resize', highlightActive);
+    highlightActive();
+
     if (reducedMotion) return;
 
     setInterval(() => {
         if (autoPaused) return;
 
-        const step = (strip.querySelector('.core-sample')?.getBoundingClientRect().width ?? 260) + 16;
+        const first = strip.querySelector('.core-sample');
+        const gap = parseFloat(getComputedStyle(strip).gap) || 16;
+        const step = (first?.offsetWidth ?? 300) + gap;
         const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
 
         strip.scrollTo({ left: atEnd ? 0 : strip.scrollLeft + step, behavior: 'smooth' });
-    }, 3200);
+    }, 3600);
 });
 
 // Animations au scroll (apparition à l'entrée, disparition à la sortie)

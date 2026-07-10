@@ -18,6 +18,7 @@
         <div class="core-strip" data-core-strip>
             @foreach ($galleryImages as $shot)
                 <figure class="core-sample" data-lightbox data-full="{{ $shot->image_url }}">
+                    <span class="cs-badge" aria-hidden="true">En vue</span>
                     <img src="{{ $shot->image_url }}" alt="{{ $shot->title }}" loading="lazy" />
                     <figcaption>{{ $shot->caption }}</figcaption>
                 </figure>
