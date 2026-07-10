@@ -19,6 +19,9 @@
     .nav-burger { display: flex; }
     .nav-cta { display: none; }
 
+    .nav-logo img,
+    .nav.scrolled .nav-logo img { height: 64px; }
+
     .split, .split.reverse { grid-template-columns: 1fr; gap: 2.5rem; }
     .split.reverse .split-media { order: 0; }
     .frame .plate { left: 1rem; bottom: 1rem; }
@@ -48,6 +51,9 @@
 
 /* ===== ≤ 720px : mobile ===== */
 @media (max-width: 720px) {
+    .nav-logo img,
+    .nav.scrolled .nav-logo img { height: 52px; }
+
     .hero { align-items: flex-end; }
     .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1px 0; }
     .hero-stats .hs { padding: 1rem 1rem 0; }
@@ -66,12 +72,32 @@
     .core-strip .core-sample, .core-strip-ruler span { flex-basis: 200px; }
     .field-row { grid-template-columns: 1fr; }
 
-    .drill-log-entry { flex-direction: column; gap: 0.7rem; }
-    .drill-log-axis { flex-direction: row; justify-content: flex-start; gap: 0.6rem; padding-bottom: 0; }
+    .drill-log-entry { flex-direction: column; gap: 0.5rem; }
+    .drill-log-axis {
+        flex: 0 0 auto;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.55rem;
+        padding-bottom: 0;
+    }
     .drill-log-axis::before { display: none; }
     .drill-log-date { margin-bottom: 0; }
-    .drill-log-card { flex-direction: column; padding-bottom: 0; margin-bottom: 1.6rem; }
+    .drill-log-node {
+        width: 9px;
+        height: 9px;
+        border-width: 2px;
+        box-shadow: 0 0 0 3px #fff, 0 0 8px rgba(250, 231, 0, 0.35);
+    }
+    .drill-log-card {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        padding-bottom: 1.4rem;
+        margin-bottom: 1.2rem;
+    }
     .drill-log-thumb { flex-basis: auto; width: 100%; aspect-ratio: 16 / 9; }
+    .drill-log-body h3 { font-size: 1.05rem; }
 
     .job-ticket { grid-template-columns: 1fr; padding-left: 1.8rem; }
     .job-cta { text-align: left; }
@@ -85,6 +111,15 @@
     .frame .plate b { font-size: 1.5rem; }
 
     .to-top { right: 1rem; bottom: 1rem; width: 46px; height: 46px; }
+
+    .hse-metrics { grid-template-columns: 1fr; }
+}
+
+/* ===== ≤ 480px : bandeau cookies ===== */
+@media (max-width: 480px) {
+    .cookie-banner { left: 0.8rem; right: 0.8rem; bottom: 0.8rem; flex-direction: column; align-items: stretch; padding: 1rem; }
+    .cookie-banner-actions { margin-left: 0; }
+    .cookie-banner-actions .btn { width: 100%; justify-content: center; }
 }
 
 /* ===== ≤ 420px : petits mobiles ===== */

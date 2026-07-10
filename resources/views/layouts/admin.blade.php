@@ -17,7 +17,9 @@
 </head>
 <body class="admin-shell antialiased">
     <div class="min-h-screen md:flex">
-        <aside id="admin-sidebar" class="a-sidebar hidden md:flex md:flex-col w-64 shrink-0">
+        <div id="admin-backdrop" data-admin-backdrop class="a-sidebar-backdrop hidden md:hidden"></div>
+
+        <aside id="admin-sidebar" class="a-sidebar flex flex-col w-64 shrink-0">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-6 py-5 border-b" style="border-color: var(--a-border);">
                 <img src="{{ asset('images/logo2.png') }}" alt="SFP" class="h-8 w-auto" />
                 <div class="leading-tight">
@@ -50,6 +52,11 @@
                     @if ($unread > 0)
                         <span class="rounded-full px-1.5 py-0.5 text-[0.65rem] font-bold leading-none" style="background: var(--a-accent); color: var(--a-ink);">{{ $unread }}</span>
                     @endif
+                </a>
+
+                <p class="px-3 pb-2 pt-4 text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--a-muted);">Équipe</p>
+                <a href="{{ route('admin.users.index') }}" class="a-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <i class="hgi-stroke hgi-user w-4 text-center"></i> Utilisateurs
                 </a>
             </nav>
 

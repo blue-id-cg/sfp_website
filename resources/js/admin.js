@@ -1,8 +1,52 @@
-// Menu latéral (mobile)
-document.querySelector('[data-admin-menu-toggle]')?.addEventListener('click', () => {
-    document.getElementById('admin-sidebar')?.classList.toggle('hidden');
-    document.getElementById('admin-sidebar')?.classList.toggle('flex');
+import Quill from 'quill';
+
+// Éditeur riche (contenu des actualités)
+document.querySelectorAll('textarea[data-quill]').forEach((textarea) => {
+    const container = document.createElement('div');
+    textarea.insertAdjacentElement('afterend', container);
+    textarea.classList.add('sr-only');
+
+    const quill = new Quill(container, {
+        theme: 'snow',
+        placeholder: 'Rédigez le contenu de l\'actualité…',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ header: 2 }, { header: 3 }],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                ['blockquote', 'link'],
+                ['clean'],
+            ],
+        },
+    });
+
+    quill.root.innerHTML = textarea.value;
+
+    quill.on('text-change', () => {
+        textarea.value = quill.getText().trim() === '' ? '' : quill.root.innerHTML;
+    });
+
+    textarea.closest('form')?.addEventListener('submit', () => {
+        textarea.value = quill.getText().trim() === '' ? '' : quill.root.innerHTML;
+    });
 });
+
+// Menu latéral (mobile) : tiroir avec fond assombri
+const adminSidebar = document.getElementById('admin-sidebar');
+const adminBackdrop = document.getElementById('admin-backdrop');
+
+const closeAdminSidebar = () => {
+    adminSidebar?.classList.remove('open');
+    adminBackdrop?.classList.add('hidden');
+};
+
+document.querySelector('[data-admin-menu-toggle]')?.addEventListener('click', () => {
+    adminSidebar?.classList.add('open');
+    adminBackdrop?.classList.remove('hidden');
+});
+
+adminBackdrop?.addEventListener('click', closeAdminSidebar);
+adminSidebar?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeAdminSidebar));
 
 // Menu utilisateur
 const userMenu = document.querySelector('[data-user-menu]');

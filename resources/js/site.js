@@ -167,25 +167,53 @@ document.addEventListener('scroll', onScrollTop, { passive: true });
 onScrollTop();
 toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// Galerie « carotte de forage » : défilement horizontal à la souris
+// Galerie « carotte de forage » : défilement horizontal à la souris + carrousel automatique
 document.querySelectorAll('[data-core-strip]').forEach((strip) => {
     let isDragging = false;
     let startX = 0;
     let startScroll = 0;
+    let autoPaused = false;
+
+    const pauseAuto = () => {
+        autoPaused = true;
+    };
+    const resumeAutoSoon = () => {
+        setTimeout(() => {
+            autoPaused = false;
+        }, 1800);
+    };
 
     strip.addEventListener('mousedown', (event) => {
         isDragging = true;
         startX = event.pageX;
         startScroll = strip.scrollLeft;
+        pauseAuto();
     });
     window.addEventListener('mouseup', () => {
         isDragging = false;
+        resumeAutoSoon();
     });
     window.addEventListener('mousemove', (event) => {
         if (!isDragging) return;
         event.preventDefault();
         strip.scrollLeft = startScroll - (event.pageX - startX);
     });
+
+    strip.addEventListener('mouseenter', pauseAuto);
+    strip.addEventListener('mouseleave', resumeAutoSoon);
+    strip.addEventListener('touchstart', pauseAuto, { passive: true });
+    strip.addEventListener('touchend', resumeAutoSoon, { passive: true });
+
+    if (reducedMotion) return;
+
+    setInterval(() => {
+        if (autoPaused) return;
+
+        const step = (strip.querySelector('.core-sample')?.getBoundingClientRect().width ?? 260) + 16;
+        const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
+
+        strip.scrollTo({ left: atEnd ? 0 : strip.scrollLeft + step, behavior: 'smooth' });
+    }, 3200);
 });
 
 // Animations au scroll (apparition à l'entrée, disparition à la sortie)

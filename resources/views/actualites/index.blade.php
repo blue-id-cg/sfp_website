@@ -20,7 +20,7 @@
         <div class="wrap">
             <div class="drill-log">
                 @foreach ($actualites as $actualite)
-                    <article class="drill-log-entry">
+                    <article class="drill-log-entry reveal">
                         <div class="drill-log-axis">
                             <span class="drill-log-date">{{ $actualite->date_label }}</span>
                             <span class="drill-log-node"></span>

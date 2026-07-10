@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\HtmlSanitizer;
 use Database\Factories\ActualiteFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
@@ -68,9 +69,18 @@ class Actualite extends Model
         });
     }
 
+    /**
+     * The body is rich text authored via the admin editor. It is sanitized against an
+     * allow-list on write, so it can be rendered as trusted HTML anywhere it's read.
+     */
+    protected function body(): Attribute
+    {
+        return Attribute::make(set: fn (?string $value) => (new HtmlSanitizer)->clean($value ?? ''));
+    }
+
     protected function bodyHtml(): Attribute
     {
-        return Attribute::make(get: fn () => Str::markdown($this->body ?? ''));
+        return Attribute::make(get: fn () => $this->body ?? '');
     }
 
     protected function dateLabel(): Attribute

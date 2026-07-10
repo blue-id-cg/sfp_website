@@ -37,7 +37,7 @@
             et du work over. Des opérations maîtrisées, sûres et performantes, au cœur du bassin pétrolier.
         </p>
         <div class="hero-cta">
-            <a href="#metiers" class="btn btn-primary">Découvrir nos métiers <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+            <a href="{{ route('metiers.index') }}" class="btn btn-primary">Découvrir nos métiers <i class="hgi-stroke hgi-arrow-right-01"></i></a>
             <a href="#contact" class="btn btn-ghost-light">Nous contacter</a>
         </div>
 
