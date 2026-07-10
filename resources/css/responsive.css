@@ -51,6 +51,11 @@
 
 /* ===== ≤ 720px : mobile ===== */
 @media (max-width: 720px) {
+    /* Le plancher de --section-y (5rem) ne redescend jamais sous 80px, quelle que soit la
+       largeur de l'écran : deux sections adjacentes cumulaient ~130-160px de vide. */
+    :root { --section-y: clamp(3rem, 12vw, 4.5rem); }
+    .section-tight { padding-block: clamp(2.2rem, 8vw, 3rem); }
+
     .nav-logo img,
     .nav.scrolled .nav-logo img { height: 52px; }
 
