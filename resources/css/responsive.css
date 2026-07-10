@@ -31,6 +31,8 @@
     .sec-head-split .r { padding-bottom: 0; }
 
     .trade-grid { grid-template-columns: repeat(2, 1fr); }
+    .wellbore { grid-template-columns: 1fr; gap: 2rem; }
+    .wellbore-viz { position: static; max-width: 300px; margin-inline: auto; }
     .svc-grid { grid-template-columns: repeat(2, 1fr); }
     .hse-grid { grid-template-columns: 1fr; }
     .hse-metrics { grid-template-columns: repeat(2, 1fr); }
@@ -69,6 +71,11 @@
 
     .trade-grid { grid-template-columns: 1fr; }
     .svc-grid { grid-template-columns: 1fr; }
+
+    .phase-row { grid-template-columns: auto 1fr; gap: 0.9rem; padding: 1.2rem; }
+    .phase-row-ico { display: none; }
+    .phase-row-arrow { display: none; }
+    .phase-row-title { font-size: 1.15rem; }
     .news-grid { grid-template-columns: 1fr; }
     .core-grid { grid-template-columns: 1fr; }
     .core-strip .core-sample, .core-strip-ruler span { flex-basis: 200px; }
