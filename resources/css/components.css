@@ -2232,11 +2232,18 @@
     position: relative;
     border-radius: var(--r-lg);
     overflow: hidden;
-    min-height: 340px;
+    min-height: 420px;
     display: flex;
-    align-items: flex-end;
-    padding: 2rem;
+    flex-direction: column;
+    padding: 1.5rem 1.7rem 1.7rem;
     isolation: isolate;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+.project:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
 }
 
 .project img {
@@ -2274,6 +2281,7 @@
 
 .project .meta {
     color: #fff;
+    margin-top: auto;
 }
 
 .project .meta .pill {
@@ -2290,6 +2298,114 @@
     font-size: 0.9rem;
     margin-top: 0.4rem;
     max-width: 42ch;
+}
+
+/* --- Dossier d'opération : bandeau supérieur --- */
+.project-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.op-index {
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(12, 14, 34, 0.4);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Sceau « Réalisé » (preuve d'achèvement) */
+.op-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    padding: 0.42rem 0.85rem;
+    border-radius: 50px;
+    border: 1.5px solid rgba(250, 231, 0, 0.55);
+    background: rgba(12, 14, 34, 0.35);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transform: rotate(3deg);
+    transition: transform 0.45s var(--ease);
+}
+.op-stamp i { font-size: 0.82rem; }
+.project:hover .op-stamp { transform: rotate(0deg) scale(1.04); }
+
+/* Faits vérifiables de l'opération */
+.op-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.3rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+.op-facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.82);
+}
+.op-facts i { color: var(--yellow); font-size: 0.82rem; }
+
+.op-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+}
+.op-tags span {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+/* Appel à l'action révélé au survol */
+.op-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+.op-cta i { transition: transform 0.4s var(--ease); }
+.project:hover .op-cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+.project:hover .op-cta i { transform: translateX(4px); }
+
+@media (hover: none) {
+    .op-cta { opacity: 1; transform: none; }
 }
 
 .news-grid {
