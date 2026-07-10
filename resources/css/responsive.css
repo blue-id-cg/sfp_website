@@ -38,6 +38,8 @@
     .wellbore-viz { position: static; max-width: 300px; margin-inline: auto; }
     .console { grid-template-columns: 1fr; gap: 2rem; }
     .fleet { grid-template-columns: 1fr; gap: 2rem; }
+    .highlights { grid-template-columns: 1fr; }
+    .hl-feature { min-height: 400px; }
     .svc-grid { grid-template-columns: repeat(2, 1fr); }
     .hse-grid { grid-template-columns: 1fr; }
     .hse-metrics { grid-template-columns: repeat(2, 1fr); }
@@ -77,6 +79,9 @@
     .ent-stats { grid-template-columns: repeat(3, auto); gap: 1.1rem; }
     .ent-stat-label { font-size: 0.62rem; }
     .ent-values { grid-template-columns: 1fr; }
+
+    .hl-item { grid-template-columns: 96px 1fr; gap: 0.9rem; }
+    .hl-item-thumb { min-height: 88px; }
 
     .stat-band { grid-template-columns: repeat(2, 1fr); }
     .stat { border-left: none; padding: 1.2rem 0.8rem; }
