@@ -1154,6 +1154,240 @@
     .wb-bit, .wb-halo, .wb-node, .phase-row { transition: none; }
 }
 
+/* ============================================================
+   INNOVATION · Console de supervision (bloc signature)
+   Aesthetique salle de contrôle : HUD télémétrie « en direct »
+   sur le visuel + instruments avec signal animé.
+   ============================================================ */
+.innov {
+    position: relative;
+    background:
+        linear-gradient(rgba(34, 33, 74, 0.04) 1px, transparent 1px) 0 0 / 100% 34px,
+        linear-gradient(90deg, rgba(34, 33, 74, 0.04) 1px, transparent 1px) 0 0 / 34px 100%,
+        var(--white);
+}
+
+.console {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(1.6rem, 3.5vw, 3rem);
+    align-items: center;
+}
+
+.console-visual { margin: 0; }
+
+/* HUD télémétrie superposé au visuel */
+.hud {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 4;
+    background: rgba(12, 14, 34, 0.72);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--r-md);
+    padding: 0.9rem 1.1rem 1rem;
+    box-shadow: var(--shadow-md);
+}
+
+.hud-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.hud-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--yellow);
+}
+
+.hud-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 0 0 rgba(250, 231, 0, 0.6);
+    animation: hudPulse 1.8s var(--ease) infinite;
+}
+
+@keyframes hudPulse {
+    0% { box-shadow: 0 0 0 0 rgba(250, 231, 0, 0.55); }
+    70% { box-shadow: 0 0 0 7px rgba(250, 231, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(250, 231, 0, 0); }
+}
+
+.hud-tag {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.hud-chart {
+    width: 100%;
+    height: 56px;
+    display: block;
+}
+
+.hud-line {
+    fill: none;
+    stroke: var(--yellow);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 6 8;
+    animation: hudFlow 1.6s linear infinite;
+}
+
+@keyframes hudFlow {
+    to { stroke-dashoffset: -28; }
+}
+
+.hud-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+    margin-top: 0.55rem;
+}
+
+.hud-metrics span {
+    font-size: 0.6rem;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.hud-metrics b {
+    color: var(--yellow);
+    font-weight: 800;
+    margin-right: 0.25rem;
+    letter-spacing: 0.05em;
+}
+
+/* Instruments */
+.console-tiles {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.inst {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.1rem;
+    align-items: start;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-lg);
+    padding: 1.4rem 1.5rem;
+    overflow: hidden;
+    transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease), border-color 0.4s;
+}
+
+.inst::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--yellow), var(--orange));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.45s var(--ease);
+}
+
+.inst:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+}
+
+.inst:hover::before { transform: scaleY(1); }
+
+.inst-ico {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 1.3rem;
+    background: var(--petrol);
+    color: #fff;
+    transition: background 0.4s, color 0.4s, transform 0.4s var(--ease);
+}
+
+.inst:hover .inst-ico {
+    background: var(--yellow);
+    color: var(--charcoal);
+    transform: rotate(-6deg);
+}
+
+.inst-body h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.3rem;
+}
+
+.inst-body p {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+}
+
+/* Signal « télémétrie » (barres égaliseur) */
+.inst-signal {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 20px;
+    margin-top: 0.3rem;
+    opacity: 0.5;
+    transition: opacity 0.4s;
+}
+
+.inst:hover .inst-signal { opacity: 1; }
+
+.inst-signal i {
+    display: block;
+    width: 4px;
+    height: 30%;
+    border-radius: 3px;
+    background: var(--petrol-light);
+    transform-origin: bottom;
+    animation: instBar 1.2s var(--ease) infinite;
+}
+
+.inst:hover .inst-signal i { background: var(--orange); }
+
+.inst-signal i:nth-child(1) { animation-delay: 0s; }
+.inst-signal i:nth-child(2) { animation-delay: 0.18s; }
+.inst-signal i:nth-child(3) { animation-delay: 0.36s; }
+.inst-signal i:nth-child(4) { animation-delay: 0.12s; }
+.inst-signal i:nth-child(5) { animation-delay: 0.3s; }
+
+@keyframes instBar {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hud-dot, .hud-line, .inst-signal i { animation: none; }
+    .inst-signal i { height: 60%; }
+}
+
 .section-photo {
     position: relative;
     isolation: isolate;
