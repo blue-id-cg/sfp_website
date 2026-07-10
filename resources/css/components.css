@@ -583,6 +583,217 @@
 }
 
 /* ============================================================
+   ENTREPRISE · « Carotte de forage » (bloc signature À propos)
+   Concept : le récit de la SFP lu comme un log de forage
+   ============================================================ */
+.entreprise .ent-head {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--hairline);
+}
+
+.ent-head-lead .title-xl {
+    max-width: 16ch;
+}
+
+.ent-head-aside .lead {
+    max-width: 46ch;
+}
+
+/* Chiffres clés : rangée « instrument de mesure » */
+.ent-stats {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: clamp(1.4rem, 3vw, 2.6rem);
+    margin-top: 1.6rem;
+}
+
+.ent-stat {
+    position: relative;
+    padding-left: 1rem;
+}
+
+.ent-stat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    bottom: 0.15rem;
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--yellow), var(--orange));
+}
+
+.ent-stat-num {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--charcoal);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.ent-stat-label {
+    margin-top: 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    max-width: 12ch;
+}
+
+/* Colonne visuelle collante */
+@media (min-width: 981px) {
+    .ent-media {
+        position: sticky;
+        top: 96px;
+    }
+}
+
+.ent-story .ent-mission {
+    max-width: 60ch;
+}
+
+/* --- Log de forage (timeline verticale) --- */
+.core-log {
+    position: relative;
+    margin-top: 2rem;
+    padding-left: 0;
+}
+
+.core-log::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--yellow) 0%, var(--petrol-light) 55%, var(--hairline) 100%);
+}
+
+.core-step {
+    position: relative;
+    padding: 0 0 1.7rem 2.9rem;
+}
+
+.core-step:last-child {
+    padding-bottom: 0;
+}
+
+.core-node {
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--petrol-light);
+    z-index: 1;
+}
+
+.core-step.is-current .core-node {
+    background: var(--charcoal);
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 4px rgba(250, 231, 0, 0.15), 0 0 14px rgba(250, 231, 0, 0.5);
+    animation: coreBit 2.6s var(--ease) infinite;
+}
+
+@keyframes coreBit {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(250, 231, 0, 0.28), 0 0 14px rgba(250, 231, 0, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(250, 231, 0, 0), 0 0 14px rgba(250, 231, 0, 0.5); }
+}
+
+.core-depth {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--petrol-light);
+    font-variant-numeric: tabular-nums;
+}
+
+.core-step.is-current .core-depth {
+    color: var(--orange);
+}
+
+.core-title {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--charcoal);
+    margin-top: 0.35rem;
+    line-height: 1.2;
+}
+
+.core-desc {
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin-top: 0.3rem;
+    max-width: 54ch;
+}
+
+/* --- Engagements (deux cartes) --- */
+.ent-values {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.2rem;
+}
+
+.ent-value {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    padding: 1.3rem 1.35rem;
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), border-color 0.3s;
+}
+
+.ent-value:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: transparent;
+}
+
+.ent-value .ico {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.05rem;
+    background: var(--petrol-tint);
+    color: var(--petrol);
+    margin-bottom: 0.85rem;
+    transition: background 0.3s, color 0.3s;
+}
+
+.ent-value:hover .ico {
+    background: var(--yellow);
+    color: var(--charcoal);
+}
+
+.ent-value h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.35rem;
+}
+
+.ent-value p {
+    font-size: 0.9rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+}
+
+/* ============================================================
    SECTION HEADER
    ============================================================ */
 .sec-head {

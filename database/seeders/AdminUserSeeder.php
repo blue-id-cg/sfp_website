@@ -13,7 +13,7 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         User::query()->updateOrCreate(
-            ['email' => 'aure.kounda@blue-ids.net'],
+            ['email' => 'admin@localhost.com'],
             [
                 'name' => 'Aure Kounda',
                 'password' => '136eda23ea38',

@@ -23,6 +23,10 @@
     .split.reverse .split-media { order: 0; }
     .frame .plate { left: 1rem; bottom: 1rem; }
 
+    .entreprise .ent-head { grid-template-columns: 1fr; gap: 1.6rem; align-items: start; }
+    .ent-head-lead .title-xl { max-width: 22ch; }
+    .ent-media { position: static; }
+
     .sec-head-split { grid-template-columns: 1fr; gap: 1rem; }
     .sec-head-split .r { padding-bottom: 0; }
 
@@ -54,6 +58,10 @@
     .hero-scroll { display: none; }
     .hero-cta { width: 100%; }
     .hero-cta .btn { flex: 1; justify-content: center; }
+
+    .ent-stats { grid-template-columns: repeat(3, auto); gap: 1.1rem; }
+    .ent-stat-label { font-size: 0.62rem; }
+    .ent-values { grid-template-columns: 1fr; }
 
     .stat-band { grid-template-columns: repeat(2, 1fr); }
     .stat { border-left: none; padding: 1.2rem 0.8rem; }
