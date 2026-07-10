@@ -40,7 +40,7 @@ test('an authenticated user can create an actualite with an image', function () 
         'title' => 'Nouvelle actualité',
         'category' => 'Innovation',
         'excerpt' => 'Un résumé',
-        'body' => 'Le contenu en *markdown*.',
+        'body' => '<p>Le contenu en <strong>gras</strong>.</p>',
         'image' => UploadedFile::fake()->image('photo.jpg'),
         'published_at' => now()->format('Y-m-d'),
     ]);
@@ -51,6 +51,20 @@ test('an authenticated user can create an actualite with an image', function () 
     expect($actualite)->not->toBeNull();
     expect($actualite->slug)->toBe('nouvelle-actualite');
     Storage::disk('public')->assertExists($actualite->image);
+});
+
+test('the actualite body is sanitized against XSS when created', function () {
+    $user = User::factory()->create();
+
+    $this->actingAs($user)->post('/admin/actualites', [
+        'title' => 'Actualité avec contenu suspect',
+        'body' => '<p>Bonjour</p><script>alert(1)</script><img src=x onerror=alert(2)>',
+        'published_at' => now()->format('Y-m-d'),
+    ]);
+
+    $actualite = Actualite::query()->where('title', 'Actualité avec contenu suspect')->first();
+
+    expect($actualite->body)->toBe('<p>Bonjour</p>');
 });
 
 test('creating an actualite requires a title and body', function () {

@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'quill/dist/quill.snow.css';
 
 @source '../../storage/framework/views/*.php';
 @source '../../resources/views/admin/**/*.blade.php';
@@ -35,6 +36,28 @@ body.admin-shell {
 .a-sidebar {
     background: var(--a-surface);
     border-right: 1px solid var(--a-border);
+}
+
+.a-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(12, 14, 34, 0.45);
+}
+
+@media (max-width: 767px) {
+    .a-sidebar {
+        position: fixed;
+        inset-block: 0;
+        left: 0;
+        z-index: 40;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+    }
+
+    .a-sidebar.open {
+        transform: translateX(0);
+    }
 }
 
 .a-nav-link {
@@ -199,6 +222,34 @@ body.admin-shell {
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--a-accent-2);
+}
+
+/* ---- Éditeur riche (Quill) ---- */
+.ql-toolbar.ql-snow {
+    border-color: var(--a-border);
+    border-radius: 0.6rem 0.6rem 0 0;
+    background: #fafafc;
+}
+
+.ql-container.ql-snow {
+    border-color: var(--a-border);
+    border-radius: 0 0 0.6rem 0.6rem;
+    font-family: inherit;
+    font-size: 0.92rem;
+}
+
+.ql-editor {
+    min-height: 260px;
+}
+
+.ql-snow .ql-picker,
+.ql-snow.ql-toolbar button {
+    color: var(--a-ink-soft);
+}
+
+.ql-container.ql-snow:focus-within,
+.field:has(.ql-container.ql-snow:focus-within) .ql-toolbar.ql-snow {
+    border-color: var(--a-accent-2);
 }
 
 /* ---- Pagination ---- */

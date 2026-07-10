@@ -16,8 +16,8 @@
     <textarea name="excerpt" id="excerpt" rows="2" class="@error('excerpt') invalid @enderror">{{ old('excerpt', $actualite->excerpt ?? '') }}</textarea>
 </x-admin.field>
 
-<x-admin.field name="body" label="Contenu" hint="Markdown pris en charge (titres, listes, gras, liens…)." required>
-    <textarea name="body" id="body" rows="10" class="font-mono text-sm @error('body') invalid @enderror">{{ old('body', $actualite->body ?? '') }}</textarea>
+<x-admin.field name="body" label="Contenu" required>
+    <textarea name="body" id="body" rows="12" data-quill class="@error('body') invalid @enderror">{{ old('body', $actualite->body ?? '') }}</textarea>
 </x-admin.field>
 
 <x-admin.file-field name="image" label="Image" :existing-url="$actualite->image_url ?? null" />

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageCo
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryImageController as AdminGalleryImageController;
 use App\Http\Controllers\Admin\OffreController as AdminOffreController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CarriereController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EquipementController;
@@ -55,6 +56,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('offres', AdminOffreController::class)->except('show');
     Route::resource('gallery', AdminGalleryImageController::class)->except('show');
     Route::resource('messages', AdminContactMessageController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('users', AdminUserController::class)->only(['index', 'create', 'store']);
 });
 
 require __DIR__.'/auth.php';

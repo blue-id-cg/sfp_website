@@ -21,6 +21,7 @@
     </form>
 
     <div class="rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
         <table class="w-full text-sm text-left">
             <thead class="bg-gray-50 text-xs uppercase tracking-wide text-gray-500">
                 <tr>
@@ -77,6 +78,7 @@
                 @endforelse
             </tbody>
         </table>
+      </div>
     </div>
 
     <div class="mt-4">
