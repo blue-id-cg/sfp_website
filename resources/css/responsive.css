@@ -40,6 +40,8 @@
     .fleet { grid-template-columns: 1fr; gap: 2rem; }
     .highlights { grid-template-columns: 1fr; }
     .hl-feature { min-height: 400px; }
+    .cap-grid { grid-template-columns: repeat(2, 1fr); }
+    .pillars { grid-template-columns: 1fr; }
     .svc-grid { grid-template-columns: repeat(2, 1fr); }
     .hse-grid { grid-template-columns: 1fr; }
     .hse-metrics { grid-template-columns: repeat(2, 1fr); }
@@ -82,6 +84,8 @@
 
     .hl-item { grid-template-columns: 96px 1fr; gap: 0.9rem; }
     .hl-item-thumb { min-height: 88px; }
+
+    .cap-grid { grid-template-columns: 1fr; }
 
     .stat-band { grid-template-columns: repeat(2, 1fr); }
     .stat { border-left: none; padding: 1.2rem 0.8rem; }

@@ -22,29 +22,31 @@
                 <div class="reveal-left">
                     <span class="kicker" data-index="01">Notre histoire</span>
                     <h2 class="title-xl">Une expertise <span class="mark accent">congolaise</span> née sur le terrain</h2>
-                    <p class="lead mt-3">
-                        La <strong>Société de Forages Pétroliers (SFP)</strong> est créée en 2010, filiale à 100 % du
-                        groupe <strong>SNPC</strong> (Société Nationale des Pétroles du Congo), avec une ambition claire :
-                        bâtir une expertise nationale capable de rivaliser avec les meilleurs prestataires internationaux
-                        du forage pétrolier.
-                    </p>
-                    <p class="mt-2 text-body">
-                        L'entreprise démarre ses opérations en septembre 2011, sur le premier marché MKB
-                        (Mengo-Kudji-Bindi) attribué à la SNPC. Cette première campagne pose les fondations de la
-                        méthode SFP : rigueur technique, discipline opérationnelle et culture de sécurité affirmée
-                        dès les premiers puits forés.
-                    </p>
-                    <p class="mt-2 text-body">
-                        Depuis, la SFP a élargi son champ d'intervention au forage, à la complétion et au work over,
-                        en assurant plusieurs puits onshore forés sans incident pour les acteurs majeurs du secteur
-                        pétrolier congolais. Cette continuité opérationnelle, sans accroc, est aujourd'hui la meilleure
-                        garantie que l'entreprise peut offrir à ses partenaires.
-                    </p>
-                    <p class="mt-2 text-body">
-                        Ce socle repose sur des équipes congolaises formées aux meilleurs standards internationaux, qui
-                        opèrent des appareils de forage modernes dans le respect strict des normes de sécurité et
-                        d'environnement en vigueur dans l'industrie pétrolière.
-                    </p>
+                    <div class="story-write" data-write>
+                        <p class="lead mt-3">
+                            La <strong>Société de Forages Pétroliers (SFP)</strong> est créée en 2010, filiale à 100 % du
+                            groupe <strong>SNPC</strong> (Société Nationale des Pétroles du Congo), avec une ambition claire :
+                            bâtir une expertise nationale capable de rivaliser avec les meilleurs prestataires internationaux
+                            du forage pétrolier.
+                        </p>
+                        <p class="mt-2 text-body">
+                            L'entreprise démarre ses opérations en septembre 2011, sur le premier marché MKB
+                            (Mengo-Kudji-Bindi) attribué à la SNPC. Cette première campagne pose les fondations de la
+                            méthode SFP : rigueur technique, discipline opérationnelle et culture de sécurité affirmée
+                            dès les premiers puits forés.
+                        </p>
+                        <p class="mt-2 text-body">
+                            Depuis, la SFP a élargi son champ d'intervention au forage, à la complétion et au work over,
+                            en assurant plusieurs puits onshore forés sans incident pour les acteurs majeurs du secteur
+                            pétrolier congolais. Cette continuité opérationnelle, sans accroc, est aujourd'hui la meilleure
+                            garantie que l'entreprise peut offrir à ses partenaires.
+                        </p>
+                        <p class="mt-2 text-body">
+                            Ce socle repose sur des équipes congolaises formées aux meilleurs standards internationaux, qui
+                            opèrent des appareils de forage modernes dans le respect strict des normes de sécurité et
+                            d'environnement en vigueur dans l'industrie pétrolière.
+                        </p>
+                    </div>
                     <a href="{{ route('carrieres.index') }}" class="link-arrow mt-4">Rejoindre nos équipes <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                 </div>
 
@@ -75,13 +77,43 @@
                 <h2 class="title-xl">Nos domaines d'expertise</h2>
                 <p class="lead mx-auto maxw-md mt-2">Du forage à la diversification des services techniques, une chaîne de compétences maîtrisée de bout en bout.</p>
             </div>
-            <div class="perks stagger">
-                <div class="perk"><i class="hgi-stroke hgi-factory-01"></i><h4>Forage</h4><p>Conduite d'opérations de forage onshore, de la mobilisation à la finalisation du puits.</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-layers-01"></i><h4>Complétion</h4><p>Mise en production des puits dans le respect des standards techniques et de sécurité.</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-refresh"></i><h4>Work over</h4><p>Interventions de reprise et de réhabilitation sur puits existants (ZNG-1D, ZNG-4D, ZNG-3D…).</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-chart-line-data-01"></i><h4>Mud logging</h4><p>Suivi géologique et analyse en temps réel des paramètres de forage.</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-dashboard-speed-01"></i><h4>CTR</h4><p>Services de contrôle et de suivi technique des opérations de forage.</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-filter"></i><h4>Pompage &amp; filtration</h4><p>Gestion complète des fluides de forage, du pompage à la filtration.</p></div>
+            <div class="cap-grid stagger">
+                <article class="cap">
+                    <span class="cap-num">01</span>
+                    <span class="cap-ico"><i class="hgi-stroke hgi-factory-01"></i></span>
+                    <h4>Forage</h4>
+                    <p>Conduite d'opérations de forage onshore, de la mobilisation à la finalisation du puits.</p>
+                </article>
+                <article class="cap">
+                    <span class="cap-num">02</span>
+                    <span class="cap-ico"><i class="hgi-stroke hgi-layers-01"></i></span>
+                    <h4>Complétion</h4>
+                    <p>Mise en production des puits dans le respect des standards techniques et de sécurité.</p>
+                </article>
+                <article class="cap">
+                    <span class="cap-num">03</span>
+                    <span class="cap-ico"><i class="hgi-stroke hgi-refresh"></i></span>
+                    <h4>Work over</h4>
+                    <p>Interventions de reprise et de réhabilitation sur puits existants (ZNG-1D, ZNG-4D, ZNG-3D…).</p>
+                </article>
+                <article class="cap">
+                    <span class="cap-num">04</span>
+                    <span class="cap-ico"><i class="hgi-stroke hgi-chart-line-data-01"></i></span>
+                    <h4>Mud logging</h4>
+                    <p>Suivi géologique et analyse en temps réel des paramètres de forage.</p>
+                </article>
+                <article class="cap">
+                    <span class="cap-num">05</span>
+                    <span class="cap-ico"><i class="hgi-stroke hgi-dashboard-speed-01"></i></span>
+                    <h4>CTR</h4>
+                    <p>Services de contrôle et de suivi technique des opérations de forage.</p>
+                </article>
+                <article class="cap">
+                    <span class="cap-num">06</span>
+                    <span class="cap-ico"><i class="hgi-stroke hgi-filter"></i></span>
+                    <h4>Pompage &amp; filtration</h4>
+                    <p>Gestion complète des fluides de forage, du pompage à la filtration.</p>
+                </article>
             </div>
         </div>
     </section>
@@ -93,22 +125,28 @@
                 <span class="kicker" data-index="03">Cap stratégique</span>
                 <h2 class="title-xl">Vision, mission &amp; objectifs</h2>
             </div>
-            <div class="perks stagger">
-                <div class="perk">
-                    <i class="hgi-stroke hgi-compass-01"></i>
-                    <h4>Vision</h4>
+            <div class="pillars stagger">
+                <article class="pillar">
+                    <span class="pillar-index">01</span>
+                    <span class="pillar-ico"><i class="hgi-stroke hgi-compass-01"></i></span>
+                    <span class="pillar-label">Vision</span>
+                    <h4>Devenir un leader du forage</h4>
                     <p>Être un leader des métiers du forage et des services.</p>
-                </div>
-                <div class="perk">
-                    <i class="hgi-stroke hgi-target-01"></i>
-                    <h4>Mission</h4>
+                </article>
+                <article class="pillar pillar-feature">
+                    <span class="pillar-index">02</span>
+                    <span class="pillar-ico"><i class="hgi-stroke hgi-target-01"></i></span>
+                    <span class="pillar-label">Mission</span>
+                    <h4>Faire grandir l'expertise congolaise</h4>
                     <p>Accompagner la SNPC dans le développement de ses actifs opérés et gagner des parts de marché hors groupe SNPC, dans le forage et les services, pour accroître nos performances.</p>
-                </div>
-                <div class="perk">
-                    <i class="hgi-stroke hgi-flag-01"></i>
-                    <h4>Objectifs 2026-2027</h4>
+                </article>
+                <article class="pillar">
+                    <span class="pillar-index">03</span>
+                    <span class="pillar-ico"><i class="hgi-stroke hgi-flag-01"></i></span>
+                    <span class="pillar-label">Objectifs 2026-2027</span>
+                    <h4>Réhabiliter, forer, diversifier</h4>
                     <p>Réhabiliter nos équipements pour terminer le forage de NAN-201, forer NAN-301 et NAN-302, réaliser les work-overs de ZNG-1D, ZNG-4D et ZNG-3D en 2026 ; puis fournir des services de Mud Logging, CTR, pompage et filtration, et forer jusqu'à 6 puits de développement ou 4 puits d'exploration en 2027.</p>
-                </div>
+                </article>
             </div>
         </div>
     </section>

@@ -427,3 +427,54 @@ document.querySelectorAll('.wellbore').forEach((wellbore) => {
         row.addEventListener('focus', () => activate(row));
     });
 });
+
+// « L'histoire qui s'écrit » : révélation mot à mot au scroll (préserve les <strong>)
+const writeBlocks = document.querySelectorAll('[data-write]');
+if (writeBlocks.length && !reducedMotion && 'IntersectionObserver' in window) {
+    const wrapWords = (node, state) => {
+        Array.from(node.childNodes).forEach((child) => {
+            if (child.nodeType === Node.TEXT_NODE) {
+                const parts = child.textContent.split(/(\s+)/);
+                const frag = document.createDocumentFragment();
+                parts.forEach((part) => {
+                    if (part.trim() === '') {
+                        frag.appendChild(document.createTextNode(part));
+                    } else {
+                        const span = document.createElement('span');
+                        span.className = 'w';
+                        span.style.setProperty('--wi', state.i++);
+                        span.textContent = part;
+                        frag.appendChild(span);
+                    }
+                });
+                node.replaceChild(frag, child);
+            } else if (child.nodeType === Node.ELEMENT_NODE) {
+                wrapWords(child, state);
+            }
+        });
+    };
+
+    const writeObserver = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-writing');
+                    obs.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    writeBlocks.forEach((block) => {
+        const state = { i: 0 };
+        wrapWords(block, state);
+        const target = block.lastElementChild ?? block;
+        const caret = document.createElement('span');
+        caret.className = 'write-caret';
+        caret.setAttribute('aria-hidden', 'true');
+        caret.style.setProperty('--wi', state.i);
+        target.appendChild(caret);
+        writeObserver.observe(block);
+    });
+}
