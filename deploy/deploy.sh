@@ -8,27 +8,29 @@
 
 set -euo pipefail
 
-echo "==> Récupération des derniers changements"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/lib.sh"
+source "${SCRIPT_DIR}/laravel.sh"
+
+TOTAL_STEPS=4
+STEP=0
+
+step "Récupération des derniers changements"
 if [ -d .git ]; then
     git pull
 else
     echo "Pas de dépôt Git ici : envoyez d'abord les nouveaux fichiers (FTP/SCP) avant de relancer ce script."
 fi
 
-echo "==> Installation des dépendances"
+step "Installation des dépendances"
 composer install --optimize-autoloader --no-dev --no-interaction
 npm install
 npm run build
 
-echo "==> Application des migrations de base de données"
-php artisan migrate --force
+step "Migrations et mise en cache de la configuration"
+laravel_migrate_and_cache
 
-echo "==> Rafraîchissement des caches Laravel"
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-echo "==> Permissions"
+step "Permissions"
 if ! chmod -R 775 storage bootstrap/cache 2>/dev/null; then
     echo "Avertissement : certains fichiers dans storage/ appartiennent à un autre utilisateur"
     echo "(probablement www-data, l'utilisateur du serveur web) et n'ont pas pu être modifiés"
@@ -36,4 +38,5 @@ if ! chmod -R 775 storage bootstrap/cache 2>/dev/null; then
     echo "section « Permissions », pour corriger ça une bonne fois pour toutes."
 fi
 
+echo ""
 echo "Terminé : le site est à jour."

@@ -7,6 +7,10 @@
 # de données (SQLite, MySQL, MariaDB ou PostgreSQL), le certificat HTTPS
 # (Let's Encrypt), puis déploie l'application.
 #
+# Nécessite les fichiers voisins deploy/lib.sh, deploy/db.sh et
+# deploy/laravel.sh : exécutez-le depuis une copie complète du projet, pas en
+# copiant provision.sh isolément.
+#
 # Usage :
 #   sudo bash provision.sh votre-domaine.com [url-du-depot-git]
 #
@@ -21,6 +25,10 @@
 #
 #   Exemple :
 #     sudo DB_ENGINE=mysql bash provision.sh votre-domaine.com
+#
+#   Sur une ré-exécution du script, si DB_ENGINE n'est pas précisé, le moteur
+#   déjà configuré dans le .env existant est conservé (au lieu de revenir à
+#   sqlite par défaut).
 #
 # Pour utiliser une base de données déjà existante (ex. un service managé
 # externe comme AWS RDS, DigitalOcean Managed Database, etc.), fournissez ses
@@ -40,7 +48,12 @@ REPO_URL="${2:-}"
 APP_DIR="/var/www/sfp_website"
 PHP_VERSION="8.3"
 
-DB_ENGINE="${DB_ENGINE:-sqlite}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/lib.sh"
+source "${SCRIPT_DIR}/db.sh"
+source "${SCRIPT_DIR}/laravel.sh"
+
+DB_ENGINE="${DB_ENGINE:-}"
 DB_HOST="${DB_HOST:-}"
 DB_PORT="${DB_PORT:-}"
 DB_DATABASE="${DB_DATABASE:-}"
@@ -50,11 +63,6 @@ LETSENCRYPT_EMAIL="${LETSENCRYPT_EMAIL:-contact@snpc-sfp.net}"
 
 TOTAL_STEPS=11
 STEP=0
-step() {
-    STEP=$((STEP + 1))
-    echo ""
-    echo "==> [${STEP}/${TOTAL_STEPS}] $1"
-}
 
 if [ -z "$DOMAIN" ]; then
     echo "Usage : sudo bash provision.sh votre-domaine.com [url-du-depot-git]"
@@ -66,38 +74,11 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-case "$DB_ENGINE" in
-    sqlite|mysql|mariadb|pgsql) ;;
-    *)
-        echo "DB_ENGINE invalide : '${DB_ENGINE}' (valeurs possibles : sqlite, mysql, mariadb, pgsql)"
-        exit 1
-        ;;
-esac
-
-# Base de données externe (déjà créée par un hébergeur) si les 4 identifiants
-# sont fournis ; sinon le script installe et crée la base localement.
-DB_EXTERNAL=false
-if [ -n "$DB_HOST" ] && [ -n "$DB_DATABASE" ] && [ -n "$DB_USERNAME" ] && [ -n "$DB_PASSWORD" ]; then
-    DB_EXTERNAL=true
+if [ -n "$DB_ENGINE" ]; then
+    validate_db_engine "$DB_ENGINE"
 fi
 
-# Échappe une valeur pour une utilisation sûre dans un remplacement sed "s#...#...#".
-sed_escape() {
-    printf '%s' "$1" | sed -e 's/[#&\\]/\\&/g'
-}
-
-# set_env KEY VALUE — met à jour (ou ajoute) une clé dans le fichier .env.
-set_env() {
-    local key="$1" value="$2" escaped
-    escaped="$(sed_escape "$value")"
-    if grep -q "^${key}=" .env; then
-        sed -i "s#^${key}=.*#${key}=${escaped}#" .env
-    elif grep -q "^# ${key}=" .env; then
-        sed -i "s#^# ${key}=.*#${key}=${escaped}#" .env
-    else
-        echo "${key}=${value}" >> .env
-    fi
-}
+resolve_db_external
 
 step "Mise à jour du système"
 apt-get update -y
@@ -141,67 +122,19 @@ fi
 
 cd "$APP_DIR"
 
+if [ ! -f .env ]; then
+    cp .env.example .env
+fi
+
+# Si DB_ENGINE n'est pas fourni, on réutilise le moteur déjà configuré dans le
+# .env existant (ré-exécution du script sur un serveur déjà provisionné),
+# sinon SQLite par défaut.
+DB_ENGINE="${DB_ENGINE:-$(get_env DB_CONNECTION)}"
+DB_ENGINE="${DB_ENGINE:-sqlite}"
+validate_db_engine "$DB_ENGINE"
+
 step "Base de données (${DB_ENGINE})"
-case "$DB_ENGINE" in
-    sqlite)
-        mkdir -p database
-        touch database/database.sqlite
-        DB_DATABASE_PATH="${APP_DIR}/database/database.sqlite"
-        ;;
-
-    mysql|mariadb)
-        DB_HOST="${DB_HOST:-127.0.0.1}"
-        DB_PORT="${DB_PORT:-3306}"
-        DB_DATABASE="${DB_DATABASE:-sfp_website}"
-        DB_USERNAME="${DB_USERNAME:-sfp_website}"
-
-        apt-get install -y "php${PHP_VERSION}-mysql"
-
-        if [ "$DB_EXTERNAL" = false ]; then
-            DB_PASSWORD="${DB_PASSWORD:-$(openssl rand -base64 24 | tr -dc 'A-Za-z0-9' | head -c 24)}"
-            if [ "$DB_ENGINE" = "mysql" ]; then
-                apt-get install -y mysql-server
-                systemctl enable --now mysql
-            else
-                apt-get install -y mariadb-server
-                systemctl enable --now mariadb
-            fi
-
-            mysql -u root <<SQL
-CREATE DATABASE IF NOT EXISTS \`${DB_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER IF NOT EXISTS '${DB_USERNAME}'@'${DB_HOST}' IDENTIFIED BY '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON \`${DB_DATABASE}\`.* TO '${DB_USERNAME}'@'${DB_HOST}';
-FLUSH PRIVILEGES;
-SQL
-        else
-            echo "Base de données externe fournie (${DB_HOST}:${DB_PORT}) — aucune installation locale."
-        fi
-        ;;
-
-    pgsql)
-        DB_HOST="${DB_HOST:-127.0.0.1}"
-        DB_PORT="${DB_PORT:-5432}"
-        DB_DATABASE="${DB_DATABASE:-sfp_website}"
-        DB_USERNAME="${DB_USERNAME:-sfp_website}"
-
-        apt-get install -y "php${PHP_VERSION}-pgsql"
-
-        if [ "$DB_EXTERNAL" = false ]; then
-            DB_PASSWORD="${DB_PASSWORD:-$(openssl rand -base64 24 | tr -dc 'A-Za-z0-9' | head -c 24)}"
-            apt-get install -y postgresql postgresql-contrib
-            systemctl enable --now postgresql
-
-            sudo -u postgres psql -v ON_ERROR_STOP=1 -c "DO \$\$ BEGIN IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = '${DB_USERNAME}') THEN CREATE ROLE \"${DB_USERNAME}\" LOGIN PASSWORD '${DB_PASSWORD}'; END IF; END \$\$;"
-            if ! sudo -u postgres psql -tAc "SELECT 1 FROM pg_database WHERE datname = '${DB_DATABASE}'" | grep -q 1; then
-                sudo -u postgres psql -c "CREATE DATABASE \"${DB_DATABASE}\" OWNER \"${DB_USERNAME}\";"
-            fi
-            # PostgreSQL (paquet Ubuntu/Debian) autorise déjà les connexions
-            # locales en mot de passe (md5/scram) sur 127.0.0.1 par défaut.
-        else
-            echo "Base de données externe fournie (${DB_HOST}:${DB_PORT}) — aucune installation locale."
-        fi
-        ;;
-esac
+db_provision
 
 if [ "$DB_ENGINE" != "sqlite" ]; then
     systemctl restart "php${PHP_VERSION}-fpm"
@@ -212,34 +145,18 @@ composer install --optimize-autoloader --no-dev --no-interaction
 npm install
 npm run build
 
-if [ ! -f .env ]; then
-    cp .env.example .env
-fi
-sed -i "s#^APP_URL=.*#APP_URL=https://${DOMAIN}#" .env
-sed -i "s/^APP_ENV=.*/APP_ENV=production/" .env
-sed -i "s/^APP_DEBUG=.*/APP_DEBUG=false/" .env
-
-set_env "DB_CONNECTION" "$DB_ENGINE"
-if [ "$DB_ENGINE" = "sqlite" ]; then
-    set_env "DB_DATABASE" "$DB_DATABASE_PATH"
-else
-    set_env "DB_HOST" "$DB_HOST"
-    set_env "DB_PORT" "$DB_PORT"
-    set_env "DB_DATABASE" "$DB_DATABASE"
-    set_env "DB_USERNAME" "$DB_USERNAME"
-    set_env "DB_PASSWORD" "$DB_PASSWORD"
-fi
+set_env "APP_URL" "https://${DOMAIN}"
+set_env "APP_ENV" "production"
+set_env "APP_DEBUG" "false"
+db_write_env
 
 if ! grep -q "^APP_KEY=base64" .env; then
     php artisan key:generate --force
 fi
 
 step "Migrations et mise en cache de la configuration"
-php artisan migrate --force
 php artisan storage:link || true
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+laravel_migrate_and_cache
 
 step "Permissions des dossiers writables"
 chown -R www-data:www-data "$APP_DIR"
@@ -294,26 +211,17 @@ echo "Le DNS de ${DOMAIN} doit déjà pointer vers l'IP de ce serveur pour que c
 certbot --nginx -d "${DOMAIN}" -d "www.${DOMAIN}" --non-interactive --agree-tos -m "${LETSENCRYPT_EMAIL}" --redirect || \
     echo "AVERTISSEMENT : la génération du certificat HTTPS a échoué (DNS pas encore propagé ?). Relancez plus tard : certbot --nginx -d ${DOMAIN} -d www.${DOMAIN}"
 
-if [ "$DB_ENGINE" != "sqlite" ] && [ "$DB_EXTERNAL" = false ]; then
-    CREDS_FILE="/root/sfp_website_db_credentials.txt"
-    cat > "$CREDS_FILE" <<CREDS
-Base de données créée pour le site SFP (${DOMAIN})
-Moteur       : ${DB_ENGINE}
-Base         : ${DB_DATABASE}
-Utilisateur  : ${DB_USERNAME}
-Mot de passe : ${DB_PASSWORD}
-Hôte:Port    : ${DB_HOST}:${DB_PORT}
-CREDS
-    chmod 600 "$CREDS_FILE"
+if db_should_show_credentials; then
+    db_write_credentials_file
 fi
 
 echo ""
 echo "=================================================================="
 echo " Terminé. Le site devrait être accessible sur https://${DOMAIN}"
 echo " Base de données : ${DB_ENGINE}"
-if [ "$DB_ENGINE" != "sqlite" ] && [ "$DB_EXTERNAL" = false ]; then
-    echo " Identifiants de connexion enregistrés dans : /root/sfp_website_db_credentials.txt"
-    echo " (à noter en lieu sûr, puis à supprimer du serveur : rm /root/sfp_website_db_credentials.txt)"
+if db_should_show_credentials; then
+    echo " Identifiants de connexion enregistrés dans : ${CREDS_FILE}"
+    echo " (à noter en lieu sûr, puis à supprimer du serveur : rm ${CREDS_FILE})"
 fi
 echo " Pour les mises à jour futures, utilisez : deploy/deploy.sh"
 echo "=================================================================="

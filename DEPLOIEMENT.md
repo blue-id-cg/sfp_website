@@ -55,7 +55,9 @@ de passe root, sans aucune interface, est un **VPS vierge**.
 
 Cette méthode s'adresse à un serveur **totalement vide** (ex. une nouvelle instance chez un fournisseur
 comme OVH, Contabo, DigitalOcean, Hetzner...), sous Ubuntu ou Debian, sur lequel rien n'est encore installé.
-Un script fourni dans le projet (`deploy/provision.sh`) automatise toute l'installation.
+Un script fourni dans le projet (`deploy/provision.sh`) automatise toute l'installation. Il s'appuie sur
+d'autres fichiers du même dossier (`deploy/lib.sh`, `deploy/db.sh`, `deploy/laravel.sh`) : lancez-le depuis
+une copie complète du projet plutôt que de copier `provision.sh` seul sur le serveur.
 
 > Cette étape technique (connexion en root à un serveur Linux) est plus confortable si elle est réalisée
 > par votre développeur ou une personne à l'aise avec un terminal. Une fois faite, les mises à jour
@@ -268,7 +270,17 @@ Ce fichier contient les réglages du site (nom de domaine, mode production, etc.
 
 ## Étape 4 — Finaliser l'installation sur le serveur
 
-Toujours en SSH, dans le dossier du projet, lancez ces commandes une par une :
+Toujours en SSH, dans le dossier du projet :
+
+Si vous êtes en **SQLite** (par défaut) et que le fichier `database/database.sqlite` n'existe pas encore,
+créez-le d'abord :
+
+```bash
+mkdir -p database
+touch database/database.sqlite
+```
+
+Puis lancez ces commandes une par une :
 
 ```bash
 php artisan migrate --force
@@ -281,14 +293,6 @@ php artisan view:cache
 > La commande `migrate` crée les tables dont le site a besoin (offres d'emploi, actualités, messages de
 > contact...) dans la base de données. Elle est indispensable au premier déploiement, et à refaire à
 > chaque mise à jour qui ajoute de nouvelles fonctionnalités (voir plus bas).
-
-Si vous êtes en **SQLite** (par défaut) et que le fichier `database/database.sqlite` n'existe pas encore,
-créez-le avant la commande `migrate` ci-dessus :
-
-```bash
-mkdir -p database
-touch database/database.sqlite
-```
 
 Puis vérifiez les autorisations d'écriture (nécessaire pour que le site fonctionne) :
 
