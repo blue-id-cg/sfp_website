@@ -13,12 +13,26 @@ que de forcer une étape.
 1. **Un nom de domaine** (ex. `www.sfp-congo.com`), acheté chez un registrar (ex. OVH, Namecheap, un hébergeur local).
 2. **Un hébergement web** qui supporte PHP. Demandez à votre hébergeur de confirmer :
    - PHP version **8.2 ou plus récent**
-   - Extensions PHP : `mbstring`, `openssl`, `PDO`, `pdo_sqlite`, `tokenizer`, `xml`, `ctype`, `fileinfo`
+   - Extensions PHP : `mbstring`, `openssl`, `PDO`, `tokenizer`, `xml`, `ctype`, `fileinfo`, plus une des
+     suivantes selon la base de données choisie (voir juste en dessous) : `pdo_sqlite`, `pdo_mysql` ou
+     `pdo_pgsql`
    - Un accès **SSH** (terminal) — quasiment tous les hébergeurs sérieux le proposent, même sur les offres mutualisées (souvent à activer dans le panneau de configuration)
 3. Les identifiants d'accès à l'hébergement (cPanel, ou accès SSH/FTP) fournis par votre hébergeur.
 
-> Ce site n'a **pas besoin** d'une base de données MySQL pour fonctionner : il utilise un simple fichier
-> (SQLite) qui ne demande aucune configuration particulière chez l'hébergeur.
+### Quelle base de données utiliser ?
+
+Ce site peut fonctionner avec **quatre** moteurs de base de données, au choix :
+
+| Moteur | Quand le choisir |
+| --- | --- |
+| **SQLite** (par défaut) | Le plus simple : un seul fichier, aucune installation ni configuration chez l'hébergeur. Convient très bien à ce site (peu d'écritures : offres d'emploi, actualités, messages de contact). |
+| **MySQL** | Si votre hébergement mutualisé (cPanel) ne propose que du MySQL — c'est le cas le plus courant chez les hébergeurs mutualisés classiques. |
+| **MariaDB** | Équivalent de MySQL (même usage, même commandes), souvent installé par défaut sur les VPS Ubuntu/Debian récents. |
+| **PostgreSQL** | Si vous ou votre hébergeur préférez PostgreSQL, ou en cas de besoin de montée en charge plus poussée (voir la fin de ce guide). |
+
+> **En résumé :** ne changez rien si vous ne savez pas — SQLite fonctionne très bien pour ce site.
+> Ne choisissez MySQL/MariaDB/PostgreSQL que si votre hébergeur l'impose (mutualisé) ou si vous savez
+> pourquoi vous en avez besoin (voir [Peut-on encore améliorer / faire évoluer le site ?](#peut-on-encore-améliorer--faire-évoluer-le-site-)).
 
 ---
 
@@ -55,12 +69,15 @@ En une seule exécution, `provision.sh` :
 2. Installe **Composer** (gestionnaire de dépendances PHP) et **Node.js** (pour compiler le CSS/JS).
 3. Récupère les fichiers du site (soit depuis un dépôt Git, soit depuis des fichiers déjà envoyés sur le
    serveur).
-4. Installe les dépendances du projet et compile les fichiers CSS/JS finaux.
-5. Crée et configure le fichier `.env` (mode production, nom de domaine).
-6. Configure les bonnes permissions de fichiers.
-7. Crée la configuration Nginx pour votre nom de domaine, pointée automatiquement vers le bon dossier
+4. Installe et configure la **base de données** choisie (SQLite par défaut, ou MySQL/MariaDB/PostgreSQL —
+   voir ci-dessous) : installation du serveur si besoin, création de la base et d'un utilisateur dédié.
+5. Installe les dépendances du projet et compile les fichiers CSS/JS finaux, puis configure le fichier
+   `.env` (mode production, nom de domaine, connexion à la base de données).
+6. Exécute les migrations (création des tables) et met en cache la configuration.
+7. Configure les bonnes permissions de fichiers.
+8. Crée la configuration Nginx pour votre nom de domaine, pointée automatiquement vers le bon dossier
    (`public/`).
-8. Installe un certificat **HTTPS gratuit** (Let's Encrypt) pour votre domaine.
+9. Installe un certificat **HTTPS gratuit** (Let's Encrypt) pour votre domaine.
 
 À la fin, le site est en ligne, en HTTPS, à l'adresse de votre domaine.
 
@@ -73,7 +90,7 @@ En une seule exécution, `provision.sh` :
 
 ### Utilisation
 
-Connectez-vous en SSH au serveur en `root`, puis :
+Connectez-vous en SSH au serveur en `root`, puis, par défaut (base **SQLite**, le plus simple) :
 
 ```bash
 # Si les fichiers du projet sont déjà sur le serveur (ex. envoyés en FTP dans /var/www/sfp_website) :
@@ -83,7 +100,29 @@ sudo bash provision.sh votre-domaine.com
 sudo bash provision.sh votre-domaine.com https://github.com/votre-org/sfp_website.git
 ```
 
-Le script affiche sa progression étape par étape (`[1/9]`, `[2/9]`, ...). Une fois terminé, ouvrez
+Pour utiliser **MySQL**, **MariaDB** ou **PostgreSQL** à la place (installés et configurés automatiquement
+sur ce même serveur), ajoutez la variable `DB_ENGINE` devant la commande :
+
+```bash
+# MySQL
+sudo DB_ENGINE=mysql bash provision.sh votre-domaine.com https://github.com/votre-org/sfp_website.git
+
+# MariaDB
+sudo DB_ENGINE=mariadb bash provision.sh votre-domaine.com https://github.com/votre-org/sfp_website.git
+
+# PostgreSQL
+sudo DB_ENGINE=pgsql bash provision.sh votre-domaine.com https://github.com/votre-org/sfp_website.git
+```
+
+Le mot de passe de la base est généré automatiquement et enregistré (une seule fois) dans
+`/root/sfp_website_db_credentials.txt` sur le serveur à la fin de l'installation — notez-le en lieu sûr
+(gestionnaire de mots de passe) puis supprimez ce fichier du serveur.
+
+> Si vous utilisez plutôt une base de données **déjà hébergée ailleurs** (ex. un service managé), voir la
+> section [Peut-on encore améliorer / faire évoluer le site ?](#peut-on-encore-améliorer--faire-évoluer-le-site-)
+> plus bas — le script sait aussi s'y connecter sans rien installer localement.
+
+Le script affiche sa progression étape par étape (`[1/11]`, `[2/11]`, ...). Une fois terminé, ouvrez
 `https://votre-domaine.com` dans un navigateur.
 
 ### Mettre à jour le site après ce premier déploiement
@@ -207,6 +246,24 @@ Ce fichier contient les réglages du site (nom de domaine, mode production, etc.
    php artisan key:generate
    ```
 
+5. **Si votre hébergeur mutualisé impose MySQL** (cas le plus fréquent sur cPanel — beaucoup
+   d'hébergeurs mutualisés ne proposent pas SQLite), créez une base de données MySQL depuis cPanel :
+   ouvrez **"Bases de données MySQL"**, créez une base, un utilisateur, et associez l'utilisateur à la
+   base avec **tous les privilèges**. cPanel préfixe généralement les noms (ex. `monlogin_sfp`,
+   `monlogin_sfpuser`). Reportez ensuite ces informations dans `.env` :
+
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_DATABASE=monlogin_sfp
+   DB_USERNAME=monlogin_sfpuser
+   DB_PASSWORD=le-mot-de-passe-choisi
+   ```
+
+   (Pour PostgreSQL, remplacez par `DB_CONNECTION=pgsql` et `DB_PORT=5432` — mêmes autres champs. Si
+   votre hébergeur vous laisse SQLite, ne touchez à rien : c'est déjà la configuration par défaut.)
+
 ---
 
 ## Étape 4 — Finaliser l'installation sur le serveur
@@ -214,10 +271,23 @@ Ce fichier contient les réglages du site (nom de domaine, mode production, etc.
 Toujours en SSH, dans le dossier du projet, lancez ces commandes une par une :
 
 ```bash
+php artisan migrate --force
 php artisan storage:link
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+```
+
+> La commande `migrate` crée les tables dont le site a besoin (offres d'emploi, actualités, messages de
+> contact...) dans la base de données. Elle est indispensable au premier déploiement, et à refaire à
+> chaque mise à jour qui ajoute de nouvelles fonctionnalités (voir plus bas).
+
+Si vous êtes en **SQLite** (par défaut) et que le fichier `database/database.sqlite` n'existe pas encore,
+créez-le avant la commande `migrate` ci-dessus :
+
+```bash
+mkdir -p database
+touch database/database.sqlite
 ```
 
 Puis vérifiez les autorisations d'écriture (nécessaire pour que le site fonctionne) :
@@ -252,10 +322,14 @@ Quand une modification du contenu ou du design est livrée par le développeur :
    ```bash
    composer install --optimize-autoloader --no-dev
    npm install && npm run build
+   php artisan migrate --force
    php artisan config:cache
    php artisan route:cache
    php artisan view:cache
    ```
+
+   (Si vous avez déployé via le script `deploy/deploy.sh` sur un VPS provisionné avec `provision.sh`,
+   ces commandes sont déjà toutes incluses — voir [plus haut](#mettre-à-jour-le-site-après-ce-premier-déploiement).)
 
 > Astuce : si une page affiche encore l'ancienne version après une mise à jour, c'est souvent le "cache"
 > du site. Les trois commandes `artisan ... :cache` ci-dessus le régénèrent. Vous pouvez aussi forcer un
@@ -273,6 +347,16 @@ bootstrap/cache`).
 **Le site s'affiche sans style (pas de couleurs, mise en page cassée)**
 Le dossier `public/build/` est manquant ou incomplet : relancez `npm run build` puis renvoyez ce dossier
 sur le serveur.
+
+**Erreur "could not find driver" ou "SQLSTATE" à l'ouverture du site**
+La base de données configurée dans `.env` (`DB_CONNECTION`) ne correspond pas à ce qui est réellement
+disponible chez l'hébergeur, ou l'extension PHP correspondante (`pdo_mysql`, `pdo_pgsql`, `pdo_sqlite`)
+n'est pas activée — demandez à votre hébergeur de l'activer, ou passez par cPanel > "Sélecteur PHP" >
+"Extensions". Vérifiez aussi que `DB_HOST`, `DB_DATABASE`, `DB_USERNAME` et `DB_PASSWORD` correspondent
+exactement à ce qui a été créé côté hébergeur (voir Étape 3).
+
+**Erreur "Base table ... doesn't exist" ou une page (actualités, carrières, contact) plante**
+Les tables n'ont pas été créées : relancez `php artisan migrate --force` dans le dossier du projet.
 
 **"404 Not Found" sur toutes les pages sauf l'accueil**
 Le domaine ne pointe probablement pas vers le bon dossier (`public/`), ou la réécriture d'URL (`.htaccess`
@@ -304,6 +388,39 @@ que tout nouveau fichier créé (par le site ou par un futur déploiement) héri
 `www-data`, ce qui évite que ce conflit ne se reproduise. Après cette commande, l'utilisateur de
 déploiement doit se reconnecter (nouvelle session SSH) pour que l'appartenance au groupe soit prise en
 compte.
+
+---
+
+## Peut-on encore améliorer / faire évoluer le site ?
+
+Pour la taille et le trafic actuels du site, la configuration décrite dans ce guide (un seul serveur,
+SQLite ou MySQL/MariaDB/PostgreSQL en local) est largement suffisante. Si le site venait à grossir
+beaucoup (trafic important, gestion de comptes utilisateurs, envoi d'e-mails en masse, plusieurs serveurs
+pour la fiabilité), voici les évolutions possibles — techniques, donc à faire réaliser par un développeur :
+
+- **Base de données externe / managée** : `provision.sh` sait déjà se connecter à une base hébergée
+  ailleurs (AWS RDS, DigitalOcean Managed Database, etc.) en fournissant `DB_HOST`, `DB_DATABASE`,
+  `DB_USERNAME`, `DB_PASSWORD` en variables d'environnement — utile pour séparer la base de l'application
+  ou passer plusieurs serveurs web.
+- **Plusieurs serveurs web derrière un répartiteur de charge** : demande alors une base de données
+  partagée (donc MySQL/MariaDB/PostgreSQL plutôt que SQLite, qui est un fichier local à un seul serveur),
+  des sessions et un cache partagés (ex. Redis), et un stockage de fichiers partagé (ex. S3) au lieu du
+  disque local — les variables `AWS_*` sont déjà présentes dans `.env.example` pour ça.
+- **Vrai envoi d'e-mails** : le formulaire de contact utilise actuellement `MAIL_MAILER=log` (les
+  e-mails sont écrits dans un fichier journal, pas envoyés) — brancher un service comme Mailgun, SES ou
+  un SMTP dédié le rendrait fonctionnel en production.
+- **Sauvegardes automatiques** : mettre en place une sauvegarde régulière (cron) de la base de données et
+  du dossier `storage/` (fichiers envoyés par le site), avec copie hors du serveur.
+- **Déploiement sans coupure et retour arrière rapide** : le script `deploy.sh` actuel met à jour les
+  fichiers en place ; un système de déploiement par "releases" (dossiers horodatés + lien symbolique) permet
+  de basculer instantanément et de revenir en arrière en cas de souci.
+- **Mise en cache et surveillance** : ajouter Redis pour le cache/les sessions, activer OPcache côté PHP,
+  et surveiller la disponibilité du site (ex. UptimeRobot, Laravel Pulse) pour être alerté en cas de panne.
+- **Intégration continue** : automatiser les tests et le déploiement via GitHub Actions plutôt que de
+  lancer `deploy.sh` à la main à chaque mise à jour.
+
+Aucune de ces évolutions n'est nécessaire aujourd'hui — elles ne prennent leur intérêt que si le site
+change significativement d'échelle ou d'usage. Discutez-en avec votre développeur le moment venu.
 
 ---
 

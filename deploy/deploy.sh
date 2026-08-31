@@ -20,6 +20,9 @@ composer install --optimize-autoloader --no-dev --no-interaction
 npm install
 npm run build
 
+echo "==> Application des migrations de base de données"
+php artisan migrate --force
+
 echo "==> Rafraîchissement des caches Laravel"
 php artisan config:cache
 php artisan route:cache
