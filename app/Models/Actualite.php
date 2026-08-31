@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasImageUrl;
+use App\Models\Concerns\HasUniqueSlug;
+use App\Models\Concerns\Publishable;
 use App\Support\HtmlSanitizer;
 use Database\Factories\ActualiteFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 #[Fillable(['title', 'slug', 'category', 'excerpt', 'body', 'image', 'published_at'])]
 class Actualite extends Model
 {
     /** @use HasFactory<ActualiteFactory> */
-    use HasFactory;
+    use HasFactory, HasImageUrl, HasUniqueSlug, Publishable;
 
     /**
      * @return array<string, string>
@@ -26,47 +26,6 @@ class Actualite extends Model
         return [
             'published_at' => 'datetime',
         ];
-    }
-
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
-    public static function generateUniqueSlug(string $title, ?int $ignoreId = null): string
-    {
-        $base = Str::slug($title);
-        $slug = $base;
-        $suffix = 2;
-
-        while (static::query()->where('slug', $slug)->when($ignoreId, fn (Builder $query) => $query->whereKeyNot($ignoreId))->exists()) {
-            $slug = "{$base}-{$suffix}";
-            $suffix++;
-        }
-
-        return $slug;
-    }
-
-    /**
-     * @param  Builder<Actualite>  $query
-     * @return Builder<Actualite>
-     */
-    public function scopePublished(Builder $query): Builder
-    {
-        return $query->whereNotNull('published_at')->where('published_at', '<=', now());
-    }
-
-    protected function imageUrl(): Attribute
-    {
-        return Attribute::make(get: function () {
-            if (! $this->image) {
-                return null;
-            }
-
-            return str_contains($this->image, '/')
-                ? Storage::disk('public')->url($this->image)
-                : asset('images/opt/'.$this->image.'.jpg');
-        });
     }
 
     /**

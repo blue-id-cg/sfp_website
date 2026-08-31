@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function __construct(private readonly UserService $users) {}
+
     public function index(): View
     {
         $this->authorize('viewAny', User::class);
@@ -29,10 +31,7 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request): RedirectResponse
     {
-        User::query()->create([
-            ...$request->safe()->only(['name', 'email']),
-            'password' => Hash::make($request->validated('password')),
-        ]);
+        $this->users->create($request->safe()->only(['name', 'email', 'password']));
 
         return redirect()->route('admin.users.index')->with('status', 'Utilisateur créé.');
     }

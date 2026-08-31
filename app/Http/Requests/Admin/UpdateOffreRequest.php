@@ -2,13 +2,16 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Http\Requests\Concerns\ParsesLineDelimitedFields;
+use App\Http\Requests\Concerns\PreparesSlugField;
 use App\Models\Offre;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class UpdateOffreRequest extends FormRequest
 {
+    use ParsesLineDelimitedFields, PreparesSlugField;
+
     public function authorize(): bool
     {
         return $this->user()?->can('update', $this->route('offre')) ?? false;
@@ -16,29 +19,8 @@ class UpdateOffreRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        foreach (['tags', 'missions', 'profile'] as $field) {
-            if ($this->filled($field) && is_string($this->input($field))) {
-                $this->merge([$field => $this->linesToArray($this->string($field)->toString())]);
-            }
-        }
-
-        if ($this->filled('slug')) {
-            $this->merge(['slug' => Str::slug($this->string('slug'))]);
-        } elseif ($this->filled('title')) {
-            $this->merge(['slug' => Offre::generateUniqueSlug($this->string('title'), $this->route('offre')->id)]);
-        }
-    }
-
-    /**
-     * @return array<int, string>
-     */
-    private function linesToArray(string $value): array
-    {
-        return collect(preg_split('/\r\n|\r|\n/', $value))
-            ->map(fn (string $line) => trim($line))
-            ->filter()
-            ->values()
-            ->all();
+        $this->prepareLineDelimitedFields(['tags', 'missions', 'profile']);
+        $this->prepareSlug(Offre::class, $this->route('offre')->id);
     }
 
     /**
