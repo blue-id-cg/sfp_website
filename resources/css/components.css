@@ -58,6 +58,7 @@
 
 .nav-menu {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.4rem;
 }
@@ -2853,6 +2854,7 @@
 .article {
     max-width: 760px;
     margin-inline: auto;
+    overflow-wrap: break-word;
 }
 
 .article h2 {
@@ -3590,6 +3592,7 @@
 .page-head h1 {
     color: #fff;
     font-size: clamp(2.2rem, 5vw, 3.6rem);
+    overflow-wrap: break-word;
 }
 
 .page-head .lead {
@@ -3600,12 +3603,14 @@
 
 .breadcrumb {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     align-items: center;
     color: rgba(255, 255, 255, 0.55);
     font-size: 0.78rem;
     margin-bottom: 1.4rem;
     letter-spacing: 0.04em;
+    overflow-wrap: break-word;
 }
 
 .breadcrumb a:hover {
@@ -3673,8 +3678,8 @@
 }
 
 .socials a {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 11px;
     display: grid;
     place-items: center;

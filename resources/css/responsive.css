@@ -158,6 +158,9 @@
     .cookie-banner { left: 0.8rem; right: 0.8rem; bottom: 0.8rem; flex-direction: column; align-items: stretch; padding: 1rem; }
     .cookie-banner-actions { margin-left: 0; }
     .cookie-banner-actions .btn { width: 100%; justify-content: center; }
+
+    /* The stacked cookie banner grows tall enough at this width to cover the to-top button. */
+    body:has(.cookie-banner.show) .to-top { bottom: 12rem; }
 }
 
 /* ===== ≤ 420px : petits mobiles ===== */

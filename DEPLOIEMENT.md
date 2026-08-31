@@ -300,6 +300,20 @@ Puis vérifiez les autorisations d'écriture (nécessaire pour que le site fonct
 chmod -R 775 storage bootstrap/cache
 ```
 
+Enfin, créez votre compte administrateur (celui qui vous servira à vous connecter sur `/login` pour gérer
+les actualités, les offres d'emploi, la galerie et les messages reçus) :
+
+```bash
+php artisan app:create-admin-user
+```
+
+La commande vous demande votre nom, votre email et un mot de passe (saisie masquée). Vous pouvez aussi
+fournir ces informations directement, utile pour un script d'installation automatisé :
+
+```bash
+php artisan app:create-admin-user --name="Votre Nom" --email="vous@exemple.com" --password="un-mot-de-passe-solide"
+```
+
 ---
 
 ## Étape 5 — Vérifier que tout fonctionne
