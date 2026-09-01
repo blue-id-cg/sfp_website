@@ -10,9 +10,9 @@
             ['label' => 'Accueil', 'url' => route('home')],
             ['label' => 'Équipements', 'url' => null],
         ],
-        'kicker' => 'Équipements',
-        'title' => 'Un parc industriel à la hauteur des enjeux',
-        'lead' => 'Deux rigs, le MR-8000 Drillmec (1080 HP) et le MR-3500, ainsi qu\'une base opérationnelle de 30 000 m² à Djeno pour la réception, le stockage et l\'entretien des équipements avant leur déploiement sur site.',
+        'kicker' => $page->get('intro.kicker', 'Équipements'),
+        'title' => $page->get('intro.title', 'Un parc industriel à la hauteur des enjeux'),
+        'lead' => $page->get('intro.lead', "Deux rigs, le MR-8000 Drillmec (1080 HP) et le MR-3500, ainsi qu'une base opérationnelle de 30 000 m² à Djeno pour la réception, le stockage et l'entretien des équipements avant leur déploiement sur site."),
     ])
 
     <section class="section">
@@ -53,14 +53,14 @@
     <section class="section bg-industrial">
         <div class="wrap">
             <div class="sec-head center reveal mb-4">
-                <span class="kicker" data-index="01">Base de Djeno</span>
-                <h2 class="title-xl">30 000 m² dédiés à la préparation des opérations</h2>
-                <p class="lead mx-auto maxw-md mt-2">Réception, stockage, entretien et remise en état des équipements avant chaque mobilisation sur site.</p>
+                <span class="kicker" data-index="01">{{ $page->get('base.kicker', 'Base de Djeno') }}</span>
+                <h2 class="title-xl">{{ $page->get('base.title', '30 000 m² dédiés à la préparation des opérations') }}</h2>
+                <p class="lead mx-auto maxw-md mt-2">{{ $page->get('base.lead', 'Réception, stockage, entretien et remise en état des équipements avant chaque mobilisation sur site.') }}</p>
             </div>
             <div class="perks stagger">
-                <div class="perk"><i class="hgi-stroke hgi-warehouse"></i><h4>Stockage</h4><p>Aire logistique pour le matériel de forage et les équipements techniques.</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-settings-01"></i><h4>Maintenance</h4><p>Entretien préventif et remise en état des rigs entre deux campagnes.</p></div>
-                <div class="perk"><i class="hgi-stroke hgi-delivery-truck-01"></i><h4>Mobilisation</h4><p>Préparation et levage du matériel avant déploiement sur site.</p></div>
+                @foreach ($perks as $perk)
+                    <div class="perk"><i class="hgi-stroke {{ $perk->icon }}"></i><h4>{{ $perk->title }}</h4><p>{{ $perk->description }}</p></div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -69,12 +69,12 @@
         <div class="wrap">
             <div class="careers-cta-inner reveal">
                 <div>
-                    <span class="kicker on-dark" data-index="02">Rejoignez-nous</span>
-                    <h2 class="title-xl on-dark">Envie de travailler sur nos appareils de forage ?</h2>
-                    <p class="lead mt-2">Découvrez nos offres d'emploi et rejoignez une équipe d'excellence au service de l'énergie congolaise.</p>
+                    <span class="kicker on-dark" data-index="02">{{ $page->get('cta.kicker', 'Rejoignez-nous') }}</span>
+                    <h2 class="title-xl on-dark">{{ $page->get('cta.title', 'Envie de travailler sur nos appareils de forage ?') }}</h2>
+                    <p class="lead mt-2">{{ $page->get('cta.lead', "Découvrez nos offres d'emploi et rejoignez une équipe d'excellence au service de l'énergie congolaise.") }}</p>
                 </div>
                 <div class="careers-cta-actions">
-                    <a href="{{ route('carrieres.index') }}" class="btn btn-primary">Voir les offres d'emploi <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+                    <a href="{{ route('carrieres.index') }}" class="btn btn-primary">{{ $page->get('cta.button_label', "Voir les offres d'emploi") }} <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                 </div>
             </div>
         </div>

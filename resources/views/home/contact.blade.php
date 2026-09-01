@@ -4,22 +4,22 @@
     <div class="wrap">
         <div class="split contact-grid">
             <div class="reveal-left">
-                <span class="kicker" data-index="10">Contact</span>
-                <h2 class="title-xl">Discutons de vos <span class="mark accent">projets</span></h2>
-                <p class="lead mt-3">Une question, un projet, un partenariat ? Nos équipes sont à votre écoute pour vous accompagner à chaque étape.</p>
+                <span class="kicker" data-index="10">{{ $page->get('contact.kicker', 'Contact') }}</span>
+                <h2 class="title-xl">{{ $page->get('contact.title', 'Discutons de vos projets') }}</h2>
+                <p class="lead mt-3">{{ $page->get('contact.lead', 'Une question, un projet, un partenariat ? Nos équipes sont à votre écoute pour vous accompagner à chaque étape.') }}</p>
 
                 <div class="grid gap-md mt-5">
                     <div class="contact-item">
                         <span class="ico"><i class="hgi-stroke hgi-location-01"></i></span>
-                        <div><h4>Adresse</h4><p>Avenue du Général de Gaulle, B.P. 622,<br />Pointe-Noire, République du Congo</p></div>
+                        <div><h4>Adresse</h4><p>{{ $settings->contact_address ?? 'Avenue du Général de Gaulle, B.P. 622, Pointe-Noire, République du Congo' }}</p></div>
                     </div>
                     <div class="contact-item">
                         <span class="ico"><i class="hgi-stroke hgi-call"></i></span>
-                        <div><h4>Téléphone</h4><a href="tel:+242065870728">+242 06 587 07 28</a></div>
+                        <div><h4>Téléphone</h4><a href="tel:{{ preg_replace('/\s+/', '', $settings->contact_phone ?? '+242065870728') }}">{{ $settings->contact_phone ?? '+242 06 587 07 28' }}</a></div>
                     </div>
                     <div class="contact-item">
                         <span class="ico"><i class="hgi-stroke hgi-mail-01"></i></span>
-                        <div><h4>E-mail</h4><a href="mailto:contact@snpc-sfp.net">contact@snpc-sfp.net</a></div>
+                        <div><h4>E-mail</h4><a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}">{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a></div>
                     </div>
                     <div class="contact-item">
                         <span class="ico"><i class="hgi-stroke hgi-briefcase-01"></i></span>

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import 'quill/dist/quill.snow.css';
+@import '@yaireo/tagify/dist/tagify.css';
+@import 'notyf/notyf.min.css';
 
 @source '../../storage/framework/views/*.php';
 @source '../../resources/views/admin/**/*.blade.php';
@@ -222,6 +224,24 @@ body.admin-shell {
     font-size: 0.8rem;
     font-weight: 600;
     color: var(--a-accent-2);
+}
+
+/* ---- Champ tags (Tagify) ---- */
+.tagify {
+    --tag-bg: #fff8ec;
+    --tag-text-color: var(--a-ink);
+    --tag-remove-btn-color: var(--a-accent-2);
+    --tag-hover: #ffe9c7;
+    --tags-border-color: var(--a-border);
+    --tags-focus-border-color: var(--a-accent-2);
+    --tag-pad: 0.3rem 0.7rem;
+    border-radius: 0.6rem;
+    font-family: inherit;
+}
+
+/* ---- Toasts (Notyf) ---- */
+.notyf__toast {
+    border-radius: 0.6rem;
 }
 
 /* ---- Éditeur riche (Quill) ---- */

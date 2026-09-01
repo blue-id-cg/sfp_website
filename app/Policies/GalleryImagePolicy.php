@@ -9,26 +9,26 @@ class GalleryImagePolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('manage gallery');
     }
 
     public function view(User $user, GalleryImage $galleryImage): bool
     {
-        return true;
+        return $user->can('manage gallery');
     }
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('manage gallery');
     }
 
     public function update(User $user, GalleryImage $galleryImage): bool
     {
-        return true;
+        return $user->can('manage gallery');
     }
 
     public function delete(User $user, GalleryImage $galleryImage): bool
     {
-        return true;
+        return $user->can('manage gallery');
     }
 }

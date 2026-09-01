@@ -44,8 +44,8 @@
                 'addressLocality' => 'Pointe-Noire',
                 'addressCountry' => 'CG',
             ],
-            'telephone' => '+242065870728',
-            'email' => 'contact@snpc-sfp.net',
+            'telephone' => preg_replace('/\s+/', '', $settings->contact_phone ?? '+242065870728'),
+            'email' => $settings->contact_email ?? 'contact@snpc-sfp.net',
             'parentOrganization' => [
                 '@type' => 'Organization',
                 'name' => 'SNPC · Société Nationale des Pétroles du Congo',

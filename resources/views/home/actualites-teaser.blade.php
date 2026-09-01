@@ -3,11 +3,11 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="08">Actualités</span>
-                <h2 class="title-xl">Les temps forts<br />de la SFP</h2>
+                <span class="kicker" data-index="08">{{ $page->get('actualites_teaser.kicker', 'Actualités') }}</span>
+                <h2 class="title-xl">{{ $page->get('actualites_teaser.title', 'Les temps forts de la SFP') }}</h2>
             </div>
             <div class="r reveal">
-                <p class="lead">Un aperçu de nos dernières publications. Retrouvez l'ensemble de nos actualités sur la page dédiée.</p>
+                <p class="lead">{{ $page->get('actualites_teaser.lead', "Un aperçu de nos dernières publications. Retrouvez l'ensemble de nos actualités sur la page dédiée.") }}</p>
                 <a href="{{ route('actualites.index') }}" class="link-arrow mt-3">Toutes les actualités <i class="hgi-stroke hgi-arrow-right-01"></i></a>
             </div>
         </div>

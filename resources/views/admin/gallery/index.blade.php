@@ -9,12 +9,6 @@
         </x-slot:actions>
     </x-admin.page-header>
 
-    @if (session('status'))
-        <p class="mb-5 inline-flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
-            <i class="hgi-stroke hgi-checkmark-circle-01"></i> {{ session('status') }}
-        </p>
-    @endif
-
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
         @forelse ($images as $image)
             <div class="group rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden transition hover:shadow-md">

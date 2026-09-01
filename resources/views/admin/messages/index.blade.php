@@ -3,12 +3,6 @@
 
     <x-admin.page-header title="Messages de contact" subtitle="{{ $messages->total() }} message(s) au total." />
 
-    @if (session('status'))
-        <p class="mb-5 inline-flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
-            <i class="hgi-stroke hgi-checkmark-circle-01"></i> {{ session('status') }}
-        </p>
-    @endif
-
     <div class="flex flex-wrap items-center gap-3 mb-5">
         <div class="inline-flex rounded-md border border-gray-200 bg-white p-1 text-sm">
             @foreach (['' => 'Tous', 'unread' => 'Non lus', 'read' => 'Lus'] as $value => $label)

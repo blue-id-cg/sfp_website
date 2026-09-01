@@ -20,8 +20,17 @@
             </x-admin.field>
 
             <x-admin.field name="password_confirmation" label="Confirmer le mot de passe" required>
-                <input type="password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password" />
+                <input type="password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password" class="@error('password_confirmation') invalid @enderror" />
             </x-admin.field>
+
+            @can('manage roles')
+                <x-admin.field name="role" label="Rôle" required>
+                    <select name="role" id="role" required class="@error('role') invalid @enderror">
+                        <option value="editor" @selected(old('role') === 'editor')>Éditeur — gère le contenu</option>
+                        <option value="admin" @selected(old('role') === 'admin')>Administrateur — accès complet</option>
+                    </select>
+                </x-admin.field>
+            @endcan
 
             <div class="mt-6 flex items-center gap-3">
                 <button type="submit" class="inline-flex items-center rounded-md bg-[#0C0E22] px-4 py-2 text-sm font-medium text-white hover:bg-black">

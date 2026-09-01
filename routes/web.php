@@ -4,9 +4,15 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ActualiteController;
 use App\Http\Controllers\Admin\ActualiteController as AdminActualiteController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageController;
+use App\Http\Controllers\Admin\ContentBlockController as AdminContentBlockController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryImageController as AdminGalleryImageController;
+use App\Http\Controllers\Admin\MediaController as AdminMediaController;
+use App\Http\Controllers\Admin\MilestoneController as AdminMilestoneController;
 use App\Http\Controllers\Admin\OffreController as AdminOffreController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\RealisationController as AdminRealisationController;
+use App\Http\Controllers\Admin\SiteSettingController as AdminSiteSettingController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CarriereController;
 use App\Http\Controllers\ContactController;
@@ -50,13 +56,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+Route::middleware('auth')->prefix(config('admin.path'))->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('actualites', AdminActualiteController::class)->except('show');
     Route::resource('offres', AdminOffreController::class)->except('show');
     Route::resource('gallery', AdminGalleryImageController::class)->except('show');
+    Route::resource('media', AdminMediaController::class)->parameters(['media' => 'media'])->only(['index', 'store', 'destroy']);
+    Route::resource('content-blocks', AdminContentBlockController::class)->parameters(['content-blocks' => 'contentBlock'])->except('show');
+    Route::resource('realisations', AdminRealisationController::class)->except('show');
+    Route::resource('milestones', AdminMilestoneController::class)->except('show');
+    Route::resource('pages', AdminPageController::class)->only(['index', 'edit', 'update']);
     Route::resource('messages', AdminContactMessageController::class)->only(['index', 'show', 'destroy']);
-    Route::resource('users', AdminUserController::class)->only(['index', 'create', 'store']);
+    Route::resource('users', AdminUserController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('/settings', [AdminSiteSettingController::class, 'edit'])->name('settings.edit');
+    Route::put('/settings', [AdminSiteSettingController::class, 'update'])->name('settings.update');
 });
 
 require __DIR__.'/auth.php';

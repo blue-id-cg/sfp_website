@@ -21,11 +21,11 @@
                 <p>
                     Le présent site est édité par la <strong>Société de Forages Pétroliers (SFP)</strong>, Société Anonyme
                     au capital de 100 000 000 Francs CFA, filiale du groupe SNPC (Société Nationale des Pétroles du Congo),
-                    dont le siège social est situé Avenue du Général de Gaulle, B.P. 622, Pointe-Noire, République du Congo.
+                    dont le siège social est situé {{ $settings->contact_address ?? 'Avenue du Général de Gaulle, B.P. 622, Pointe-Noire, République du Congo' }}.
                 </p>
                 <p>
-                    Téléphone : <a href="tel:+242065870728">+242 06 587 07 28</a><br />
-                    E-mail : <a href="mailto:contact@snpc-sfp.net">contact@snpc-sfp.net</a>
+                    Téléphone : <a href="tel:{{ preg_replace('/\s+/', '', $settings->contact_phone ?? '+242065870728') }}">{{ $settings->contact_phone ?? '+242 06 587 07 28' }}</a><br />
+                    E-mail : <a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}">{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a>
                 </p>
 
                 <h2>Directeur de la publication</h2>
@@ -52,7 +52,7 @@
                 <p>
                     Conformément à la réglementation applicable en matière de protection des données personnelles, vous
                     disposez d'un droit d'accès, de rectification et de suppression des données vous concernant, que
-                    vous pouvez exercer en écrivant à <a href="mailto:contact@snpc-sfp.net">contact@snpc-sfp.net</a>.
+                    vous pouvez exercer en écrivant à <a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}">{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a>.
                     Pour le détail des traitements, des durées de conservation et de vos droits, consultez notre
                     <a href="{{ route('legal.privacy') }}">politique de confidentialité</a>.
                 </p>

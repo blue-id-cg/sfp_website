@@ -9,16 +9,16 @@ class ContactMessagePolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('view messages');
     }
 
     public function view(User $user, ContactMessage $contactMessage): bool
     {
-        return true;
+        return $user->can('view messages');
     }
 
     public function delete(User $user, ContactMessage $contactMessage): bool
     {
-        return true;
+        return $user->can('delete messages');
     }
 }

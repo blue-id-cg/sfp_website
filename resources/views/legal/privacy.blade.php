@@ -33,7 +33,7 @@
                 <p>Les données transmises via le formulaire de contact sont conservées le temps nécessaire au traitement de votre demande, puis archivées ou supprimées selon nos obligations légales et nos besoins opérationnels.</p>
 
                 <h2>Vos droits</h2>
-                <p>Conformément à la réglementation applicable, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Pour exercer ce droit, contactez-nous à l'adresse <a href="mailto:contact@snpc-sfp.net">contact@snpc-sfp.net</a>.</p>
+                <p>Conformément à la réglementation applicable, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Pour exercer ce droit, contactez-nous à l'adresse <a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}">{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a>.</p>
 
                 <h2>Sécurité</h2>
                 <p>La SFP met en œuvre les mesures techniques et organisationnelles raisonnables pour protéger vos données contre tout accès non autorisé, perte ou divulgation.</p>

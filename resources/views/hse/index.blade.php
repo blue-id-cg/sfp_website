@@ -10,9 +10,9 @@
             ['label' => 'Accueil', 'url' => route('home')],
             ['label' => 'HSE', 'url' => null],
         ],
-        'kicker' => 'Santé · Sécurité · Environnement',
-        'title' => 'La sécurité avant la performance',
-        'lead' => 'Notre engagement pour la santé, la sécurité et l\'environnement est non négociable. C\'est le fondement de notre culture d\'entreprise et la condition de chaque opération.',
+        'kicker' => $page->get('intro.kicker', 'Santé · Sécurité · Environnement'),
+        'title' => $page->get('intro.title', 'La sécurité avant la performance'),
+        'lead' => $page->get('intro.lead', 'Notre engagement pour la santé, la sécurité et l\'environnement est non négociable. C\'est le fondement de notre culture d\'entreprise et la condition de chaque opération.'),
     ])
 
     <section class="section">
@@ -58,14 +58,13 @@
     <section class="section-tight bg-charcoal noise">
         <div class="wrap">
             <div class="sec-head center reveal mb-4">
-                <span class="kicker on-dark" data-index="01">Nos engagements</span>
-                <h2 class="title-xl on-dark">Une culture HSE au quotidien</h2>
+                <span class="kicker on-dark" data-index="01">{{ $page->get('engagements.kicker', 'Nos engagements') }}</span>
+                <h2 class="title-xl on-dark">{{ $page->get('engagements.title', 'Une culture HSE au quotidien') }}</h2>
             </div>
             <div class="hse-metrics stagger" role="list">
-                <div role="listitem"><i class="hgi-stroke hgi-vest"></i><b>EPI</b><span>Obligatoires sur l'ensemble des sites d'intervention</span></div>
-                <div role="listitem"><i class="hgi-stroke hgi-user-group"></i><b>Briefing</b><span>Point sécurité systématique avant chaque opération</span></div>
-                <div role="listitem"><i class="hgi-stroke hgi-clipboard"></i><b>Audits</b><span>Contrôles et bonnes pratiques régulièrement vérifiés</span></div>
-                <div role="listitem"><i class="hgi-stroke hgi-shield-01"></i><b>Zéro</b><span>Objectif zéro incident, non négociable</span></div>
+                @foreach ($engagements as $metric)
+                    <div role="listitem"><i class="hgi-stroke {{ $metric->icon }}"></i><b>{{ $metric->title }}</b><span>{{ $metric->description }}</span></div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -74,13 +73,13 @@
         <div class="wrap">
             <div class="split items-center">
                 <div class="reveal-left">
-                    <span class="kicker" data-index="02">Notre méthode</span>
-                    <h2 class="title-xl">Une démarche <span class="mark accent">structurée</span>, du bureau au terrain</h2>
-                    <p class="lead mt-3">La prévention se construit avant l'arrivée sur site : analyse des risques, plans d'action et procédures validées en amont, puis appliquées avec rigueur sur chaque chantier.</p>
+                    <span class="kicker" data-index="02">{{ $page->get('method.kicker', 'Notre méthode') }}</span>
+                    <h2 class="title-xl">{{ $page->get('method.title', 'Une démarche structurée, du bureau au terrain') }}</h2>
+                    <p class="lead mt-3">{{ $page->get('method.lead', 'La prévention se construit avant l\'arrivée sur site : analyse des risques, plans d\'action et procédures validées en amont, puis appliquées avec rigueur sur chaque chantier.') }}</p>
                     <ul class="feature-list">
-                        <li><span class="ico"><i class="hgi-stroke hgi-search-01"></i></span><div><h4>Analyse des risques</h4><p>Identification et traitement des dangers avant chaque opération.</p></div></li>
-                        <li><span class="ico"><i class="hgi-stroke hgi-graduation-scroll"></i></span><div><h4>Formation continue</h4><p>Sensibilisation régulière des équipes aux bonnes pratiques HSE.</p></div></li>
-                        <li><span class="ico"><i class="hgi-stroke hgi-leaf-01"></i></span><div><h4>Impact environnemental</h4><p>Gestion responsable des déchets et des ressources sur chaque site.</p></div></li>
+                        @foreach ($methodItems as $item)
+                            <li><span class="ico"><i class="hgi-stroke {{ $item->icon }}"></i></span><div><h4>{{ $item->title }}</h4><p>{{ $item->description }}</p></div></li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="reveal-right">

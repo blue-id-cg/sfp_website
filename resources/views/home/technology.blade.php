@@ -4,11 +4,11 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="03">Innovation</span>
-                <h2 class="title-xl">Performance <span class="mark accent">opérationnelle</span> &amp; digitalisation</h2>
+                <span class="kicker" data-index="03">{{ $page->get('technology.kicker', 'Innovation') }}</span>
+                <h2 class="title-xl">{{ $page->get('technology.title', 'Performance opérationnelle & digitalisation') }}</h2>
             </div>
             <div class="r reveal">
-                <p class="lead">Nous intégrons les technologies les plus avancées pour optimiser chaque phase de nos opérations : de la surveillance en temps réel à l'analyse des données, jusqu'à la modernisation des équipements.</p>
+                <p class="lead">{{ $page->get('technology.lead', "Nous intégrons les technologies les plus avancées pour optimiser chaque phase de nos opérations : de la surveillance en temps réel à l'analyse des données, jusqu'à la modernisation des équipements.") }}</p>
             </div>
         </div>
 
@@ -53,30 +53,16 @@
 
             <!-- Instruments -->
             <div class="console-tiles stagger">
-                <article class="inst">
-                    <span class="inst-ico"><i class="hgi-stroke hgi-dashboard-speed-01"></i></span>
-                    <div class="inst-body">
-                        <h4>Surveillance en temps réel</h4>
-                        <p>Contrôle continu des paramètres de forage pour des décisions rapides et sûres.</p>
-                    </div>
-                    <span class="inst-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-                </article>
-                <article class="inst">
-                    <span class="inst-ico"><i class="hgi-stroke hgi-cpu"></i></span>
-                    <div class="inst-body">
-                        <h4>Digitalisation des opérations</h4>
-                        <p>Systèmes connectés pour gagner en efficacité, en traçabilité et en fiabilité.</p>
-                    </div>
-                    <span class="inst-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-                </article>
-                <article class="inst">
-                    <span class="inst-ico"><i class="hgi-stroke hgi-focus-point"></i></span>
-                    <div class="inst-body">
-                        <h4>Optimisation par la donnée</h4>
-                        <p>Amélioration continue des performances fondée sur l'analyse des indicateurs.</p>
-                    </div>
-                    <span class="inst-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
-                </article>
+                @foreach ($instruments as $instrument)
+                    <article class="inst">
+                        <span class="inst-ico"><i class="hgi-stroke {{ $instrument->icon }}"></i></span>
+                        <div class="inst-body">
+                            <h4>{{ $instrument->title }}</h4>
+                            <p>{{ $instrument->description }}</p>
+                        </div>
+                        <span class="inst-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                    </article>
+                @endforeach
             </div>
         </div>
     </div>

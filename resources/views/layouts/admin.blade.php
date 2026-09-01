@@ -41,9 +41,28 @@
                 <a href="{{ route('admin.offres.index') }}" class="a-nav-link {{ request()->routeIs('admin.offres.*') ? 'active' : '' }}">
                     <i class="hgi-stroke hgi-briefcase-01 w-4 text-center"></i> Offres d'emploi
                 </a>
+                <a href="{{ route('admin.realisations.index') }}" class="a-nav-link {{ request()->routeIs('admin.realisations.*') ? 'active' : '' }}">
+                    <i class="hgi-stroke hgi-award-01 w-4 text-center"></i> Réalisations
+                </a>
                 <a href="{{ route('admin.gallery.index') }}" class="a-nav-link {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}">
                     <i class="hgi-stroke hgi-image-02 w-4 text-center"></i> Galerie
                 </a>
+                @can('manage media')
+                    <a href="{{ route('admin.media.index') }}" class="a-nav-link {{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-folder-library w-4 text-center"></i> Médiathèque
+                    </a>
+                @endcan
+                @can('manage pages')
+                    <a href="{{ route('admin.content-blocks.index') }}" class="a-nav-link {{ request()->routeIs('admin.content-blocks.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-dashboard-square-01 w-4 text-center"></i> Blocs de contenu
+                    </a>
+                    <a href="{{ route('admin.milestones.index') }}" class="a-nav-link {{ request()->routeIs('admin.milestones.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-flag-01 w-4 text-center"></i> Frise chronologique
+                    </a>
+                    <a href="{{ route('admin.pages.index') }}" class="a-nav-link {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-file-01 w-4 text-center"></i> Pages
+                    </a>
+                @endcan
 
                 <p class="px-3 pb-2 pt-4 text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--a-muted);">Échanges</p>
                 <a href="{{ route('admin.messages.index') }}" class="a-nav-link justify-between {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
@@ -54,10 +73,19 @@
                     @endif
                 </a>
 
-                <p class="px-3 pb-2 pt-4 text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--a-muted);">Équipe</p>
-                <a href="{{ route('admin.users.index') }}" class="a-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <i class="hgi-stroke hgi-user w-4 text-center"></i> Utilisateurs
-                </a>
+                @can('manage users')
+                    <p class="px-3 pb-2 pt-4 text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--a-muted);">Équipe</p>
+                    <a href="{{ route('admin.users.index') }}" class="a-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-user w-4 text-center"></i> Utilisateurs
+                    </a>
+                @endcan
+
+                @can('manage settings')
+                    <p class="px-3 pb-2 pt-4 text-[0.65rem] font-semibold uppercase tracking-widest" style="color: var(--a-muted);">Réglages</p>
+                    <a href="{{ route('admin.settings.edit') }}" class="a-nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-settings-01 w-4 text-center"></i> Réglages du site
+                    </a>
+                @endcan
             </nav>
 
             <div class="border-t px-3 py-4" style="border-color: var(--a-border);">
@@ -103,6 +131,12 @@
             </header>
 
             <main class="flex-1 p-4 md:p-8">
+                @if (session('status'))
+                    <span hidden data-flash="success">{{ session('status') }}</span>
+                @endif
+                @if (session('error'))
+                    <span hidden data-flash="error">{{ session('error') }}</span>
+                @endif
                 {{ $slot }}
             </main>
         </div>

@@ -314,6 +314,11 @@ fournir ces informations directement, utile pour un script d'installation automa
 php artisan app:create-admin-user --name="Votre Nom" --email="vous@exemple.com" --password="un-mot-de-passe-solide"
 ```
 
+> **Sécurité (facultatif) :** par défaut, l'administration est accessible sur `/admin`. Pour la rendre plus
+> difficile à trouver par un scan automatisé, ajoutez `ADMIN_PATH=un-chemin-difficile-a-deviner` dans le
+> fichier `.env`, puis videz le cache de configuration : `php artisan config:clear`. L'administration sera
+> alors accessible sur `https://votre-domaine.com/un-chemin-difficile-a-deviner`.
+
 ---
 
 ## Étape 5 — Vérifier que tout fonctionne

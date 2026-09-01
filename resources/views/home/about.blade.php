@@ -5,21 +5,18 @@
         <!-- En-tête éditorial : titre à gauche, accroche + chiffres à droite -->
         <div class="ent-head reveal">
             <div class="ent-head-lead">
-                <span class="kicker" data-index="01">L'entreprise</span>
-                <h2 class="title-xl">Une expertise <span class="mark accent">congolaise</span> au cœur de l'industrie pétrolière</h2>
+                <span class="kicker" data-index="01">{{ $page->get('about.kicker', "L'entreprise") }}</span>
+                <h2 class="title-xl">{{ $page->get('about.title', "Une expertise congolaise au cœur de l'industrie pétrolière") }}</h2>
             </div>
             <div class="ent-head-aside">
-                <p class="lead">
-                    Depuis 2010, la <strong>SFP</strong> conçoit et opère des forages onshore pour les acteurs
-                    majeurs du secteur pétrolier congolais — avec un principe non négociable : <strong>zéro incident</strong>.
-                </p>
+                <p class="lead">{{ $page->get('about.lead', "Depuis 2010, la SFP conçoit et opère des forages onshore pour les acteurs majeurs du secteur pétrolier congolais — avec un principe non négociable : zéro incident.") }}</p>
                 <dl class="ent-stats">
                     <div class="ent-stat">
-                        <dt class="ent-stat-num"><span data-count="15" data-suffix="+">0</span></dt>
+                        <dt class="ent-stat-num"><span data-count="{{ now()->year - ($settings->founding_year ?? 2011) }}" data-suffix="+">0</span></dt>
                         <dd class="ent-stat-label">Années d'expertise</dd>
                     </div>
                     <div class="ent-stat">
-                        <dt class="ent-stat-num"><span data-count="0">0</span></dt>
+                        <dt class="ent-stat-num"><span data-count="{{ $settings->incidents_count ?? 0 }}">0</span></dt>
                         <dd class="ent-stat-label">Incident enregistré</dd>
                     </div>
                     <div class="ent-stat">
@@ -50,11 +47,7 @@
 
             <!-- Récit « carotte de forage » (colonne droite) -->
             <div class="ent-story reveal-right">
-                <p class="text-body ent-mission">
-                    Notre mission : fournir des prestations de haute qualité tout au long du cycle de vie des puits,
-                    en garantissant la sécurité de nos équipes, la maîtrise des risques industriels et le respect
-                    des normes internationales.
-                </p>
+                <p class="text-body ent-mission">{{ $page->get('about.mission', 'Notre mission : fournir des prestations de haute qualité tout au long du cycle de vie des puits, en garantissant la sécurité de nos équipes, la maîtrise des risques industriels et le respect des normes internationales.') }}</p>
 
                 <ol class="core-log stagger" aria-label="Étapes clés de la SFP">
                     <li class="core-step">
@@ -78,16 +71,13 @@
                 </ol>
 
                 <div class="ent-values">
-                    <div class="ent-value">
-                        <span class="ico"><i class="hgi-stroke hgi-target-01"></i></span>
-                        <h4>Excellence opérationnelle</h4>
-                        <p>Des standards élevés, une amélioration continue et une exigence de résultat sur le terrain.</p>
-                    </div>
-                    <div class="ent-value">
-                        <span class="ico"><i class="hgi-stroke hgi-agreement-01"></i></span>
-                        <h4>Fiabilité &amp; transparence</h4>
-                        <p>Un partenaire de confiance pour des projets pétroliers complexes et exigeants.</p>
-                    </div>
+                    @foreach ($entValues as $value)
+                        <div class="ent-value">
+                            <span class="ico"><i class="hgi-stroke {{ $value->icon }}"></i></span>
+                            <h4>{{ $value->title }}</h4>
+                            <p>{{ $value->description }}</p>
+                        </div>
+                    @endforeach
                 </div>
 
                 <div class="mt-4">

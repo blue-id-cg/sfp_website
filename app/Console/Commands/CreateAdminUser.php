@@ -55,6 +55,7 @@ class CreateAdminUser extends Command
             'name' => $name,
             'email' => $email,
             'password' => $plainPassword,
+            'role' => 'admin',
         ]);
 
         $this->components->info("Administrateur créé : {$user->email}");

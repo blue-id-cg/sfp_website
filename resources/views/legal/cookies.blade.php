@@ -35,7 +35,7 @@
                 <p>Vous pouvez à tout moment configurer votre navigateur pour refuser ou supprimer les cookies déposés. Le paramétrage est propre à chaque navigateur et accessible depuis son menu d'aide.</p>
 
                 <h2>En savoir plus</h2>
-                <p>Pour toute question relative aux cookies ou à la protection de vos données, consultez notre <a href="{{ route('legal.privacy') }}">politique de confidentialité</a> ou contactez-nous à <a href="mailto:contact@snpc-sfp.net">contact@snpc-sfp.net</a>.</p>
+                <p>Pour toute question relative aux cookies ou à la protection de vos données, consultez notre <a href="{{ route('legal.privacy') }}">politique de confidentialité</a> ou contactez-nous à <a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}">{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a>.</p>
             </div>
         </div>
     </article>

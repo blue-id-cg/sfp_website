@@ -4,11 +4,11 @@
     <div class="wrap">
         <div class="sec-head-split mb-4">
             <div class="reveal">
-                <span class="kicker" data-index="02">Nos métiers</span>
-                <h2 class="title-xl">Le cycle de vie du puits,<br />maîtrisé de bout en bout</h2>
+                <span class="kicker" data-index="02">{{ $page->get('activities.kicker', 'Nos métiers') }}</span>
+                <h2 class="title-xl">{{ $page->get('activities.title', 'Le cycle de vie du puits, maîtrisé de bout en bout') }}</h2>
             </div>
             <div class="r reveal">
-                <p class="lead">De la préparation des opérations à la maintenance des installations, nos équipes couvrent l'ensemble des disciplines du forage pétrolier.</p>
+                <p class="lead">{{ $page->get('activities.lead', "De la préparation des opérations à la maintenance des installations, nos équipes couvrent l'ensemble des disciplines du forage pétrolier.") }}</p>
                 <a href="{{ route('metiers.index') }}" class="link-arrow mt-3">Découvrir tous nos métiers <i class="hgi-stroke hgi-arrow-right-01"></i></a>
             </div>
         </div>

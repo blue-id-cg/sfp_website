@@ -1,0 +1,29 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\ContentBlock;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<ContentBlock>
+ */
+class ContentBlockFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'group' => 'trades',
+            'icon' => 'hgi-factory-01',
+            'title' => $this->faker->words(2, true),
+            'description' => $this->faker->sentence(12),
+            'meta' => null,
+            'position' => 0,
+        ];
+    }
+}

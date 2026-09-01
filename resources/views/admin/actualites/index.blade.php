@@ -9,12 +9,6 @@
         </x-slot:actions>
     </x-admin.page-header>
 
-    @if (session('status'))
-        <p class="mb-5 inline-flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-700">
-            <i class="hgi-stroke hgi-checkmark-circle-01"></i> {{ session('status') }}
-        </p>
-    @endif
-
     <form method="GET" class="relative mb-5 max-w-sm">
         <i class="hgi-stroke hgi-search-01 absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></i>
         <input type="search" name="q" value="{{ $search }}" placeholder="Rechercher une actualité…" class="w-full rounded-md border border-gray-200 py-2 pl-9 pr-3 text-sm focus:border-gray-400 focus:outline-none" />

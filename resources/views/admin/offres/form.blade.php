@@ -8,20 +8,28 @@
     <input type="text" name="slug" id="slug" value="{{ old('slug', $offre->slug ?? '') }}" class="@error('slug') invalid @enderror" />
 </x-admin.field>
 
-<x-admin.field name="tags" label="Tags" hint="Un par ligne, ex. Brazzaville, CDI, Forage.">
-    <textarea name="tags" id="tags" rows="3" class="@error('tags') invalid @enderror">{{ old('tags', isset($offre) ? implode("\n", $offre->tags ?? []) : '') }}</textarea>
-</x-admin.field>
+@php
+    $tagsValue = is_array(old('tags'))
+        ? implode("\n", old('tags'))
+        : old('tags', isset($offre) ? implode("\n", $offre->tags ?? []) : '');
+@endphp
+<x-admin.tag-field
+    name="tags"
+    label="Tags"
+    hint="Appuyez sur Entrée ou virgule pour ajouter un tag, ex. Brazzaville, CDI, Forage."
+    :value="$tagsValue"
+/>
 
 <x-admin.field name="summary" label="Résumé">
     <textarea name="summary" id="summary" rows="2" class="@error('summary') invalid @enderror">{{ old('summary', $offre->summary ?? '') }}</textarea>
 </x-admin.field>
 
 <x-admin.field name="missions" label="Missions" hint="Une par ligne.">
-    <textarea name="missions" id="missions" rows="5" class="@error('missions') invalid @enderror">{{ old('missions', isset($offre) ? implode("\n", $offre->missions ?? []) : '') }}</textarea>
+    <textarea name="missions" id="missions" rows="5" class="@error('missions') invalid @enderror">{{ is_array(old('missions')) ? implode("\n", old('missions')) : old('missions', isset($offre) ? implode("\n", $offre->missions ?? []) : '') }}</textarea>
 </x-admin.field>
 
 <x-admin.field name="profile" label="Profil recherché" hint="Une ligne par critère.">
-    <textarea name="profile" id="profile" rows="5" class="@error('profile') invalid @enderror">{{ old('profile', isset($offre) ? implode("\n", $offre->profile ?? []) : '') }}</textarea>
+    <textarea name="profile" id="profile" rows="5" class="@error('profile') invalid @enderror">{{ is_array(old('profile')) ? implode("\n", old('profile')) : old('profile', isset($offre) ? implode("\n", $offre->profile ?? []) : '') }}</textarea>
 </x-admin.field>
 
 <x-admin.field name="published_at" label="Date de publication" hint="Laisser vide pour enregistrer comme brouillon.">

@@ -32,18 +32,15 @@
         <h1>
             <span id="heroTypewriter" data-typewriter='["Forer plus profond, avec une précision absolue.","Un leader du forage et des services.","L’expertise congolaise du forage pétrolier."]'></span><span class="hero-typewriter-cursor" aria-hidden="true"></span>
         </h1>
-        <p class="hero-sub">
-            Société de Forages Pétroliers · l'expertise congolaise du forage, de la complétion
-            et du work over. Des opérations maîtrisées, sûres et performantes, au cœur du bassin pétrolier.
-        </p>
+        <p class="hero-sub">{{ $page->get('hero.subhead', "Société de Forages Pétroliers · l'expertise congolaise du forage, de la complétion et du work over. Des opérations maîtrisées, sûres et performantes, au cœur du bassin pétrolier.") }}</p>
         <div class="hero-cta">
-            <a href="{{ route('metiers.index') }}" class="btn btn-primary">Découvrir nos métiers <i class="hgi-stroke hgi-arrow-right-01"></i></a>
-            <a href="#contact" class="btn btn-ghost-light">Nous contacter</a>
+            <a href="{{ route('metiers.index') }}" class="btn btn-primary">{{ $page->get('hero.cta_primary_label', 'Découvrir nos métiers') }} <i class="hgi-stroke hgi-arrow-right-01"></i></a>
+            <a href="#contact" class="btn btn-ghost-light">{{ $page->get('hero.cta_secondary_label', 'Nous contacter') }}</a>
         </div>
 
         <div class="hero-stats">
-            <div class="hs"><b data-count="{{ now()->year - 2011 }}" data-suffix="+">0</b><span>Années d'expérience</span></div>
-            <div class="hs"><b data-count="2">0</b><span>Rigs de forage</span></div>
+            <div class="hs"><b data-count="{{ now()->year - ($settings->founding_year ?? 2011) }}" data-suffix="+">0</b><span>Années d'expérience</span></div>
+            <div class="hs"><b data-count="{{ $settings->rigs_count ?? 2 }}">0</b><span>Rigs de forage</span></div>
             <div class="hs"><b>24<i>/</i>7</b><span>Opérations continues</span></div>
             <div class="hs"><b data-count="0" data-literal="HSE">HSE</b><span>Priorité absolue</span></div>
         </div>

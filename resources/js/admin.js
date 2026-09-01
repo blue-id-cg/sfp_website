@@ -1,4 +1,6 @@
 import Quill from 'quill';
+import Tagify from '@yaireo/tagify';
+import { Notyf } from 'notyf';
 
 // Éditeur riche (contenu des actualités)
 document.querySelectorAll('textarea[data-quill]').forEach((textarea) => {
@@ -61,6 +63,81 @@ document.addEventListener('click', (event) => {
     if (userMenu && !userMenu.contains(event.target)) {
         userMenuPanel?.classList.add('hidden');
     }
+});
+
+// Champ tags (Tagify) — le textarea sous-jacent reste la source de vérité pour le serveur,
+// une valeur par ligne (App\Http\Requests\Concerns\ParsesLineDelimitedFields).
+document.querySelectorAll('textarea[data-tag-input]').forEach((textarea) => {
+    const initialTags = textarea.value.split(/\r\n|\r|\n/).map((tag) => tag.trim()).filter(Boolean);
+    textarea.value = '';
+
+    const tagify = new Tagify(textarea, {
+        originalInputValueFormat: (values) => values.map((tag) => tag.value).join('\n'),
+        placeholder: 'Ajouter un tag…',
+    });
+
+    tagify.addTags(initialTags);
+});
+
+// Notifications (Notyf) — messages flash de session affichés en toast plutôt qu'en bandeau statique.
+export const notyf = new Notyf({
+    duration: 4500,
+    position: { x: 'right', y: 'top' },
+    types: [
+        { type: 'success', background: '#16a34a' },
+        { type: 'error', background: '#dc2626', icon: false },
+    ],
+});
+
+document.querySelectorAll('[data-flash]').forEach((el) => {
+    const type = el.dataset.flash;
+    const message = el.textContent.trim();
+    if (message) {
+        notyf.open({ type, message });
+    }
+});
+
+// Sélecteur d'icône (bloc de contenu) — palette cliquable plutôt qu'un champ texte libre, pour
+// qu'un admin ne puisse pas enregistrer une classe Hugeicons qui n'existe pas sans s'en apercevoir.
+document.querySelectorAll('[data-icon-picker]').forEach((picker) => {
+    const input = picker.querySelector('[data-icon-value]');
+    const trigger = picker.querySelector('[data-icon-trigger]');
+    const panel = picker.querySelector('[data-icon-panel]');
+    const preview = picker.querySelector('[data-icon-preview]');
+    const label = picker.querySelector('[data-icon-label]');
+    if (!input || !trigger || !panel || !preview || !label) return;
+
+    const select = (value) => {
+        input.value = value;
+        preview.className = value ? `hgi-stroke ${value}` : 'hgi-stroke';
+        preview.style.visibility = value ? 'visible' : 'hidden';
+        label.textContent = value || 'Aucune icône';
+        label.classList.toggle('text-gray-400', !value);
+        label.classList.toggle('text-gray-900', Boolean(value));
+
+        panel.querySelectorAll('[data-icon-option]').forEach((option) => {
+            const isSelected = value !== '' && option.dataset.iconOption === value;
+            option.classList.toggle('bg-gray-900', isSelected);
+            option.classList.toggle('text-white', isSelected);
+        });
+    };
+
+    trigger.addEventListener('click', () => {
+        panel.hidden = !panel.hidden;
+    });
+
+    panel.querySelectorAll('[data-icon-option]').forEach((option) => {
+        option.addEventListener('click', () => {
+            select(option.dataset.iconOption ?? '');
+            panel.hidden = true;
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!picker.contains(event.target)) panel.hidden = true;
+    });
+
+    select(input.value);
 });
 
 // Zone de dépôt de fichier (upload image)

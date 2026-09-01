@@ -41,8 +41,8 @@
                 <h5>Restons en contact</h5>
                 <div class="footer-links">
                     <a href="https://maps.google.com/?q=Pointe-Noire,Congo" target="_blank" rel="noopener"><i class="hgi-stroke hgi-location-01"></i>&nbsp; Pointe-Noire, Congo</a>
-                    <a href="tel:+242065870728"><i class="hgi-stroke hgi-call"></i>&nbsp; +242 06 587 07 28</a>
-                    <a href="mailto:contact@snpc-sfp.net"><i class="hgi-stroke hgi-mail-01"></i>&nbsp; contact@snpc-sfp.net</a>
+                    <a href="tel:{{ preg_replace('/\s+/', '', $settings->contact_phone ?? '+242065870728') }}"><i class="hgi-stroke hgi-call"></i>&nbsp; {{ $settings->contact_phone ?? '+242 06 587 07 28' }}</a>
+                    <a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}"><i class="hgi-stroke hgi-mail-01"></i>&nbsp; {{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a>
                 </div>
                 <form class="newsletter" data-newsletter novalidate>
                     <input type="email" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail" required />
