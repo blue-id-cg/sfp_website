@@ -61,7 +61,7 @@ DB_USERNAME="${DB_USERNAME:-}"
 DB_PASSWORD="${DB_PASSWORD:-}"
 LETSENCRYPT_EMAIL="${LETSENCRYPT_EMAIL:-contact@snpc-sfp.net}"
 
-TOTAL_STEPS=11
+TOTAL_STEPS=12
 STEP=0
 
 if [ -z "$DOMAIN" ]; then
@@ -157,6 +157,16 @@ fi
 step "Migrations et mise en cache de la configuration"
 php artisan storage:link || true
 laravel_migrate_and_cache
+
+step "Contenu initial du CMS"
+# Uniquement si la base est vierge : les seeders réécrivent des lignes par slug/position,
+# ce qui écraserait silencieusement tout contenu déjà modifié depuis l'admin si ce script
+# était ré-exécuté sur un serveur déjà provisionné (ex. pour corriger une étape en échec).
+if [ "$(php artisan tinker --execute='echo \App\Models\Page::query()->count();')" = "0" ]; then
+    php artisan db:seed --force
+else
+    echo "Contenu déjà présent : seed ignoré (ré-exécution du script sur un serveur existant)."
+fi
 
 step "Permissions des dossiers writables"
 chown -R www-data:www-data "$APP_DIR"

@@ -12,7 +12,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/lib.sh"
 source "${SCRIPT_DIR}/laravel.sh"
 
-TOTAL_STEPS=4
+TOTAL_STEPS=5
 STEP=0
 
 step "Récupération des derniers changements"
@@ -29,6 +29,12 @@ npm run build
 
 step "Migrations et mise en cache de la configuration"
 laravel_migrate_and_cache
+
+step "Synchronisation des rôles et permissions"
+# Sans danger à ré-exécuter à chaque déploiement (findOrCreate/syncPermissions) : contrairement
+# aux seeders de contenu (pages, blocs, réalisations...), celui-ci ne touche à aucune donnée
+# éditée depuis l'admin. Ça garde les permissions à jour si de nouvelles sont ajoutées au code.
+php artisan db:seed --class=RolesAndPermissionsSeeder --force
 
 step "Permissions"
 if ! chmod -R 775 storage bootstrap/cache 2>/dev/null; then

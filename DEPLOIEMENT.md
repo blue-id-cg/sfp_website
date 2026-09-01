@@ -284,6 +284,7 @@ Puis lancez ces commandes une par une :
 
 ```bash
 php artisan migrate --force
+php artisan db:seed --force
 php artisan storage:link
 php artisan config:cache
 php artisan route:cache
@@ -293,6 +294,11 @@ php artisan view:cache
 > La commande `migrate` crée les tables dont le site a besoin (offres d'emploi, actualités, messages de
 > contact...) dans la base de données. Elle est indispensable au premier déploiement, et à refaire à
 > chaque mise à jour qui ajoute de nouvelles fonctionnalités (voir plus bas).
+>
+> La commande `db:seed` remplit ces tables avec le contenu initial du site (pages, blocs de contenu,
+> réalisations, frise chronologique, réglages du site, rôles). **Uniquement au premier déploiement** :
+> ne la relancez pas lors des mises à jour suivantes, sinon elle écraserait le contenu déjà modifié
+> depuis l'administration (voir l'avertissement plus bas).
 
 Puis vérifiez les autorisations d'écriture (nécessaire pour que le site fonctionne) :
 
@@ -346,6 +352,7 @@ Quand une modification du contenu ou du design est livrée par le développeur :
    composer install --optimize-autoloader --no-dev
    npm install && npm run build
    php artisan migrate --force
+   php artisan db:seed --class=RolesAndPermissionsSeeder --force
    php artisan config:cache
    php artisan route:cache
    php artisan view:cache
@@ -353,6 +360,13 @@ Quand une modification du contenu ou du design est livrée par le développeur :
 
    (Si vous avez déployé via le script `deploy/deploy.sh` sur un VPS provisionné avec `provision.sh`,
    ces commandes sont déjà toutes incluses — voir [plus haut](#mettre-à-jour-le-site-après-ce-premier-déploiement).)
+
+> **Ne relancez jamais `php artisan db:seed --force` (sans `--class=...`) lors d'une mise à jour** : les
+> seeders de contenu (pages, blocs, réalisations, frise, actualités, offres, galerie) réécrivent des
+> lignes précises et effaceraient les modifications faites depuis l'administration. Seul
+> `RolesAndPermissionsSeeder` est sans danger à rejouer — il ne fait que garder les permissions à jour.
+
+---
 
 > Astuce : si une page affiche encore l'ancienne version après une mise à jour, c'est souvent le "cache"
 > du site. Les trois commandes `artisan ... :cache` ci-dessus le régénèrent. Vous pouvez aussi forcer un
@@ -370,6 +384,12 @@ bootstrap/cache`).
 **Le site s'affiche sans style (pas de couleurs, mise en page cassée)**
 Le dossier `public/build/` est manquant ou incomplet : relancez `npm run build` puis renvoyez ce dossier
 sur le serveur.
+
+**"Erreur 500" alors que le site s'affichait bien avant, juste après un premier déploiement du CMS**
+Les tables existent (`migrate` a fonctionné) mais sont vides : le contenu initial (pages, blocs de
+contenu, réalisations, frise, réglages, rôles) n'a jamais été chargé. Lancez une seule fois :
+`php artisan db:seed --force`. Voir l'avertissement plus haut : ne relancez plus cette commande sans
+`--class=...` par la suite, seulement lors du tout premier déploiement.
 
 **Erreur "could not find driver" ou "SQLSTATE" à l'ouverture du site**
 La base de données configurée dans `.env` (`DB_CONNECTION`) ne correspond pas à ce qui est réellement
