@@ -12,8 +12,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/lib.sh"
 source "${SCRIPT_DIR}/laravel.sh"
 
-TOTAL_STEPS=5
+TOTAL_STEPS=7
 STEP=0
+
+step "Mode maintenance"
+php artisan down --retry=60
+# Quoi qu'il arrive ensuite (échec d'une étape, Ctrl+C...), on ne laisse jamais le site bloqué
+# en maintenance sans que personne ne s'en aperçoive.
+trap 'php artisan up >/dev/null 2>&1 || true' EXIT
 
 step "Récupération des derniers changements"
 if [ -d .git ]; then
@@ -43,6 +49,9 @@ if ! chmod -R 775 storage bootstrap/cache 2>/dev/null; then
     echo "par $(whoami). Ce n'est pas bloquant : le site reste à jour. Voir DEPLOIEMENT.md,"
     echo "section « Permissions », pour corriger ça une bonne fois pour toutes."
 fi
+
+step "Fin de la maintenance"
+php artisan up
 
 echo ""
 echo "Terminé : le site est à jour."
