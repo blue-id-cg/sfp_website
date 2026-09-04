@@ -34,7 +34,7 @@
                 <div class="p-3">
                     <p class="text-sm font-medium text-gray-900 truncate">{{ $item->alt_text ?: $item->original_name }}</p>
                     @unless ($pickerFor)
-                        <form method="POST" action="{{ route('admin.media.destroy', $item) }}" class="mt-2" onsubmit="return confirm('Supprimer ce fichier ?');">
+                        <form method="POST" action="{{ route('admin.media.destroy', $item) }}" class="mt-2" data-confirm data-confirm-title="Supprimer ce fichier ?" data-confirm-message="Ce fichier sera définitivement supprimé.">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="inline-flex items-center gap-1.5 text-sm text-red-600 hover:underline">

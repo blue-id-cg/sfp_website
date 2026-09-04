@@ -35,7 +35,7 @@ class UpdateRealisationRequest extends FormRequest
             'slug' => ['required', 'string', 'max:255', Rule::unique('realisations', 'slug')->ignore($this->route('realisation')?->id)],
             'category' => ['nullable', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:2000'],
-            'image' => ['nullable', 'image', 'max:4096'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'facts' => ['nullable', 'array'],
             'facts.*.icon' => ['nullable', 'string', 'max:100'],
             'facts.*.text' => ['required', 'string', 'max:255'],

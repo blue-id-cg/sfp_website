@@ -1,11 +1,94 @@
+document.addEventListener("alpine:init", () => {
+    Alpine.data("validatedForm", () => ({
+        errors: {},
+        processing: false,
+        success: false,
+
+        validate() {
+            const form = this.$el;
+            this.errors = {};
+
+            form.querySelectorAll("[required]").forEach((field) => {
+                if (!field.value.trim()) {
+                    this.errors[field.name] = "Ce champ est obligatoire.";
+                }
+            });
+
+            const email = form.querySelector('input[type="email"]');
+            if (email?.value && !email.validity.valid) {
+                this.errors[email.name] =
+                    "Veuillez saisir une adresse e-mail valide.";
+            }
+
+            form.querySelectorAll("[maxlength]").forEach((field) => {
+                if (field.value.length > Number(field.maxLength)) {
+                    this.errors[field.name] =
+                        `Ce champ ne peut pas dépasser ${field.maxLength} caractères.`;
+                }
+            });
+
+            const cv = form.querySelector('input[type="file"]');
+            const file = cv?.files?.[0];
+            if (file) {
+                const acceptedTypes = [
+                    "application/pdf",
+                    "application/msword",
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ];
+                if (
+                    !acceptedTypes.includes(file.type) ||
+                    file.size > 5 * 1024 * 1024
+                ) {
+                    this.errors[cv.name] =
+                        "Le CV doit être un fichier PDF, DOC ou DOCX de 5 Mo maximum.";
+                }
+            }
+
+            return Object.keys(this.errors).length === 0;
+        },
+
+        async submit() {
+            if (!this.validate()) {
+                this.$nextTick(() =>
+                    this.$el.querySelector(".invalid")?.focus(),
+                );
+                return;
+            }
+
+            this.processing = true;
+            this.success = false;
+
+            try {
+                await window.axios.post(
+                    this.$el.action,
+                    new FormData(this.$el),
+                    {
+                        headers: { Accept: "application/json" },
+                    },
+                );
+                this.success = true;
+                this.$el.reset();
+                this.errors = {};
+            } catch (error) {
+                this.errors = error.response?.data?.errors ?? {
+                    form: "Une erreur est survenue. Veuillez réessayer.",
+                };
+            } finally {
+                this.processing = false;
+            }
+        },
+    }));
+});
+
 // Préchargeur
-const splash = document.getElementById('splash');
+const splash = document.getElementById("splash");
 if (splash) {
-    const splashPct = document.getElementById('splashPct');
+    const splashPct = document.getElementById("splashPct");
     let splashProgress = 0;
     let splashDone = false;
 
-    const formatPct = (value) => `${String(Math.floor(value)).padStart(2, '0')} %`;
+    const formatPct = (value) =>
+        `${String(Math.floor(value)).padStart(2, "0")} %`;
 
     const tickSplashProgress = () => {
         if (splashDone) return;
@@ -15,26 +98,28 @@ if (splash) {
     };
     tickSplashProgress();
 
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
         splashDone = true;
         splashProgress = 100;
         if (splashPct) splashPct.textContent = formatPct(100);
-        setTimeout(() => splash.classList.add('done'), 300);
+        setTimeout(() => splash.classList.add("done"), 300);
     });
 }
 
 // Barre de navigation : fond au scroll
-const nav = document.getElementById('nav');
+const nav = document.getElementById("nav");
 const onScroll = () => {
     if (!nav) return;
-    nav.classList.toggle('scrolled', window.scrollY > 40);
+    nav.classList.toggle("scrolled", window.scrollY > 40);
 };
-document.addEventListener('scroll', onScroll, { passive: true });
+document.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
 // Parallaxe (bannière hero & page-head)
-const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const parallaxEls = Array.from(document.querySelectorAll("[data-parallax]"));
+const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+).matches;
 
 if (parallaxEls.length && !reducedMotion) {
     let ticking = false;
@@ -55,18 +140,22 @@ if (parallaxEls.length && !reducedMotion) {
     };
 
     applyParallax();
-    window.addEventListener('scroll', onParallaxScroll, { passive: true });
-    window.addEventListener('resize', applyParallax);
+    window.addEventListener("scroll", onParallaxScroll, { passive: true });
+    window.addEventListener("resize", applyParallax);
 }
 
 // Curseur « trépan » (identité transverse, site public uniquement)
-if (nav && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !reducedMotion) {
-    document.body.classList.add('custom-cursor');
+if (
+    nav &&
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+    !reducedMotion
+) {
+    document.body.classList.add("custom-cursor");
 
-    const cursorDot = document.createElement('div');
-    cursorDot.className = 'cursor-dot';
-    const cursorRing = document.createElement('div');
-    cursorRing.className = 'cursor-ring';
+    const cursorDot = document.createElement("div");
+    cursorDot.className = "cursor-dot";
+    const cursorRing = document.createElement("div");
+    cursorRing.className = "cursor-ring";
     document.body.append(cursorDot, cursorRing);
 
     let mouseX = 0;
@@ -78,14 +167,16 @@ if (nav && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !r
         el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
     };
 
-    document.addEventListener('mousemove', (event) => {
+    document.addEventListener("mousemove", (event) => {
         mouseX = event.clientX;
         mouseY = event.clientY;
-        document.body.classList.add('custom-cursor-active');
+        document.body.classList.add("custom-cursor-active");
         positionCursor(cursorDot, mouseX, mouseY);
     });
 
-    document.addEventListener('mouseleave', () => document.body.classList.remove('custom-cursor-active'));
+    document.addEventListener("mouseleave", () =>
+        document.body.classList.remove("custom-cursor-active"),
+    );
 
     const followRing = () => {
         ringX += (mouseX - ringX) * 0.18;
@@ -95,16 +186,22 @@ if (nav && window.matchMedia('(hover: hover) and (pointer: fine)').matches && !r
     };
     followRing();
 
-    document.querySelectorAll('a, button, [role="button"], input, textarea, select').forEach((el) => {
-        el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
-    });
+    document
+        .querySelectorAll('a, button, [role="button"], input, textarea, select')
+        .forEach((el) => {
+            el.addEventListener("mouseenter", () =>
+                cursorRing.classList.add("hover"),
+            );
+            el.addEventListener("mouseleave", () =>
+                cursorRing.classList.remove("hover"),
+            );
+        });
 }
 
 // Machine à écrire (texte d'accroche du hero)
-const typewriterEl = document.getElementById('heroTypewriter');
+const typewriterEl = document.getElementById("heroTypewriter");
 if (typewriterEl) {
-    const phrases = JSON.parse(typewriterEl.dataset.typewriter || '[]');
+    const phrases = JSON.parse(typewriterEl.dataset.typewriter || "[]");
 
     if (phrases.length && !reducedMotion) {
         let phraseIndex = 0;
@@ -141,34 +238,38 @@ if (typewriterEl) {
 }
 
 // Menu mobile
-const burger = document.getElementById('burger');
-const mobileMenu = document.getElementById('mobileMenu');
-const mmClose = document.getElementById('mmClose');
+const burger = document.getElementById("burger");
+const mobileMenu = document.getElementById("mobileMenu");
+const mmClose = document.getElementById("mmClose");
 
 const openMobileMenu = () => {
-    mobileMenu?.classList.add('open');
-    mobileMenu?.setAttribute('aria-hidden', 'false');
-    burger?.setAttribute('aria-expanded', 'true');
+    mobileMenu?.classList.add("open");
+    mobileMenu?.setAttribute("aria-hidden", "false");
+    burger?.setAttribute("aria-expanded", "true");
 };
 const closeMobileMenu = () => {
-    mobileMenu?.classList.remove('open');
-    mobileMenu?.setAttribute('aria-hidden', 'true');
-    burger?.setAttribute('aria-expanded', 'false');
+    mobileMenu?.classList.remove("open");
+    mobileMenu?.setAttribute("aria-hidden", "true");
+    burger?.setAttribute("aria-expanded", "false");
 };
 
-burger?.addEventListener('click', openMobileMenu);
-mmClose?.addEventListener('click', closeMobileMenu);
-mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMobileMenu));
+burger?.addEventListener("click", openMobileMenu);
+mmClose?.addEventListener("click", closeMobileMenu);
+mobileMenu
+    ?.querySelectorAll("a")
+    .forEach((link) => link.addEventListener("click", closeMobileMenu));
 
 // Retour en haut
-const toTop = document.getElementById('toTop');
-const onScrollTop = () => toTop?.classList.toggle('show', window.scrollY > 600);
-document.addEventListener('scroll', onScrollTop, { passive: true });
+const toTop = document.getElementById("toTop");
+const onScrollTop = () => toTop?.classList.toggle("show", window.scrollY > 600);
+document.addEventListener("scroll", onScrollTop, { passive: true });
 onScrollTop();
-toTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+toTop?.addEventListener("click", () =>
+    window.scrollTo({ top: 0, behavior: "smooth" }),
+);
 
 // Galerie « carotte de forage » : défilement horizontal à la souris + carrousel automatique
-document.querySelectorAll('[data-core-strip]').forEach((strip) => {
+document.querySelectorAll("[data-core-strip]").forEach((strip) => {
     let isDragging = false;
     let startX = 0;
     let startScroll = 0;
@@ -183,29 +284,29 @@ document.querySelectorAll('[data-core-strip]').forEach((strip) => {
         }, 1800);
     };
 
-    strip.addEventListener('mousedown', (event) => {
+    strip.addEventListener("mousedown", (event) => {
         isDragging = true;
         startX = event.pageX;
         startScroll = strip.scrollLeft;
         pauseAuto();
     });
-    window.addEventListener('mouseup', () => {
+    window.addEventListener("mouseup", () => {
         isDragging = false;
         resumeAutoSoon();
     });
-    window.addEventListener('mousemove', (event) => {
+    window.addEventListener("mousemove", (event) => {
         if (!isDragging) return;
         event.preventDefault();
         strip.scrollLeft = startScroll - (event.pageX - startX);
     });
 
-    strip.addEventListener('mouseenter', pauseAuto);
-    strip.addEventListener('mouseleave', resumeAutoSoon);
-    strip.addEventListener('touchstart', pauseAuto, { passive: true });
-    strip.addEventListener('touchend', resumeAutoSoon, { passive: true });
+    strip.addEventListener("mouseenter", pauseAuto);
+    strip.addEventListener("mouseleave", resumeAutoSoon);
+    strip.addEventListener("touchstart", pauseAuto, { passive: true });
+    strip.addEventListener("touchend", resumeAutoSoon, { passive: true });
 
     // Diapositive « active » = celle la plus proche du centre du carrousel
-    const samples = Array.from(strip.querySelectorAll('.core-sample'));
+    const samples = Array.from(strip.querySelectorAll(".core-sample"));
     let activeTicking = false;
 
     const highlightActive = () => {
@@ -221,18 +322,24 @@ document.querySelectorAll('[data-core-strip]').forEach((strip) => {
                 best = sample;
             }
         });
-        samples.forEach((sample) => sample.classList.toggle('is-active', sample === best));
+        samples.forEach((sample) =>
+            sample.classList.toggle("is-active", sample === best),
+        );
     };
 
-    strip.addEventListener('scroll', () => {
-        if (activeTicking) return;
-        activeTicking = true;
-        requestAnimationFrame(() => {
-            highlightActive();
-            activeTicking = false;
-        });
-    }, { passive: true });
-    window.addEventListener('resize', highlightActive);
+    strip.addEventListener(
+        "scroll",
+        () => {
+            if (activeTicking) return;
+            activeTicking = true;
+            requestAnimationFrame(() => {
+                highlightActive();
+                activeTicking = false;
+            });
+        },
+        { passive: true },
+    );
+    window.addEventListener("resize", highlightActive);
     highlightActive();
 
     if (reducedMotion) return;
@@ -240,72 +347,91 @@ document.querySelectorAll('[data-core-strip]').forEach((strip) => {
     setInterval(() => {
         if (autoPaused) return;
 
-        const first = strip.querySelector('.core-sample');
+        const first = strip.querySelector(".core-sample");
         const gap = parseFloat(getComputedStyle(strip).gap) || 16;
         const step = (first?.offsetWidth ?? 300) + gap;
-        const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
+        const atEnd =
+            strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
 
-        strip.scrollTo({ left: atEnd ? 0 : strip.scrollLeft + step, behavior: 'smooth' });
+        strip.scrollTo({
+            left: atEnd ? 0 : strip.scrollLeft + step,
+            behavior: "smooth",
+        });
     }, 3600);
 });
 
 // Animations au scroll (apparition à l'entrée, disparition à la sortie)
-const revealTargets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger');
-if ('IntersectionObserver' in window && revealTargets.length && !reducedMotion) {
+const revealTargets = document.querySelectorAll(
+    ".reveal, .reveal-left, .reveal-right, .reveal-scale, .stagger",
+);
+if (
+    "IntersectionObserver" in window &&
+    revealTargets.length &&
+    !reducedMotion
+) {
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
-                entry.target.classList.toggle('is-in', entry.isIntersecting);
+                entry.target.classList.toggle("is-in", entry.isIntersecting);
             });
         },
-        { threshold: 0.15 }
+        { threshold: 0.15 },
     );
     revealTargets.forEach((target) => observer.observe(target));
 } else {
-    revealTargets.forEach((target) => target.classList.add('is-in'));
+    revealTargets.forEach((target) => target.classList.add("is-in"));
 }
 
 // Jauge de profondeur (toutes les pages) : reformule la progression de scroll en mètres forés
-const siteFooter = document.querySelector('.footer');
-const depthGauge = document.getElementById('depthGauge');
-const depthFill = document.getElementById('depthFill');
-const depthBit = document.getElementById('depthBit');
-const depthValueEl = document.getElementById('depthValue');
+const siteFooter = document.querySelector(".footer");
+const depthGauge = document.getElementById("depthGauge");
+const depthFill = document.getElementById("depthFill");
+const depthBit = document.getElementById("depthBit");
+const depthValueEl = document.getElementById("depthValue");
 
 if (depthGauge && depthFill && depthBit && depthValueEl) {
     const onDepthScroll = () => {
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
-        const nearFooter = siteFooter ? siteFooter.getBoundingClientRect().top < window.innerHeight : false;
+        const scrollable =
+            document.documentElement.scrollHeight - window.innerHeight;
+        const progress =
+            scrollable > 0
+                ? Math.min(Math.max(window.scrollY / scrollable, 0), 1)
+                : 0;
+        const nearFooter = siteFooter
+            ? siteFooter.getBoundingClientRect().top < window.innerHeight
+            : false;
 
-        depthGauge.classList.toggle('show', window.scrollY > 200 && !nearFooter);
+        depthGauge.classList.toggle(
+            "show",
+            window.scrollY > 200 && !nearFooter,
+        );
         depthFill.style.height = `${progress * 100}%`;
         depthBit.style.top = `${progress * 100}%`;
-        depthValueEl.textContent = `${Math.round(progress * 3000).toLocaleString('fr-FR')} m`;
+        depthValueEl.textContent = `${Math.round(progress * 3000).toLocaleString("fr-FR")} m`;
     };
 
-    document.addEventListener('scroll', onDepthScroll, { passive: true });
+    document.addEventListener("scroll", onDepthScroll, { passive: true });
     onDepthScroll();
 }
 
 // Zone de dépôt de fichier (CV du formulaire de candidature)
-document.querySelectorAll('[data-file-input]').forEach((input) => {
-    const drop = input.closest('.field')?.querySelector('[data-file-drop]');
-    const nameEl = drop?.querySelector('[data-file-name]');
+document.querySelectorAll("[data-file-input]").forEach((input) => {
+    const drop = input.closest(".field")?.querySelector("[data-file-drop]");
+    const nameEl = drop?.querySelector("[data-file-name]");
     if (!drop || !nameEl) return;
 
-    input.addEventListener('change', () => {
+    input.addEventListener("change", () => {
         if (input.files?.[0]) nameEl.textContent = input.files[0].name;
     });
 
-    ['dragover', 'dragleave', 'drop'].forEach((eventName) => {
+    ["dragover", "dragleave", "drop"].forEach((eventName) => {
         drop.addEventListener(eventName, (event) => {
             event.preventDefault();
-            drop.classList.toggle('drag', eventName === 'dragover');
+            drop.classList.toggle("drag", eventName === "dragover");
         });
     });
 
-    drop.addEventListener('drop', (event) => {
+    drop.addEventListener("drop", (event) => {
         if (event.dataTransfer?.files?.[0]) {
             input.files = event.dataTransfer.files;
             nameEl.textContent = event.dataTransfer.files[0].name;
@@ -314,53 +440,69 @@ document.querySelectorAll('[data-file-input]').forEach((input) => {
 });
 
 // Lightbox (galerie & équipements)
-const lightbox = document.getElementById('lightbox');
-const lbImage = document.getElementById('lbImage');
-const lbCap = document.getElementById('lbCap');
-const lbCount = document.getElementById('lbCount');
-const lightboxTriggers = Array.from(document.querySelectorAll('[data-lightbox]'));
+const lightbox = document.getElementById("lightbox");
+const lbImage = document.getElementById("lbImage");
+const lbCap = document.getElementById("lbCap");
+const lbCount = document.getElementById("lbCount");
+const lightboxTriggers = Array.from(
+    document.querySelectorAll("[data-lightbox]"),
+);
 
 if (lightbox && lbImage && lightboxTriggers.length) {
     let currentIndex = 0;
 
     const sourceFor = (el) =>
-        el.dataset.full || el.querySelector('img')?.currentSrc || el.querySelector('img')?.src || '';
-    const captionFor = (el) => el.querySelector('figcaption')?.textContent?.trim() ?? el.querySelector('img')?.alt ?? '';
+        el.dataset.full ||
+        el.querySelector("img")?.currentSrc ||
+        el.querySelector("img")?.src ||
+        "";
+    const captionFor = (el) =>
+        el.querySelector("figcaption")?.textContent?.trim() ??
+        el.querySelector("img")?.alt ??
+        "";
 
     const openLightboxAt = (index) => {
-        currentIndex = (index + lightboxTriggers.length) % lightboxTriggers.length;
+        currentIndex =
+            (index + lightboxTriggers.length) % lightboxTriggers.length;
         const el = lightboxTriggers[currentIndex];
         lbImage.src = sourceFor(el);
         lbImage.alt = captionFor(el);
         if (lbCap) lbCap.textContent = captionFor(el);
-        if (lbCount) lbCount.textContent = `${currentIndex + 1} / ${lightboxTriggers.length}`;
-        lightbox.classList.add('open');
+        if (lbCount)
+            lbCount.textContent = `${currentIndex + 1} / ${lightboxTriggers.length}`;
+        lightbox.classList.add("open");
     };
 
     lightboxTriggers.forEach((el, index) => {
-        el.addEventListener('click', () => openLightboxAt(index));
+        el.addEventListener("click", () => openLightboxAt(index));
     });
 
-    document.querySelector('[data-lb-close]')?.addEventListener('click', () => lightbox.classList.remove('open'));
-    document.querySelector('[data-lb-prev]')?.addEventListener('click', () => openLightboxAt(currentIndex - 1));
-    document.querySelector('[data-lb-next]')?.addEventListener('click', () => openLightboxAt(currentIndex + 1));
-    lightbox.addEventListener('click', (event) => {
-        if (event.target === lightbox) lightbox.classList.remove('open');
+    document
+        .querySelector("[data-lb-close]")
+        ?.addEventListener("click", () => lightbox.classList.remove("open"));
+    document
+        .querySelector("[data-lb-prev]")
+        ?.addEventListener("click", () => openLightboxAt(currentIndex - 1));
+    document
+        .querySelector("[data-lb-next]")
+        ?.addEventListener("click", () => openLightboxAt(currentIndex + 1));
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) lightbox.classList.remove("open");
     });
-    document.addEventListener('keydown', (event) => {
-        if (!lightbox.classList.contains('open')) return;
-        if (event.key === 'Escape') lightbox.classList.remove('open');
-        if (event.key === 'ArrowLeft') openLightboxAt(currentIndex - 1);
-        if (event.key === 'ArrowRight') openLightboxAt(currentIndex + 1);
+    document.addEventListener("keydown", (event) => {
+        if (!lightbox.classList.contains("open")) return;
+        if (event.key === "Escape") lightbox.classList.remove("open");
+        if (event.key === "ArrowLeft") openLightboxAt(currentIndex - 1);
+        if (event.key === "ArrowRight") openLightboxAt(currentIndex + 1);
     });
 }
 
 // Compteurs animés (bandeau hero / chiffres clés)
-const counters = document.querySelectorAll('[data-count]');
-if ('IntersectionObserver' in window && counters.length) {
+const counters = document.querySelectorAll("[data-count]");
+if ("IntersectionObserver" in window && counters.length) {
     const animateCount = (el) => {
         const target = Number(el.dataset.count);
-        const suffix = el.dataset.suffix ?? '';
+        const suffix = el.dataset.suffix ?? "";
         const literal = el.dataset.literal;
         if (literal) {
             el.textContent = literal;
@@ -385,64 +527,68 @@ if ('IntersectionObserver' in window && counters.length) {
                 }
             });
         },
-        { threshold: 0.5 }
+        { threshold: 0.5 },
     );
     counters.forEach((counter) => counterObserver.observe(counter));
 }
 
 // Bandeau de consentement cookies
-const cookieBanner = document.getElementById('cookieBanner');
+const cookieBanner = document.getElementById("cookieBanner");
 if (cookieBanner) {
-    const COOKIE_CONSENT_KEY = 'sfp_cookie_consent';
+    const COOKIE_CONSENT_KEY = "sfp_cookie_consent";
 
     if (!window.localStorage.getItem(COOKIE_CONSENT_KEY)) {
-        setTimeout(() => cookieBanner.classList.add('show'), 800);
+        setTimeout(() => cookieBanner.classList.add("show"), 800);
     }
 
-    cookieBanner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
-        window.localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
-        cookieBanner.classList.remove('show');
-    });
+    cookieBanner
+        .querySelector("[data-cookie-accept]")
+        ?.addEventListener("click", () => {
+            window.localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
+            cookieBanner.classList.remove("show");
+        });
 }
 
 // Nos métiers · Coupe de puits interactive : cliquer/survoler une phase
 // fait descendre le trépan jusqu'à la station correspondante.
-document.querySelectorAll('.wellbore').forEach((wellbore) => {
-    const rows = Array.from(wellbore.querySelectorAll('.phase-row'));
-    const readout = wellbore.querySelector('[data-wb-readout]');
+document.querySelectorAll(".wellbore").forEach((wellbore) => {
+    const rows = Array.from(wellbore.querySelectorAll(".phase-row"));
+    const readout = wellbore.querySelector("[data-wb-readout]");
 
     const activate = (row) => {
         const phase = row.dataset.phase;
         if (wellbore.dataset.active === phase) return;
         wellbore.dataset.active = phase;
-        rows.forEach((r) => r.setAttribute('aria-current', String(r === row)));
+        rows.forEach((r) => r.setAttribute("aria-current", String(r === row)));
         if (readout) {
-            readout.textContent = row.querySelector('.phase-row-title')?.textContent ?? readout.textContent;
+            readout.textContent =
+                row.querySelector(".phase-row-title")?.textContent ??
+                readout.textContent;
         }
     };
 
     rows.forEach((row) => {
-        row.addEventListener('click', () => activate(row));
-        row.addEventListener('mouseenter', () => activate(row));
-        row.addEventListener('focus', () => activate(row));
+        row.addEventListener("click", () => activate(row));
+        row.addEventListener("mouseenter", () => activate(row));
+        row.addEventListener("focus", () => activate(row));
     });
 });
 
 // « L'histoire qui s'écrit » : révélation mot à mot au scroll (préserve les <strong>)
-const writeBlocks = document.querySelectorAll('[data-write]');
-if (writeBlocks.length && !reducedMotion && 'IntersectionObserver' in window) {
+const writeBlocks = document.querySelectorAll("[data-write]");
+if (writeBlocks.length && !reducedMotion && "IntersectionObserver" in window) {
     const wrapWords = (node, state) => {
         Array.from(node.childNodes).forEach((child) => {
             if (child.nodeType === Node.TEXT_NODE) {
                 const parts = child.textContent.split(/(\s+)/);
                 const frag = document.createDocumentFragment();
                 parts.forEach((part) => {
-                    if (part.trim() === '') {
+                    if (part.trim() === "") {
                         frag.appendChild(document.createTextNode(part));
                     } else {
-                        const span = document.createElement('span');
-                        span.className = 'w';
-                        span.style.setProperty('--wi', state.i++);
+                        const span = document.createElement("span");
+                        span.className = "w";
+                        span.style.setProperty("--wi", state.i++);
                         span.textContent = part;
                         frag.appendChild(span);
                     }
@@ -458,22 +604,22 @@ if (writeBlocks.length && !reducedMotion && 'IntersectionObserver' in window) {
         (entries, obs) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('is-writing');
+                    entry.target.classList.add("is-writing");
                     obs.unobserve(entry.target);
                 }
             });
         },
-        { threshold: 0.2 }
+        { threshold: 0.2 },
     );
 
     writeBlocks.forEach((block) => {
         const state = { i: 0 };
         wrapWords(block, state);
         const target = block.lastElementChild ?? block;
-        const caret = document.createElement('span');
-        caret.className = 'write-caret';
-        caret.setAttribute('aria-hidden', 'true');
-        caret.style.setProperty('--wi', state.i);
+        const caret = document.createElement("span");
+        caret.className = "write-caret";
+        caret.setAttribute("aria-hidden", "true");
+        caret.style.setProperty("--wi", state.i);
         target.appendChild(caret);
         writeObserver.observe(block);
     });

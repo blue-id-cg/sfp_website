@@ -48,3 +48,14 @@ test('an authenticated user can delete a media file', function () {
     $this->assertModelMissing($media);
     Storage::disk('public')->assertMissing($media->path);
 });
+
+test('media uploads reject SVG files', function () {
+    Storage::fake('public');
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->post('/admin/media', [
+        'file' => UploadedFile::fake()->create('icon.svg', 10, 'image/svg+xml'),
+    ]);
+
+    $response->assertSessionHasErrors(['file']);
+});

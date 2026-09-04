@@ -20,7 +20,7 @@ class StoreGalleryImageRequest extends FormRequest
         return [
             'title' => ['nullable', 'string', 'max:255'],
             'caption' => ['nullable', 'string', 'max:255'],
-            'image' => ['required', 'image', 'max:4096'],
+            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'position' => ['nullable', 'integer', 'min:0'],
         ];
     }

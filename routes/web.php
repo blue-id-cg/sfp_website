@@ -38,7 +38,9 @@ Route::get('/mentions-legales', [LegalController::class, 'mentions'])->name('leg
 Route::get('/politique-de-confidentialite', [LegalController::class, 'privacy'])->name('legal.privacy');
 Route::get('/cookies', [LegalController::class, 'cookies'])->name('legal.cookies');
 
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::post('/contact', [ContactController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('contact.store');
 
 Route::get('/actualites', [ActualiteController::class, 'index'])->name('actualites.index');
 Route::get('/actualites/{actualite}', [ActualiteController::class, 'show'])->name('actualites.show');
@@ -67,6 +69,7 @@ Route::middleware('auth')->prefix(config('admin.path'))->name('admin.')->group(f
     Route::resource('milestones', AdminMilestoneController::class)->except('show');
     Route::resource('pages', AdminPageController::class)->only(['index', 'edit', 'update']);
     Route::resource('messages', AdminContactMessageController::class)->only(['index', 'show', 'destroy']);
+    Route::get('/messages/{message}/cv', [AdminContactMessageController::class, 'cv'])->name('messages.cv');
     Route::resource('users', AdminUserController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::get('/settings', [AdminSiteSettingController::class, 'edit'])->name('settings.edit');
     Route::put('/settings', [AdminSiteSettingController::class, 'update'])->name('settings.update');

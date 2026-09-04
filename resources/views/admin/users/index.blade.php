@@ -40,7 +40,7 @@
                                 <i class="hgi-stroke hgi-edit-02 text-xs"></i> Modifier
                             </a>
                             @unless ($user->is(auth()->user()) || ($user->hasRole('admin') && $adminCount <= 1))
-                                <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline" onsubmit="return confirm('Supprimer cet utilisateur ?');">
+                                <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline" data-confirm data-confirm-title="Supprimer cet utilisateur ?" data-confirm-message="Cet utilisateur sera définitivement supprimé.">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="inline-flex items-center gap-1.5 text-red-600 hover:underline">

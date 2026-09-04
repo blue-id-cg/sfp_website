@@ -11,7 +11,6 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo1.png') }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" />
 
     {{--
         Page volontairement autonome (ni @extends('layouts.app'), ni resources/css/app.css compilé
@@ -26,7 +25,7 @@
             height: 100%;
             background: #0c0e22;
             color: #fff;
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Tw Cen MT', Arial, sans-serif;
         }
         body {
             display: grid;

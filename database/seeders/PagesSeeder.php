@@ -85,7 +85,7 @@ class PagesSeeder extends Seeder
                 'title' => 'Une expertise congolaise née sur le terrain',
                 'paragraphs' => implode("\n\n", [
                     'La Société de Forages Pétroliers (SFP) est créée en 2010, filiale à 100 % du groupe SNPC (Société Nationale des Pétroles du Congo), avec une ambition claire : bâtir une expertise nationale capable de rivaliser avec les meilleurs prestataires internationaux du forage pétrolier.',
-                    "L'entreprise démarre ses opérations en septembre 2011, sur le premier marché MKB (Mengo-Kudji-Bindi) attribué à la SNPC. Cette première campagne pose les fondations de la méthode SFP : rigueur technique, discipline opérationnelle et culture de sécurité affirmée dès les premiers puits forés.",
+                    "L'entreprise démarre ses opérations en septembre 2011, sur le premier marché MKB (Mengo-Kundji-Bindi) attribué à la SNPC. Cette première campagne pose les bases de la méthode SFP : rigueur technique, discipline opérationnelle et culture de sécurité affirmée dès les premiers puits forés.",
                     "Depuis, la SFP a élargi son champ d'intervention au forage, à la complétion et au work over, en assurant plusieurs puits onshore forés sans incident pour les acteurs majeurs du secteur pétrolier congolais. Cette continuité opérationnelle, sans accroc, est aujourd'hui la meilleure garantie que l'entreprise peut offrir à ses partenaires.",
                     "Ce socle repose sur des équipes congolaises formées aux meilleurs standards internationaux, qui opèrent des appareils de forage modernes dans le respect strict des normes de sécurité et d'environnement en vigueur dans l'industrie pétrolière.",
                 ]),

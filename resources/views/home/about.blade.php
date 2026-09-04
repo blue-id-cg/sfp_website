@@ -54,18 +54,18 @@
                         <span class="core-node" aria-hidden="true"></span>
                         <span class="core-depth">2010 · Création</span>
                         <h3 class="core-title">Naissance de la SFP</h3>
-                        <p class="core-desc">Fondation de la société, filiale à 100 % du groupe SNPC.</p>
+                        <p class="core-desc">Création de la société, filiale à 100 % du groupe SNPC.</p>
                     </li>
                     <li class="core-step">
                         <span class="core-node" aria-hidden="true"></span>
                         <span class="core-depth">Sept. 2011 · Mise en service</span>
                         <h3 class="core-title">Premières opérations</h3>
-                        <p class="core-desc">Démarrage sur le premier marché MKB (Mengo-Kudji-Bindi) attribué à la SNPC.</p>
+                        <p class="core-desc">Démarrage sur le premier marché MKB (Mengo-Kundji-Bindi) attribué à la SNPC.</p>
                     </li>
                     <li class="core-step is-current">
                         <span class="core-node" aria-hidden="true"></span>
                         <span class="core-depth">Aujourd'hui · En opération</span>
-                        <h3 class="core-title">Plusieurs puits forés sans incident</h3>
+                        <h3 class="core-title">Plusieurs puits forés sans incident ni accident</h3>
                         <p class="core-desc">Du forage à la maintenance, au service des acteurs majeurs du secteur pétrolier au Congo.</p>
                     </li>
                 </ol>

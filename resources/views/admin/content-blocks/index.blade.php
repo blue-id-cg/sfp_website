@@ -66,7 +66,7 @@
                                         <a href="{{ route('admin.content-blocks.edit', $block) }}" class="inline-flex items-center gap-1.5 text-blue-600 hover:underline">
                                             <i class="hgi-stroke hgi-edit-02 text-xs"></i> Modifier
                                         </a>
-                                        <form method="POST" action="{{ route('admin.content-blocks.destroy', $block) }}" class="inline" onsubmit="return confirm('Supprimer ce bloc ?');">
+                                        <form method="POST" action="{{ route('admin.content-blocks.destroy', $block) }}" class="inline" data-confirm data-confirm-title="Supprimer ce bloc ?" data-confirm-message="Ce bloc de contenu sera définitivement supprimé.">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="inline-flex items-center gap-1.5 text-red-600 hover:underline">

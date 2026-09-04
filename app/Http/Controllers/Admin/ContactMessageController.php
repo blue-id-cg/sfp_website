@@ -7,6 +7,7 @@ use App\Models\ContactMessage;
 use App\Services\ContactService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ContactMessageController extends Controller
@@ -52,5 +53,17 @@ class ContactMessageController extends Controller
         $message->delete();
 
         return redirect()->route('admin.messages.index')->with('status', 'Message supprimé.');
+    }
+
+    public function cv(ContactMessage $message): mixed
+    {
+        $this->authorize('view', $message);
+
+        abort_unless($message->cv_path !== null, 404);
+
+        return response()->download(
+            Storage::disk('local')->path($message->cv_path),
+            $message->cv_filename,
+        );
     }
 }

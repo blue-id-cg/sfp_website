@@ -39,38 +39,46 @@
                         @endpush
                     @endif
 
-                    <form method="POST" action="{{ route('contact.store') }}" novalidate>
+                    <form method="POST" action="{{ route('contact.store') }}" novalidate x-data="validatedForm" @submit.prevent="submit">
                         @csrf
+                        <div class="form-alert error" x-show="Object.keys(errors).length" x-cloak role="alert">
+                            <i class="hgi-stroke hgi-alert-02"></i>
+                            <span x-text="Object.values(errors)[0]"></span>
+                        </div>
+                        <div class="form-alert ok" x-show="success" x-cloak role="status">
+                            <i class="hgi-stroke hgi-checkmark-circle-01"></i>
+                            <span>Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.</span>
+                        </div>
                         <div class="field-row">
                             <div class="field">
                                 <label for="c-name">Nom &amp; prénom <span class="req">*</span></label>
-                                <input type="text" id="c-name" name="name" value="{{ old('name') }}" required autocomplete="name" />
+                                <input type="text" id="c-name" name="name" value="{{ old('name') }}" required maxlength="255" autocomplete="name" :class="{ invalid: errors.name }" :aria-invalid="errors.name ? 'true' : 'false'" />
                                 @error('name') <span class="err">{{ $message }}</span> @enderror
                             </div>
                             <div class="field">
                                 <label for="c-email">E-mail <span class="req">*</span></label>
-                                <input type="email" id="c-email" name="email" value="{{ old('email') }}" required autocomplete="email" />
+                                <input type="email" id="c-email" name="email" value="{{ old('email') }}" required maxlength="255" autocomplete="email" :class="{ invalid: errors.email }" :aria-invalid="errors.email ? 'true' : 'false'" />
                                 @error('email') <span class="err">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="field-row">
                             <div class="field">
                                 <label for="c-phone">Téléphone</label>
-                                <input type="tel" id="c-phone" name="phone" value="{{ old('phone') }}" autocomplete="tel" />
+                                <input type="tel" id="c-phone" name="phone" value="{{ old('phone') }}" autocomplete="tel" maxlength="30" :class="{ invalid: errors.phone }" :aria-invalid="errors.phone ? 'true' : 'false'" />
                                 @error('phone') <span class="err">{{ $message }}</span> @enderror
                             </div>
                             <div class="field">
                                 <label for="c-subject">Objet</label>
-                                <input type="text" id="c-subject" name="subject" value="{{ old('subject') }}" />
+                                <input type="text" id="c-subject" name="subject" value="{{ old('subject') }}" maxlength="255" :class="{ invalid: errors.subject }" :aria-invalid="errors.subject ? 'true' : 'false'" />
                                 @error('subject') <span class="err">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="field">
                             <label for="c-message">Message <span class="req">*</span></label>
-                            <textarea id="c-message" name="message" required>{{ old('message') }}</textarea>
+                            <textarea id="c-message" name="message" required maxlength="5000" :class="{ invalid: errors.message }" :aria-invalid="errors.message ? 'true' : 'false'">{{ old('message') }}</textarea>
                             @error('message') <span class="err">{{ $message }}</span> @enderror
                         </div>
-                        <button type="submit" class="btn btn-dark">Envoyer le message <i class="hgi-stroke hgi-sent"></i></button>
+                        <button type="submit" class="btn btn-dark" :disabled="processing"><span x-text="processing ? 'Envoi...' : 'Envoyer le message'"></span> <i class="hgi-stroke hgi-sent"></i></button>
                         <p class="form-note">Les champs marqués d'un <span class="req">*</span> sont obligatoires. Vos données ne sont utilisées que pour traiter votre demande.</p>
                     </form>
                 </div>

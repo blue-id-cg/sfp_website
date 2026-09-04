@@ -27,8 +27,21 @@ test('a visitor can submit the contact form', function () {
     Mail::assertQueued(ContactMessageReceived::class);
 });
 
+test('a visitor can submit the contact form over ajax', function () {
+    Mail::fake();
+
+    $response = $this->withHeader('Accept', 'application/json')->post('/contact', [
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+        'message' => 'Bonjour, je souhaite plus d\'informations.',
+    ]);
+
+    $response->assertSuccessful()
+        ->assertJson(['message' => 'Votre demande a bien été envoyée.']);
+});
+
 test('a visitor can submit the contact form with a CV attached', function () {
-    Storage::fake('public');
+    Storage::fake('local');
     Mail::fake();
 
     $response = $this->post('/contact', [
@@ -43,7 +56,7 @@ test('a visitor can submit the contact form with a CV attached', function () {
 
     $contactMessage = ContactMessage::query()->where('email', 'alice@example.com')->first();
     expect($contactMessage->cv_path)->not->toBeNull();
-    Storage::disk('public')->assertExists($contactMessage->cv_path);
+    Storage::disk('local')->assertExists($contactMessage->cv_path);
 
     Mail::assertQueued(ContactMessageReceived::class);
 });
@@ -66,4 +79,29 @@ test('the contact form requires a name, email and message', function () {
 
     $response->assertSessionHasErrors(['name', 'email', 'message']);
     expect(ContactMessage::query()->count())->toBe(0);
+});
+
+test('the contact form is rate limited', function () {
+    Mail::fake();
+
+    $payload = [
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+        'message' => 'Bonjour.',
+    ];
+
+    foreach (range(1, 5) as $attempt) {
+        $this->post('/contact', $payload)->assertRedirect();
+    }
+
+    $this->post('/contact', $payload)->assertStatus(429);
+});
+
+test('public responses include security headers', function () {
+    $response = $this->get('/');
+
+    $response->assertHeader('X-Content-Type-Options', 'nosniff')
+        ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
+        ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
+        ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 });

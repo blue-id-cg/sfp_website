@@ -32,7 +32,7 @@ class UpdateActualiteRequest extends FormRequest
             'category' => ['nullable', 'string', 'max:100'],
             'excerpt' => ['nullable', 'string', 'max:500'],
             'body' => ['required', 'string'],
-            'image' => ['nullable', 'image', 'max:4096'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'published_at' => ['nullable', 'date'],
         ];
     }

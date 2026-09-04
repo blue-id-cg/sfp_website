@@ -41,7 +41,7 @@ class ContactMessageReceived extends Mailable implements ShouldQueue
         }
 
         return [
-            Attachment::fromStorageDisk('public', $this->contactMessage->cv_path)
+            Attachment::fromStorageDisk('local', $this->contactMessage->cv_path)
                 ->as($this->contactMessage->cv_filename),
         ];
     }

@@ -20,7 +20,7 @@
                 <input type="email" name="contact_email" id="contact_email" value="{{ old('contact_email', $setting->contact_email) }}" class="@error('contact_email') invalid @enderror" />
             </x-admin.field>
 
-            <x-admin.field name="founding_year" label="Année de fondation" hint="Utilisée pour calculer « Années d'expérience ».">
+            <x-admin.field name="founding_year" label="Année de création" hint="Utilisée pour calculer « Années d'expérience ».">
                 <input type="number" name="founding_year" id="founding_year" value="{{ old('founding_year', $setting->founding_year) }}" class="@error('founding_year') invalid @enderror" />
             </x-admin.field>
 
@@ -28,7 +28,7 @@
                 <input type="number" name="rigs_count" id="rigs_count" value="{{ old('rigs_count', $setting->rigs_count) }}" class="@error('rigs_count') invalid @enderror" />
             </x-admin.field>
 
-            <x-admin.field name="incidents_count" label="Nombre d'incidents depuis la fondation">
+            <x-admin.field name="incidents_count" label="Nombre d'incidents depuis la création">
                 <input type="number" name="incidents_count" id="incidents_count" value="{{ old('incidents_count', $setting->incidents_count) }}" class="@error('incidents_count') invalid @enderror" />
             </x-admin.field>
 

@@ -32,7 +32,7 @@
                             <a href="{{ route('admin.milestones.edit', $milestone) }}" class="inline-flex items-center gap-1.5 text-blue-600 hover:underline">
                                 <i class="hgi-stroke hgi-edit-02 text-xs"></i> Modifier
                             </a>
-                            <form method="POST" action="{{ route('admin.milestones.destroy', $milestone) }}" class="inline" onsubmit="return confirm('Supprimer cette étape ?');">
+                            <form method="POST" action="{{ route('admin.milestones.destroy', $milestone) }}" class="inline" data-confirm data-confirm-title="Supprimer cette étape ?" data-confirm-message="Cette étape sera définitivement supprimée.">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="inline-flex items-center gap-1.5 text-red-600 hover:underline">

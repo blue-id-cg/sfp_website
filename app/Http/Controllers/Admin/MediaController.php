@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreMediaRequest;
 use App\Models\Media;
 use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
@@ -25,15 +26,8 @@ class MediaController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(StoreMediaRequest $request): RedirectResponse
     {
-        $this->authorize('create', Media::class);
-
-        $request->validate([
-            'file' => ['required', 'image', 'max:8192'],
-            'alt_text' => ['nullable', 'string', 'max:255'],
-        ]);
-
         $this->media->store($request->file('file'), Auth::id(), $request->string('alt_text')->toString() ?: null);
 
         return back()->with('status', 'Média ajouté à la médiathèque.');

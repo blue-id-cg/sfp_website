@@ -26,7 +26,7 @@
 }
 
 body.admin-shell {
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Tw Cen MT', Arial, sans-serif;
     background:
         radial-gradient(900px 420px at 100% -8%, rgba(250, 231, 0, 0.10), transparent 60%),
         radial-gradient(700px 380px at -5% 8%, rgba(239, 123, 16, 0.06), transparent 55%),
@@ -124,12 +124,186 @@ body.admin-shell {
     background: linear-gradient(90deg, var(--admin-stat-color, var(--a-accent)), transparent);
 }
 
+/* ---- Recherche ---- */
+.admin-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: min(100%, 28rem);
+    min-height: 2.75rem;
+    border: 1px solid var(--a-border);
+    border-radius: 0.75rem;
+    background: var(--a-surface);
+    box-shadow: 0 1px 2px rgba(12, 14, 34, 0.04);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-search:focus-within {
+    border-color: var(--a-accent-2);
+    box-shadow: 0 0 0 4px rgba(239, 123, 16, 0.12);
+}
+
+.admin-search__icon {
+    flex: 0 0 auto;
+    margin-left: 0.85rem;
+    color: var(--a-muted);
+    font-size: 0.95rem;
+}
+
+.admin-search__input {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    padding: 0.7rem 0.7rem;
+    color: var(--a-ink);
+    font-size: 0.875rem;
+}
+
+.admin-search__input::placeholder {
+    color: var(--a-muted);
+}
+
+.admin-search__clear,
+.admin-search__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.admin-search__clear {
+    width: 2rem;
+    color: var(--a-muted);
+    transition: color 0.2s;
+}
+
+.admin-search__clear:hover {
+    color: var(--a-ink);
+}
+
+.admin-search__submit {
+    gap: 0.4rem;
+    align-self: stretch;
+    border-left: 1px solid var(--a-border);
+    padding: 0 0.9rem;
+    color: var(--a-ink-soft);
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: background 0.2s, color 0.2s;
+}
+
+.admin-search__submit:hover {
+    background: var(--a-ink);
+    color: #fff;
+}
+
 .form-card {
     background: var(--a-surface);
     border: 1px solid var(--a-border);
     border-radius: var(--a-radius);
     padding: clamp(1.4rem, 3vw, 2rem);
     box-shadow: 0 1px 2px rgba(12, 14, 34, 0.04);
+}
+
+/* ---- Dialogue de confirmation ---- */
+.confirm-dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(100% - 2rem, 28rem);
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--a-radius);
+    background: transparent;
+    color: var(--a-ink);
+    box-shadow: 0 24px 70px rgba(12, 14, 34, 0.24);
+}
+
+.confirm-dialog::backdrop {
+    background: rgba(12, 14, 34, 0.52);
+    backdrop-filter: blur(3px);
+}
+
+.confirm-dialog__panel {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem 1rem;
+    padding: 1.5rem;
+    background: var(--a-surface);
+}
+
+.confirm-dialog__icon {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.75rem;
+    background: #fff1f2;
+    color: #be123c;
+    font-size: 1.15rem;
+}
+
+.confirm-dialog__title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.confirm-dialog__message {
+    margin: 0.3rem 0 0;
+    color: var(--a-ink-soft);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.confirm-dialog__actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.65rem;
+    margin-top: 0.55rem;
+}
+
+.confirm-dialog__cancel,
+.confirm-dialog__submit {
+    min-height: 2.5rem;
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.confirm-dialog__cancel {
+    border: 1px solid var(--a-border);
+    color: var(--a-ink-soft);
+}
+
+.confirm-dialog__cancel:hover {
+    background: var(--a-bg);
+    color: var(--a-ink);
+}
+
+.confirm-dialog__submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #be123c;
+    color: #fff;
+}
+
+.confirm-dialog__submit:hover {
+    background: #9f1239;
+}
+
+.confirm-dialog__cancel:focus-visible,
+.confirm-dialog__submit:focus-visible {
+    outline: 3px solid rgba(239, 123, 16, 0.35);
+    outline-offset: 2px;
 }
 
 /* ---- Champs de formulaire ---- */

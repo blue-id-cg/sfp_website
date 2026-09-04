@@ -9,10 +9,7 @@
         </x-slot:actions>
     </x-admin.page-header>
 
-    <form method="GET" class="relative mb-5 max-w-sm">
-        <i class="hgi-stroke hgi-search-01 absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></i>
-        <input type="search" name="q" value="{{ $search }}" placeholder="Rechercher une réalisation…" class="w-full rounded-md border border-gray-200 py-2 pl-9 pr-3 text-sm focus:border-gray-400 focus:outline-none" />
-    </form>
+    <x-admin.search value="{{ $search }}" placeholder="Rechercher une réalisation…" class="mb-5" />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         @forelse ($realisations as $realisation)
@@ -40,7 +37,7 @@
                             <a href="{{ route('admin.realisations.edit', $realisation) }}" class="inline-flex items-center gap-1.5 text-blue-600 hover:underline">
                                 <i class="hgi-stroke hgi-edit-02 text-xs"></i> Modifier
                             </a>
-                            <form method="POST" action="{{ route('admin.realisations.destroy', $realisation) }}" class="inline" onsubmit="return confirm('Supprimer cette réalisation ?');">
+                            <form method="POST" action="{{ route('admin.realisations.destroy', $realisation) }}" class="inline" data-confirm data-confirm-title="Supprimer cette réalisation ?" data-confirm-message="Cette réalisation sera définitivement supprimée.">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="inline-flex items-center gap-1.5 text-red-600 hover:underline">

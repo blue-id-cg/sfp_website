@@ -15,7 +15,7 @@ class ContactService
     public function submit(array $data, ?UploadedFile $cv = null): ContactMessage
     {
         if ($cv !== null) {
-            $data['cv_path'] = $cv->store('candidatures', 'public');
+            $data['cv_path'] = $cv->store('candidatures');
         }
 
         $message = ContactMessage::query()->create($data);

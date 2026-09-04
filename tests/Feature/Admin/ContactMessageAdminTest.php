@@ -2,11 +2,26 @@
 
 use App\Models\ContactMessage;
 use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 test('guests cannot access admin contact messages', function () {
     $response = $this->get('/admin/messages');
 
     $response->assertRedirect('/login');
+});
+
+test('authorized users can download a CV from private storage', function () {
+    Storage::fake('local');
+    $user = User::factory()->create();
+    $message = ContactMessage::factory()->create([
+        'cv_path' => UploadedFile::fake()->create('cv.pdf', 100, 'application/pdf')->store('candidatures'),
+    ]);
+
+    $response = $this->actingAs($user)->get(route('admin.messages.cv', $message));
+
+    $response->assertOk();
+    expect($response->headers->get('Content-Disposition'))->toStartWith('attachment; filename=');
 });
 
 test('viewing a message marks it as read', function () {

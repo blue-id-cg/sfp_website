@@ -26,3 +26,14 @@ test('an authenticated user can view and update site settings', function () {
     expect(SiteSetting::current()->contact_email)->toBe('nouveau@snpc-sfp.net');
     expect(SiteSetting::current()->rigs_count)->toBe(3);
 });
+
+test('site settings cannot break out of the JSON-LD script', function () {
+    SiteSetting::factory()->create([
+        'contact_email' => '</script><script>alert(1)</script>@example.com',
+    ]);
+
+    $response = $this->get('/');
+
+    $response->assertOk()
+        ->assertDontSee('</script><script>alert(1)</script>@example.com', false);
+});

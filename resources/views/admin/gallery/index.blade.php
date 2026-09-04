@@ -23,7 +23,7 @@
                         <a href="{{ route('admin.gallery.edit', $image) }}" class="inline-flex items-center gap-1.5 text-blue-600 hover:underline">
                             <i class="hgi-stroke hgi-edit-02 text-xs"></i> Modifier
                         </a>
-                        <form method="POST" action="{{ route('admin.gallery.destroy', $image) }}" onsubmit="return confirm('Supprimer cette image ?');">
+                        <form method="POST" action="{{ route('admin.gallery.destroy', $image) }}" data-confirm data-confirm-title="Supprimer cette image ?" data-confirm-message="Cette image sera définitivement supprimée.">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="inline-flex items-center gap-1.5 text-red-600 hover:underline">
