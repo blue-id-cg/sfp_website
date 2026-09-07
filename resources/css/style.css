@@ -83,7 +83,7 @@ body {
     font-family: var(--font);
     background: var(--white);
     color: var(--ink);
-    line-height: 1.45;
+    line-height: 1.15;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -161,7 +161,7 @@ h4 {
 
 p {
     text-align: justify;
-    line-height: 1.45;
+    line-height: 1.15;
 }
 
 .display {
@@ -193,7 +193,7 @@ p {
 .lead {
     font-size: clamp(1.05rem, 1.4vw, 1.22rem);
     color: var(--ink-2);
-    line-height: 1.55;
+    line-height: 1.25;
     font-weight: 400;
 }
 
@@ -740,5 +740,5 @@ p {
 
 .text-body {
     color: var(--ink-2);
-    line-height: 1.45;
+    line-height: 1.15;
 }
