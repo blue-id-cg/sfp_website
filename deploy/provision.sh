@@ -155,6 +155,11 @@ if ! grep -q "^APP_KEY=base64" .env; then
 fi
 
 step "Migrations et mise en cache de la configuration"
+if [ "$DB_ENGINE" = "sqlite" ]; then
+    chmod 775 "$APP_DIR/database"
+    chmod 664 "$APP_DIR/database/database.sqlite"
+    chown www-data:www-data "$APP_DIR/database" "$APP_DIR/database/database.sqlite"
+fi
 php artisan storage:link || true
 laravel_migrate_and_cache
 

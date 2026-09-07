@@ -12,23 +12,23 @@ que de forcer une étape.
 
 1. **Un nom de domaine** (ex. `www.sfp-congo.com`), acheté chez un registrar (ex. OVH, Namecheap, un hébergeur local).
 2. **Un hébergement web** qui supporte PHP. Demandez à votre hébergeur de confirmer :
-   - PHP version **8.2 ou plus récent**
-   - Extensions PHP : `mbstring`, `openssl`, `PDO`, `tokenizer`, `xml`, `ctype`, `fileinfo`, plus une des
-     suivantes selon la base de données choisie (voir juste en dessous) : `pdo_sqlite`, `pdo_mysql` ou
-     `pdo_pgsql`
-   - Un accès **SSH** (terminal) — quasiment tous les hébergeurs sérieux le proposent, même sur les offres mutualisées (souvent à activer dans le panneau de configuration)
+    - PHP version **8.2 ou plus récent**
+    - Extensions PHP : `mbstring`, `openssl`, `PDO`, `tokenizer`, `xml`, `ctype`, `fileinfo`, plus une des
+      suivantes selon la base de données choisie (voir juste en dessous) : `pdo_sqlite`, `pdo_mysql` ou
+      `pdo_pgsql`
+    - Un accès **SSH** (terminal) — quasiment tous les hébergeurs sérieux le proposent, même sur les offres mutualisées (souvent à activer dans le panneau de configuration)
 3. Les identifiants d'accès à l'hébergement (cPanel, ou accès SSH/FTP) fournis par votre hébergeur.
 
 ### Quelle base de données utiliser ?
 
 Ce site peut fonctionner avec **quatre** moteurs de base de données, au choix :
 
-| Moteur | Quand le choisir |
-| --- | --- |
+| Moteur                  | Quand le choisir                                                                                                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **SQLite** (par défaut) | Le plus simple : un seul fichier, aucune installation ni configuration chez l'hébergeur. Convient très bien à ce site (peu d'écritures : offres d'emploi, actualités, messages de contact). |
-| **MySQL** | Si votre hébergement mutualisé (cPanel) ne propose que du MySQL — c'est le cas le plus courant chez les hébergeurs mutualisés classiques. |
-| **MariaDB** | Équivalent de MySQL (même usage, même commandes), souvent installé par défaut sur les VPS Ubuntu/Debian récents. |
-| **PostgreSQL** | Si vous ou votre hébergeur préférez PostgreSQL, ou en cas de besoin de montée en charge plus poussée (voir la fin de ce guide). |
+| **MySQL**               | Si votre hébergement mutualisé (cPanel) ne propose que du MySQL — c'est le cas le plus courant chez les hébergeurs mutualisés classiques.                                                   |
+| **MariaDB**             | Équivalent de MySQL (même usage, même commandes), souvent installé par défaut sur les VPS Ubuntu/Debian récents.                                                                            |
+| **PostgreSQL**          | Si vous ou votre hébergeur préférez PostgreSQL, ou en cas de besoin de montée en charge plus poussée (voir la fin de ce guide).                                                             |
 
 > **En résumé :** ne changez rien si vous ne savez pas — SQLite fonctionne très bien pour ce site.
 > Ne choisissez MySQL/MariaDB/PostgreSQL que si votre hébergeur l'impose (mutualisé) ou si vous savez
@@ -40,10 +40,10 @@ Ce site peut fonctionner avec **quatre** moteurs de base de données, au choix :
 
 Il y a deux façons de mettre le site en ligne. Choisissez celle qui correspond à ce que vous avez acheté :
 
-| Vous avez... | Méthode | Section |
-| --- | --- | --- |
-| Un **hébergement mutualisé** (cPanel, offre "hébergement web" classique) | Suivez les étapes 1 à 5 ci-dessous, à la main | [Étape 1](#étape-1--préparer-les-fichiers-du-site-sur-votre-ordinateur) |
-| Un **serveur privé (VPS) tout neuf**, sans rien d'installé dessus | Utilisez le script automatisé fourni | [Déploiement sur un serveur neuf (VPS)](#déploiement-sur-un-serveur-neuf-vps--méthode-automatisée) |
+| Vous avez...                                                             | Méthode                                       | Section                                                                                            |
+| ------------------------------------------------------------------------ | --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Un **hébergement mutualisé** (cPanel, offre "hébergement web" classique) | Suivez les étapes 1 à 5 ci-dessous, à la main | [Étape 1](#étape-1--préparer-les-fichiers-du-site-sur-votre-ordinateur)                            |
+| Un **serveur privé (VPS) tout neuf**, sans rien d'installé dessus        | Utilisez le script automatisé fourni          | [Déploiement sur un serveur neuf (VPS)](#déploiement-sur-un-serveur-neuf-vps--méthode-automatisée) |
 
 Si vous ne savez pas ce que vous avez acheté : un hébergement où on vous donne accès à un "cPanel" avec
 une interface graphique est un **mutualisé**. Un accès où vous recevez seulement une adresse IP et un mot
@@ -167,11 +167,11 @@ Cette étape se fait une seule fois (et à refaire à chaque mise à jour du des
 1. Ouvrez un terminal dans le dossier du projet.
 2. Installez les dépendances et générez les fichiers finaux (CSS/JS optimisés) :
 
-   ```bash
-   composer install --optimize-autoloader --no-dev
-   npm install
-   npm run build
-   ```
+    ```bash
+    composer install --optimize-autoloader --no-dev
+    npm install
+    npm run build
+    ```
 
 3. Vérifiez qu'un dossier `public/build/` a bien été créé — c'est lui qui contient le CSS et le JavaScript
    prêts pour la mise en ligne.
@@ -192,9 +192,9 @@ Deux façons de faire, utilisez celle que votre hébergeur propose :
    `ssh monidentifiant@monserveur.com`).
 4. Placez-vous dans le dossier du projet puis lancez :
 
-   ```bash
-   composer install --optimize-autoloader --no-dev
-   ```
+    ```bash
+    composer install --optimize-autoloader --no-dev
+    ```
 
 ### Option B — Sans SSH (FTP uniquement)
 
@@ -224,29 +224,29 @@ Ce fichier contient les réglages du site (nom de domaine, mode production, etc.
 
 1. Sur le serveur, dupliquez `.env.example` en `.env` (si ce n'est pas déjà fait) :
 
-   ```bash
-   cp .env.example .env
-   ```
+    ```bash
+    cp .env.example .env
+    ```
 
 2. Ouvrez `.env` et modifiez la ligne suivante avec votre vrai nom de domaine :
 
-   ```
-   APP_URL=https://www.sfp-congo.com
-   ```
+    ```
+    APP_URL=https://www.sfp-congo.com
+    ```
 
 3. Vérifiez que ces deux lignes sont bien présentes (elles désactivent l'affichage des erreurs techniques
    aux visiteurs) :
 
-   ```
-   APP_ENV=production
-   APP_DEBUG=false
-   ```
+    ```
+    APP_ENV=production
+    APP_DEBUG=false
+    ```
 
 4. Générez la clé de sécurité de l'application (obligatoire, une seule fois) :
 
-   ```bash
-   php artisan key:generate
-   ```
+    ```bash
+    php artisan key:generate
+    ```
 
 5. **Si votre hébergeur mutualisé impose MySQL** (cas le plus fréquent sur cPanel — beaucoup
    d'hébergeurs mutualisés ne proposent pas SQLite), créez une base de données MySQL depuis cPanel :
@@ -254,17 +254,17 @@ Ce fichier contient les réglages du site (nom de domaine, mode production, etc.
    base avec **tous les privilèges**. cPanel préfixe généralement les noms (ex. `monlogin_sfp`,
    `monlogin_sfpuser`). Reportez ensuite ces informations dans `.env` :
 
-   ```
-   DB_CONNECTION=mysql
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_DATABASE=monlogin_sfp
-   DB_USERNAME=monlogin_sfpuser
-   DB_PASSWORD=le-mot-de-passe-choisi
-   ```
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=localhost
+    DB_PORT=3306
+    DB_DATABASE=monlogin_sfp
+    DB_USERNAME=monlogin_sfpuser
+    DB_PASSWORD=le-mot-de-passe-choisi
+    ```
 
-   (Pour PostgreSQL, remplacez par `DB_CONNECTION=pgsql` et `DB_PORT=5432` — mêmes autres champs. Si
-   votre hébergeur vous laisse SQLite, ne touchez à rien : c'est déjà la configuration par défaut.)
+    (Pour PostgreSQL, remplacez par `DB_CONNECTION=pgsql` et `DB_PORT=5432` — mêmes autres champs. Si
+    votre hébergeur vous laisse SQLite, ne touchez à rien : c'est déjà la configuration par défaut.)
 
 ---
 
@@ -279,6 +279,23 @@ créez-le d'abord :
 mkdir -p database
 touch database/database.sqlite
 ```
+
+Le dossier et le fichier doivent être accessibles en écriture par PHP-FPM :
+
+```bash
+chmod 775 database
+chmod 664 database/database.sqlite
+```
+
+Sur un VPS où PHP-FPM fonctionne avec `www-data`, appliquez aussi la propriété du fichier :
+
+```bash
+sudo chown www-data:www-data database database/database.sqlite
+```
+
+Si le site affiche `attempt to write a readonly database`, exécutez ces trois commandes depuis
+`/var/www/sfp_website`, puis rechargez la page. Les scripts automatisés appliquent désormais ces droits
+avant les migrations.
 
 Puis lancez ces commandes une par une :
 
@@ -331,11 +348,11 @@ php artisan app:create-admin-user --name="Votre Nom" --email="vous@exemple.com" 
 
 1. Ouvrez votre nom de domaine dans un navigateur (ex. `https://www.sfp-congo.com`).
 2. Vérifiez que :
-   - La page d'accueil s'affiche avec les images, les couleurs et le logo SFP
-   - Le menu (aussi sur mobile) s'ouvre correctement
-   - Les pages **Actualités** et **Carrières** s'ouvrent sans erreur
-   - Le formulaire de contact, en bas de la page d'accueil, affiche bien un message de confirmation après
-     l'envoi
+    - La page d'accueil s'affiche avec les images, les couleurs et le logo SFP
+    - Le menu (aussi sur mobile) s'ouvre correctement
+    - Les pages **Actualités** et **Carrières** s'ouvrent sans erreur
+    - Le formulaire de contact, en bas de la page d'accueil, affiche bien un message de confirmation après
+      l'envoi
 3. Si le cadenas HTTPS n'apparaît pas dans la barre d'adresse, activez le certificat SSL gratuit
    (Let's Encrypt) depuis le panneau de votre hébergeur — presque tous le proposent en un clic.
 
@@ -348,18 +365,18 @@ Quand une modification du contenu ou du design est livrée par le développeur :
 1. Récupérez les nouveaux fichiers et envoyez-les sur le serveur (mêmes méthodes qu'à l'étape 2).
 2. Reconnectez-vous en SSH dans le dossier du projet et relancez :
 
-   ```bash
-   composer install --optimize-autoloader --no-dev
-   npm install && npm run build
-   php artisan migrate --force
-   php artisan db:seed --class=RolesAndPermissionsSeeder --force
-   php artisan config:cache
-   php artisan route:cache
-   php artisan view:cache
-   ```
+    ```bash
+    composer install --optimize-autoloader --no-dev
+    npm install && npm run build
+    php artisan migrate --force
+    php artisan db:seed --class=RolesAndPermissionsSeeder --force
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    ```
 
-   (Si vous avez déployé via le script `deploy/deploy.sh` sur un VPS provisionné avec `provision.sh`,
-   ces commandes sont déjà toutes incluses — voir [plus haut](#mettre-à-jour-le-site-après-ce-premier-déploiement).)
+    (Si vous avez déployé via le script `deploy/deploy.sh` sur un VPS provisionné avec `provision.sh`,
+    ces commandes sont déjà toutes incluses — voir [plus haut](#mettre-à-jour-le-site-après-ce-premier-déploiement).)
 
 > **Ne relancez jamais `php artisan db:seed --force` (sans `--class=...`) lors d'une mise à jour** : les
 > seeders de contenu (pages, blocs, réalisations, frise, actualités, offres, galerie) réécrivent des
@@ -467,6 +484,6 @@ change significativement d'échelle ou d'usage. Discutez-en avec votre développ
 
 ---
 
-*Pour toute modification du contenu (textes, offres d'emploi, actualités) au-delà de simples corrections
+_Pour toute modification du contenu (textes, offres d'emploi, actualités) au-delà de simples corrections
 de texte, ou pour brancher un vrai système d'envoi d'e-mails sur le formulaire de contact, faites appel à
-votre développeur.*
+votre développeur._

@@ -20,12 +20,16 @@ class ConfigureProductionDatabase extends Command
         $database = config('database.connections.sqlite.database');
 
         if (config('database.default') === 'sqlite' && $database !== ':memory:') {
-            File::ensureDirectoryExists(dirname($database));
+            $directory = dirname($database);
+            File::ensureDirectoryExists($directory);
+            File::chmod($directory, 0775);
 
             if (! File::exists($database)) {
                 File::put($database, '');
                 $this->components->info("Fichier SQLite créé : {$database}");
             }
+
+            File::chmod($database, 0664);
         }
 
         if ($this->call('migrate', ['--force' => true]) !== self::SUCCESS) {
