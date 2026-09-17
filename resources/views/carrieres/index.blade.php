@@ -25,7 +25,7 @@
                         <div class="media hover">
                             <picture>
                                 <source type="image/webp" srcset="{{ asset('images/opt/crew-women.webp') }}" />
-                                <img src="{{ asset('images/opt/crew-women.jpg') }}" alt="Collaboratrices de la SFP sur un site de forage" loading="lazy" width="1650" height="2200" />
+                                <img src="{{ asset('images/opt/crew-women.jpg') }}" alt="Techniciens SFP en relève de poste sur le derrick" loading="lazy" width="1650" height="2200" />
                             </picture>
                         </div>
                         <div class="plate"><b>Talents</b><span>Au cœur du métier</span></div>

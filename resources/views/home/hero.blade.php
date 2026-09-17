@@ -25,6 +25,12 @@
                 <img src="{{ asset('images/opt/mobilization.jpg') }}" alt="Mobilisation d'un appareil de forage à la grue" loading="lazy" width="1650" height="2200" />
             </picture>
         </div>
+        <div class="slide">
+            <picture>
+                <source type="image/webp" srcset="{{ asset('images/opt/rig-climb.webp') }}" />
+                <img src="{{ asset('images/opt/rig-climb.jpg') }}" alt="Techniciens SFP en ascension sur le mât de forage" loading="lazy" width="1650" height="2200" />
+            </picture>
+        </div>
     </div>
     <div class="hero-grid-lines" data-parallax="0.22" aria-hidden="true"></div>
 

@@ -34,7 +34,7 @@
                     <div class="media hover">
                         <picture>
                             <source type="image/webp" srcset="{{ asset('images/opt/leadership.webp') }}" />
-                            <img src="{{ asset('images/opt/leadership.jpg') }}" alt="Direction et équipes SFP réunies lors d'une cérémonie sur site" loading="lazy" width="2000" height="1500" />
+                            <img src="{{ asset('images/opt/leadership.jpg') }}" alt="Responsables et équipes SFP réunis sur un site de forage" loading="lazy" width="2000" height="1500" />
                         </picture>
                     </div>
                     <div class="plate">

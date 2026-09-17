@@ -32,7 +32,7 @@
                 <article class="hse-card">
                     <picture>
                         <source type="image/webp" srcset="{{ asset('images/opt/crew-mudpumps.webp') }}" />
-                        <img src="{{ asset('images/opt/crew-mudpumps.jpg') }}" alt="Encadrement et sensibilisation des équipes techniques sur un chantier de forage" loading="lazy" />
+                        <img src="{{ asset('images/opt/crew-mudpumps.jpg') }}" alt="Équipe SFP en tenue de protection sur le chantier de forage" loading="lazy" />
                     </picture>
                     <div class="body">
                         <span class="pill pill-y">Protection</span>

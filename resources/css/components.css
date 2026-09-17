@@ -234,7 +234,7 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    animation: heroSlideshow 24s infinite;
+    animation: heroSlideshow 30s infinite;
 }
 
 .hero-media .slide:nth-child(1) {
@@ -253,20 +253,24 @@
     animation-delay: 18s;
 }
 
+.hero-media .slide:nth-child(5) {
+    animation-delay: 24s;
+}
+
 @keyframes heroSlideshow {
     0% {
         opacity: 0;
     }
 
-    4% {
+    3.2% {
         opacity: 1;
     }
 
-    21% {
+    16.8% {
         opacity: 1;
     }
 
-    29% {
+    23.2% {
         opacity: 0;
     }
 
