@@ -19,12 +19,12 @@
                     <div class="media hover">
                         <picture>
                             <source type="image/webp" srcset="{{ asset('images/opt/rig03-unit.webp') }}" />
-                            <img src="{{ asset('images/opt/rig03-unit.jpg') }}" alt="Unité de forage mobile MR-3500 de la SFP sur un site pétrolier" loading="lazy" width="2000" height="934" />
+                            <img src="{{ asset('images/opt/rig03-unit.jpg') }}" alt="Contrôle d'une tête de puits sur un site de la SFP" loading="lazy" width="2000" height="934" />
                         </picture>
                     </div>
                     <div class="plate">
-                        <b>MR&#8209;3500</b>
-                        <span>Unité mobile</span>
+                        <b>SFP</b>
+                        <span>Suivi des opérations</span>
                     </div>
 
                     <div class="hud" aria-hidden="true">

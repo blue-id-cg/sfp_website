@@ -18,7 +18,7 @@ class GalleryImagesSeeder extends Seeder
             ['image' => 'rig-flag', 'title' => 'Mât de forage et drapeau du Congo', 'caption' => 'Mât de forage'],
             ['image' => 'leadership', 'title' => 'Responsables et équipes SFP réunis sur site', 'caption' => 'Direction & équipes'],
             ['image' => 'crew-women', 'title' => 'Techniciens SFP en relève de poste', 'caption' => 'Sur le site'],
-            ['image' => 'rig03-unit', 'title' => 'Unité mobile de forage RIG #03', 'caption' => 'Unité RIG #03'],
+            ['image' => 'rig03-unit', 'title' => 'Contrôle de la tête de puits', 'caption' => 'Suivi des opérations'],
             ['image' => 'mobilization', 'title' => "Mobilisation d'un appareil de forage à la grue", 'caption' => 'Mobilisation'],
             ['image' => 'crew-walking', 'title' => 'Collaborateurs SFP en tenue de sécurité', 'caption' => 'Culture sécurité'],
             ['image' => 'crew-mudpumps', 'title' => 'Suivi des opérations de forage', 'caption' => 'Suivi des opérations'],

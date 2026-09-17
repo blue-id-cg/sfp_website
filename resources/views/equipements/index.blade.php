@@ -28,7 +28,7 @@
                 <figure class="cell" data-lightbox>
                     <picture>
                         <source type="image/webp" srcset="{{ asset('images/opt/rig03-unit-m.webp') }}" />
-                        <img src="{{ asset('images/opt/rig03-unit-m.jpg') }}" alt="Unité de forage mobile MR-3500" loading="lazy" />
+                        <img src="{{ asset('images/opt/rig03-unit-m.jpg') }}" alt="Contrôle d'une tête de puits sur un site de la SFP" loading="lazy" />
                     </picture>
                     <figcaption class="cap"><h4>Unité mobile MR&#8209;3500</h4><span>Base de Djeno</span></figcaption>
                 </figure>
