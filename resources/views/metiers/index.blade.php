@@ -54,7 +54,7 @@
                             </picture>
                         </div>
                         <div class="plate">
-                            <b>SFP</b>
+                            <b>Terrain</b>
                             <span>Suivi des opérations</span>
                         </div>
                     </div>

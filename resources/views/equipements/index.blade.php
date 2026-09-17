@@ -23,28 +23,28 @@
                         <source type="image/webp" srcset="{{ asset('images/opt/rig-sky.webp') }}" />
                         <img src="{{ asset('images/opt/rig-sky.jpg') }}" alt="Rig MR-8000 Drillmec de la SFP dressé sous le ciel, mât de 1080 HP" loading="lazy" />
                     </picture>
-                    <figcaption class="cap"><h4>Rig MR&#8209;8000 Drillmec</h4><span>1080 HP</span></figcaption>
+                    <figcaption class="bento-cap"><h4>Rig MR&#8209;8000 Drillmec</h4><span>1080 HP</span></figcaption>
                 </figure>
                 <figure class="cell" data-lightbox>
                     <picture>
                         <source type="image/webp" srcset="{{ asset('images/opt/rig03-unit-m.webp') }}" />
                         <img src="{{ asset('images/opt/rig03-unit-m.jpg') }}" alt="Contrôle d'une tête de puits sur un site de la SFP" loading="lazy" />
                     </picture>
-                    <figcaption class="cap"><h4>Unité mobile MR&#8209;3500</h4><span>Base de Djeno</span></figcaption>
+                    <figcaption class="bento-cap"><h4>Contrôle de puits</h4><span>Opérations sur site</span></figcaption>
                 </figure>
                 <figure class="cell" data-lightbox>
                     <picture>
                         <source type="image/webp" srcset="{{ asset('images/opt/mobilization.webp') }}" />
                         <img src="{{ asset('images/opt/mobilization.jpg') }}" alt="Grues mobiles lors de la mobilisation et du montage d'un appareil de forage" loading="lazy" />
                     </picture>
-                    <figcaption class="cap"><h4>Mobilisation</h4><span>Levage &amp; rig-up</span></figcaption>
+                    <figcaption class="bento-cap"><h4>Mobilisation</h4><span>Levage &amp; rig-up</span></figcaption>
                 </figure>
                 <figure class="cell" data-lightbox>
                     <picture>
                         <source type="image/webp" srcset="{{ asset('images/opt/crew-platform-m.webp') }}" />
                         <img src="{{ asset('images/opt/crew-platform-m.jpg') }}" alt="Opérations des équipes SFP sur le plancher de forage" loading="lazy" />
                     </picture>
-                    <figcaption class="cap"><h4>Opérations sur site</h4><span>Plancher de forage</span></figcaption>
+                    <figcaption class="bento-cap"><h4>Opérations sur site</h4><span>Plancher de forage</span></figcaption>
                 </figure>
             </div>
         </div>
