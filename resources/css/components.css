@@ -342,7 +342,7 @@
     max-width: 54ch;
     color: rgba(255, 255, 255, 0.74);
     font-size: clamp(1.02rem, 1.4vw, 1.2rem);
-    line-height: 1.7;
+    line-height: 1.45;
 }
 
 .hero-tagline {

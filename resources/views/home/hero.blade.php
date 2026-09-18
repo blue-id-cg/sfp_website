@@ -34,7 +34,7 @@
         <div class="slide">
             <picture>
                 <source type="image/webp" srcset="{{ asset('images/opt/rig-harness.webp') }}" />
-                <img src="{{ asset('images/opt/rig-harness.jpg') }}" alt="Techniciens SFP sous harnais lors d'un travail en hauteur" loading="lazy" width="1650" height="2200" />
+                <img src="{{ asset('images/opt/rig-harness.jpg') }}" alt="Équipe SFP autour des pompes à boue sur le site" loading="lazy" width="1650" height="2200" />
             </picture>
         </div>
     </div>
