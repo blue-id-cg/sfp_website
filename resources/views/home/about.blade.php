@@ -16,8 +16,8 @@
                         <dd class="ent-stat-label">Années d'expertise</dd>
                     </div>
                     <div class="ent-stat">
-                        <dt class="ent-stat-num"><span data-count="{{ $settings->incidents_count ?? 0 }}">0</span></dt>
-                        <dd class="ent-stat-label">Incident enregistré</dd>
+                        <dt class="ent-stat-num"><span data-count="{{ now()->year - ($settings->safety_milestone_year ?? now()->year - 10) }}" data-suffix="+">0</span></dt>
+                        <dd class="ent-stat-label">Ans sans accident</dd>
                     </div>
                     <div class="ent-stat">
                         <dt class="ent-stat-num"><span data-count="100" data-suffix=" %">0</span></dt>
