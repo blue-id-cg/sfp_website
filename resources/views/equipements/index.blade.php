@@ -50,6 +50,50 @@
         </div>
     </section>
 
+    <section class="section">
+        <div class="wrap">
+            <div class="sec-head center reveal mb-4">
+                <span class="kicker" data-index="++">{{ $page->get('catalog.kicker', 'Notre parc') }}</span>
+                <h2 class="title-xl">{{ $page->get('catalog.title', 'Les équipements sur le terrain') }}</h2>
+                <p class="lead mx-auto maxw-md mt-2">{{ $page->get('catalog.lead', 'Chaque équipement est mis en œuvre par les équipes formées au métier correspondant, et documenté par une fiche technique téléchargeable.') }}</p>
+            </div>
+
+            @if ($equipment->isEmpty())
+                <div class="empty-state">
+                    <div class="ico"><i class="hgi-stroke hgi-tools"></i></div>
+                    <h3>Catalogue en préparation</h3>
+                    <p>Les fiches techniques de nos équipements seront bientôt disponibles ici.</p>
+                </div>
+            @else
+                <div class="hse-grid stagger">
+                    @foreach ($equipment as $item)
+                        <article class="hse-card">
+                            @if ($item->image_url)
+                                <img src="{{ $item->image_url }}" alt="{{ $item->title }}" loading="lazy" />
+                            @endif
+                            <div class="body on-dark">
+                                <h3>{{ $item->title }}</h3>
+                                @if ($item->description)
+                                    <p>{{ $item->description }}</p>
+                                @endif
+                                @if ($item->trades->isNotEmpty())
+                                    <div class="equip-trades">
+                                        @foreach ($item->trades as $trade)
+                                            <a href="{{ route('metiers.show', $trade) }}" class="pill pill-y">{{ $trade->title }}</a>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                @if ($item->spec_sheet_url)
+                                    <a href="{{ $item->spec_sheet_url }}" target="_blank" rel="noopener" class="link-arrow mt-3"><i class="hgi-stroke hgi-download-01"></i> Fiche technique (PDF)</a>
+                                @endif
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+    </section>
+
     <section class="section bg-industrial">
         <div class="wrap">
             <div class="sec-head center reveal mb-4">

@@ -82,6 +82,22 @@ return [
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Available Site Locales
+    |--------------------------------------------------------------------------
+    |
+    | The languages the public site can be displayed in, keyed by locale code
+    | and used to render the language switcher. See App\Http\Middleware\SetLocale.
+    |
+    */
+
+    'available_locales' => [
+        'fr' => 'Français',
+        'en' => 'English',
+        'zh' => '中文',
+    ],
+
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*

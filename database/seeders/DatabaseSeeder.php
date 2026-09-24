@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             SiteSettingSeeder::class,
             ContentBlocksSeeder::class,
             TradesSeeder::class,
+            EquipmentSeeder::class,
             RealisationsSeeder::class,
             MilestonesSeeder::class,
             PagesSeeder::class,

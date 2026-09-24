@@ -259,6 +259,34 @@ mobileMenu
     ?.querySelectorAll("a")
     .forEach((link) => link.addEventListener("click", closeMobileMenu));
 
+// Sélecteur de langue
+document.querySelectorAll("[data-lang-switch]").forEach((switcher) => {
+    const trigger = switcher.querySelector("[data-lang-trigger]");
+    const menu = switcher.querySelector("[data-lang-menu]");
+
+    const closeLangMenu = () => {
+        switcher.classList.remove("open");
+        menu?.setAttribute("hidden", "");
+        trigger?.setAttribute("aria-expanded", "false");
+    };
+    const openLangMenu = () => {
+        switcher.classList.add("open");
+        menu?.removeAttribute("hidden");
+        trigger?.setAttribute("aria-expanded", "true");
+    };
+
+    trigger?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        switcher.classList.contains("open") ? closeLangMenu() : openLangMenu();
+    });
+    document.addEventListener("click", (event) => {
+        if (!switcher.contains(event.target)) closeLangMenu();
+    });
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeLangMenu();
+    });
+});
+
 // Retour en haut
 const toTop = document.getElementById("toTop");
 const onScrollTop = () => toTop?.classList.toggle("show", window.scrollY > 600);

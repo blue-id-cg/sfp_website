@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ActualiteController as AdminActualiteController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageController;
 use App\Http\Controllers\Admin\ContentBlockController as AdminContentBlockController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EquipmentController as AdminEquipmentController;
 use App\Http\Controllers\Admin\GalleryImageController as AdminGalleryImageController;
 use App\Http\Controllers\Admin\MediaController as AdminMediaController;
 use App\Http\Controllers\Admin\MilestoneController as AdminMilestoneController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HseController;
 use App\Http\Controllers\LegalController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MetierController;
 use App\Http\Controllers\OffreController;
 use App\Http\Controllers\ProfileController;
@@ -52,6 +54,8 @@ Route::get('/carrieres/offres/{offre}', [OffreController::class, 'show'])->name(
 
 Route::get('/galerie', [GalleryController::class, 'index'])->name('galerie.index');
 
+Route::get('/lang/{locale}', [LocaleController::class, 'switch'])->name('lang.switch');
+
 Route::get('/robots.txt', [SeoController::class, 'robots'])->name('robots');
 Route::get('/sitemap.xml', [SeoController::class, 'sitemap'])->name('sitemap');
 
@@ -70,6 +74,7 @@ Route::middleware('auth')->prefix(config('admin.path'))->name('admin.')->group(f
     Route::resource('realisations', AdminRealisationController::class)->except('show');
     Route::resource('milestones', AdminMilestoneController::class)->except('show');
     Route::resource('trades', AdminTradeController::class)->except('show');
+    Route::resource('equipment', AdminEquipmentController::class)->except('show');
     Route::resource('pages', AdminPageController::class)->only(['index', 'edit', 'update']);
     Route::resource('messages', AdminContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::get('/messages/{message}/cv', [AdminContactMessageController::class, 'cv'])->name('messages.cv');

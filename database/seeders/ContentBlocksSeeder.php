@@ -76,7 +76,7 @@ class ContentBlocksSeeder extends Seeder
         $this->seedGroup('equipements_perks', [
             ['icon' => 'hgi-warehouse', 'title' => 'Stockage', 'description' => 'Aire logistique pour le matériel de forage et les équipements techniques.'],
             ['icon' => 'hgi-settings-01', 'title' => 'Maintenance', 'description' => 'Entretien préventif et remise en état des rigs entre deux campagnes.'],
-            ['icon' => 'hgi-delivery-truck-01', 'title' => 'Mobilisation', 'description' => 'Préparation et levage du matériel avant déploiement sur site.'],
+            ['icon' => 'hgi-delivery-truck-01', 'title' => 'Démontellement Transport Montage (DTM)', 'description' => 'Préparation et levage du matériel avant déploiement sur site.'],
         ]);
 
         $this->seedGroup('equipment_specs', [

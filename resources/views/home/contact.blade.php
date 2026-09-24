@@ -5,7 +5,7 @@
         <div class="split contact-grid">
             <div class="reveal-left">
                 <span class="kicker" data-index="10">{{ $page->get('contact.kicker', 'Contact') }}</span>
-                <h2 class="title-xl">{{ $page->get('contact.title', 'Discutons de vos projets') }}</h2>
+                <h2 class="title-xl">{{ $page->get('contact.title', 'Parlons de vos besoins') }}</h2>
                 <p class="lead mt-3">{{ $page->get('contact.lead', 'Une question, un projet, un partenariat ? Nos équipes sont à votre écoute pour vous accompagner à chaque étape.') }}</p>
 
                 <div class="grid gap-md mt-5">

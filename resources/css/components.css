@@ -105,6 +105,84 @@
     background: var(--petrol);
 }
 
+.lang-switch {
+    position: relative;
+}
+
+.lang-switch-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    background: transparent;
+    cursor: pointer;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.lang-switch-trigger:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.lang-switch-trigger i {
+    font-size: 0.65rem;
+    transition: transform 0.3s var(--ease);
+}
+
+.lang-switch.open .lang-switch-trigger i {
+    transform: rotate(180deg);
+}
+
+.nav.scrolled .lang-switch-trigger {
+    color: rgba(12, 14, 34, 0.72);
+    border-color: var(--hairline-strong);
+}
+
+.nav.scrolled .lang-switch-trigger:hover {
+    color: var(--charcoal);
+    border-color: rgba(12, 14, 34, 0.35);
+}
+
+.lang-switch-menu {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    z-index: 10;
+    min-width: 140px;
+    background: #fff;
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+    padding: 0.4rem;
+    display: grid;
+    gap: 0.15rem;
+}
+
+.lang-switch-option {
+    display: block;
+    padding: 0.55rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    transition: background 0.2s, color 0.2s;
+}
+
+.lang-switch-option:hover {
+    background: var(--petrol-tint);
+    color: var(--petrol);
+}
+
+.lang-switch-option.active {
+    background: var(--petrol);
+    color: #fff;
+}
+
 .nav.scrolled .nav-link:hover,
 .nav.scrolled .nav-link.active {
     color: var(--charcoal);
@@ -188,6 +266,27 @@
 
 .mobile-menu a.mm-link:hover {
     color: var(--yellow);
+}
+
+.mobile-menu .mm-langs {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1.6rem;
+}
+
+.mobile-menu .mm-lang {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.mobile-menu .mm-lang.active {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--charcoal);
 }
 
 .mobile-menu .mm-foot {
@@ -1970,6 +2069,13 @@
     color: rgba(255, 255, 255, 0.78);
     font-size: 0.9rem;
     line-height: 1.6;
+}
+
+.equip-trades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
 }
 
 .hse-pledge {

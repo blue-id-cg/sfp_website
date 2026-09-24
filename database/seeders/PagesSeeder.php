@@ -69,7 +69,7 @@ class PagesSeeder extends Seeder
             ],
             'contact' => [
                 'kicker' => 'Contact',
-                'title' => 'Discutons de vos projets',
+                'title' => 'Parlons de vos besoins',
                 'lead' => 'Une question, un projet, un partenariat ? Nos équipes sont à votre écoute pour vous accompagner à chaque étape.',
             ],
         ]);
