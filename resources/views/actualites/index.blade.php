@@ -16,30 +16,6 @@
         'lead' => "Opérations, sécurité, innovation et vie de l'entreprise : suivez les temps forts de la Société de Forages Pétroliers.",
     ])
 
-    @if ($industryNews->isNotEmpty())
-        <section class="section-tight bg-industrial">
-            <div class="wrap">
-                <div class="sec-head mb-4">
-                    <span class="kicker" data-index="++">Veille sectorielle</span>
-                    <h2 class="title-lg">L'actualité du secteur pétrolier</h2>
-                    <p class="lead mt-2">Une sélection de titres externes sur l'actualité du forage et de l'énergie, fournie à titre informatif.</p>
-                </div>
-                <div class="watch-list">
-                    @foreach ($industryNews as $item)
-                        <a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferrer" class="watch-item">
-                            <span class="watch-source">{{ $item['source'] }}</span>
-                            <span class="watch-title">{{ $item['title'] }}</span>
-                            @if ($item['published_at'])
-                                <span class="watch-date">{{ $item['published_at']->translatedFormat('d F Y') }}</span>
-                            @endif
-                            <i class="hgi-stroke hgi-arrow-right-01"></i>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-    @endif
-
     <section class="section">
         <div class="wrap">
             <div class="drill-log">
@@ -69,4 +45,37 @@
             </div>
         </div>
     </section>
+
+    @if ($industryNews->isNotEmpty())
+        <section class="section-tight bg-industrial">
+            <div class="wrap">
+                <div class="sec-head mb-4">
+                    <span class="kicker" data-index="++">Veille sectorielle</span>
+                    <h2 class="title-lg">Ailleurs, dans l'actualité du secteur</h2>
+                    <p class="lead mt-2">Une sélection de titres externes sur l'actualité du forage et de l'énergie, fournie à titre informatif — hors publications de la SFP.</p>
+                </div>
+                <div class="watch-list">
+                    @foreach ($industryNews as $item)
+                        <a href="{{ $item['url'] }}" target="_blank" rel="noopener noreferrer" class="watch-item">
+                            @if ($item['image'])
+                                <div class="watch-thumb">
+                                    <img src="{{ $item['image'] }}" alt="" loading="lazy" />
+                                </div>
+                            @endif
+                            <div class="watch-body">
+                                <span class="watch-title">{{ $item['title'] }}</span>
+                                <span class="watch-meta">
+                                    <span class="watch-source">{{ $item['source'] }}</span>
+                                    @if ($item['published_at'])
+                                        <span class="watch-date">{{ $item['published_at']->translatedFormat('d F Y') }}</span>
+                                    @endif
+                                </span>
+                            </div>
+                            <i class="hgi-stroke hgi-arrow-right-01"></i>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
 @endsection
