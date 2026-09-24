@@ -9,9 +9,11 @@ class GalleryController extends Controller
 {
     public function index(): View
     {
+        $images = GalleryImage::query()->orderBy('position', 'asc')->paginate(24);
+
         return view('galerie.index', [
-            'images' => GalleryImage::query()->orderBy('position')->paginate(24),
-            'totalImages' => GalleryImage::query()->count(),
+            'images' => $images,
+            'totalImages' => $images->total(),
         ]);
     }
 }

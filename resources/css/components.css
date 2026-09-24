@@ -1899,6 +1899,19 @@
     color: var(--ink-3);
 }
 
+.stat-band-solo {
+    grid-template-columns: max-content;
+}
+
+.stat-band-solo .stat {
+    border-left: none;
+    padding: 0;
+}
+
+.stat-band-solo .stat .n {
+    font-size: clamp(3.4rem, 7vw, 5rem);
+}
+
 .hse-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1970,6 +1983,10 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
+}
+
+.hse-metrics-3 {
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .hse-metrics>div {
@@ -3186,23 +3203,34 @@
 
 .article p {
     color: var(--ink-2);
-    line-height: 1.25;
+    line-height: 1.2;
     margin-bottom: 1.2rem;
     font-size: 1.05rem;
+    text-align: justify;
 }
 
 .article ul,
 .article ol {
-    margin: 0 0 1.4rem 1.3rem;
-    display: grid;
-    gap: 0.5rem;
+    margin: 0 0 1.4rem;
+    padding-left: 1.4rem;
+}
+
+.article ul {
+    list-style: disc;
+}
+
+.article ol {
+    list-style: decimal;
 }
 
 .article ul li,
 .article ol li {
     color: var(--ink-2);
-    line-height: 1.6;
+    line-height: 1.4;
     font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+    padding-left: 0.3rem;
+    text-align: justify;
 }
 
 .article ul.dotted {

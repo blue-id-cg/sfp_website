@@ -24,6 +24,7 @@ class UpdateSiteSettingRequest extends FormRequest
             'founding_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
             'rigs_count' => ['nullable', 'integer', 'min:0'],
             'incidents_count' => ['nullable', 'integer', 'min:0'],
+            'safety_milestone_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
         ];
     }
 }

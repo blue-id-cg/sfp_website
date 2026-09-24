@@ -20,6 +20,7 @@ class SiteSettingSeeder extends Seeder
             'founding_year' => 2011,
             'rigs_count' => 2,
             'incidents_count' => 0,
+            'safety_milestone_year' => 2016,
         ]);
     }
 }

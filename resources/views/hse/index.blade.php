@@ -55,6 +55,26 @@
         </div>
     </section>
 
+    <section class="section bg-industrial">
+        <div class="wrap">
+            <div class="split items-center">
+                <div class="reveal-left">
+                    <div class="stat-band on-light stat-band-solo">
+                        <div class="stat">
+                            <div class="n" data-count="{{ now()->year - ($settings->safety_milestone_year ?? now()->year - 10) }}" data-suffix="+">0</div>
+                            <div class="l">Ans sans accident avec arrêt de travail</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-right">
+                    <span class="kicker" data-index="++">{{ $page->get('performance.kicker', 'Indicateurs & réalisations') }}</span>
+                    <h2 class="title-xl">{{ $page->get('performance.title', 'Excellence opérationnelle') }}</h2>
+                    <p class="lead mt-3">{{ $page->get('performance.lead', "Nous parlons désormais de « réalisation de puits maîtrisée » plutôt que de « vie de puits » : une manière d'affirmer notre engagement permanent pour la maîtrise des risques et la précision technique, à chaque étape de chaque puits.") }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section-tight bg-charcoal noise">
         <div class="wrap">
             <div class="sec-head center reveal mb-4">
@@ -93,6 +113,20 @@
                         <span class="pill pill-y tag-corner">Zéro incident</span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-tight bg-charcoal noise">
+        <div class="wrap">
+            <div class="sec-head center reveal mb-4">
+                <span class="kicker on-dark" data-index="03">{{ $page->get('principles.kicker', 'Nos slogans & lignes directrices') }}</span>
+                <h2 class="title-xl on-dark">{{ $page->get('principles.title', 'Safety First') }}</h2>
+            </div>
+            <div class="hse-metrics hse-metrics-3 stagger" role="list">
+                @foreach ($principles as $principle)
+                    <div role="listitem"><i class="hgi-stroke {{ $principle->icon }}"></i><b>{{ $principle->title }}</b><span>{{ $principle->description }}</span></div>
+                @endforeach
             </div>
         </div>
     </section>

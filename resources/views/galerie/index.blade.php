@@ -28,9 +28,10 @@
             </div>
 
             @if ($images->isEmpty())
-                <div class="rounded-xl border border-dashed border-gray-200 py-16 text-center text-gray-500">
-                    <i class="hgi-stroke hgi-image-02 mb-3 block text-3xl text-gray-300"></i>
-                    Aucune photo n'a encore été publiée.
+                <div class="empty-state">
+                    <div class="ico"><i class="hgi-stroke hgi-image-02"></i></div>
+                    <h3>Aucune photo pour le moment</h3>
+                    <p>Revenez bientôt : de nouvelles images de nos opérations seront publiées prochainement.</p>
                 </div>
             @else
                 <div class="core-grid reveal">
@@ -42,7 +43,7 @@
                     @endforeach
                 </div>
 
-                <div class="mt-8">
+                <div class="mt-10 text-center">
                     {{ $images->links() }}
                 </div>
             @endif

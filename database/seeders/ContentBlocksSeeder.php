@@ -36,6 +36,12 @@ class ContentBlocksSeeder extends Seeder
             ['icon' => 'hgi-leaf-01', 'title' => 'Impact environnemental', 'description' => 'Gestion responsable des déchets et des ressources sur chaque site.'],
         ]);
 
+        $this->seedGroup('hse_principles', [
+            ['icon' => 'hgi-shield-01', 'title' => 'Safety First', 'description' => 'Un principe permanent qui guide chacune de nos actions sur le terrain.'],
+            ['icon' => 'hgi-agreement-01', 'title' => 'Politique globale', 'description' => 'La sécurité du personnel, la sécurité des opérations et la protection de l\'environnement constituent nos principes fondamentaux pour un développement durable.'],
+            ['icon' => 'hgi-user-group', 'title' => "Culture d'équipe", 'description' => 'Valoriser l\'image du personnel engagé et sensibilisé lors de nos réunions de sécurité.'],
+        ]);
+
         $this->seedGroup('about_expertise', [
             ['icon' => 'hgi-factory-01', 'title' => 'Forage', 'description' => 'Conduite d\'opérations de forage onshore, de la mobilisation à la finalisation du puits.'],
             ['icon' => 'hgi-layers-01', 'title' => 'Complétion', 'description' => 'Mise en production des puits dans le respect des standards techniques et de sécurité.'],

@@ -32,6 +32,10 @@
                 <input type="number" name="incidents_count" id="incidents_count" value="{{ old('incidents_count', $setting->incidents_count) }}" class="@error('incidents_count') invalid @enderror" />
             </x-admin.field>
 
+            <x-admin.field name="safety_milestone_year" label="Année du dernier accident avec arrêt de travail" hint="Utilisée pour calculer « Années sans accident avec arrêt de travail » sur la page HSE. Laisser vide s'il n'y en a jamais eu.">
+                <input type="number" name="safety_milestone_year" id="safety_milestone_year" value="{{ old('safety_milestone_year', $setting->safety_milestone_year) }}" class="@error('safety_milestone_year') invalid @enderror" />
+            </x-admin.field>
+
             <div class="mt-6 flex items-center gap-3">
                 <button type="submit" class="inline-flex items-center rounded-md bg-[#0C0E22] px-4 py-2 text-sm font-medium text-white hover:bg-black">
                     Enregistrer

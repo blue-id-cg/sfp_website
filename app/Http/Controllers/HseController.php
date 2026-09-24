@@ -14,6 +14,7 @@ class HseController extends Controller
             'page' => Page::query()->where('slug', 'hse')->firstOrNew(),
             'engagements' => ContentBlock::query()->group('hse_metrics')->orderBy('position')->get(),
             'methodItems' => ContentBlock::query()->group('hse_method')->orderBy('position')->get(),
+            'principles' => ContentBlock::query()->group('hse_principles')->orderBy('position')->get(),
         ]);
     }
 }

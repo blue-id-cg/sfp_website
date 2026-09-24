@@ -49,6 +49,7 @@ class ContentBlock extends Model
         'instruments' => 'Accueil & Métiers — technologie',
         'hse_metrics' => 'Accueil & HSE — indicateurs sécurité',
         'hse_method' => 'HSE — notre méthode',
+        'hse_principles' => 'HSE — slogans & lignes directrices',
         'about_expertise' => "À propos — domaines d'expertise",
         'about_pillars' => 'À propos — vision, mission, objectifs',
         'about_values' => 'À propos — nos valeurs',

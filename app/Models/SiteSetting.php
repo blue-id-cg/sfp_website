@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * Single-row table holding site-wide settings (contact details, key figures) that would
  * otherwise be duplicated across several pages.
  */
-#[Fillable(['contact_address', 'contact_phone', 'contact_email', 'founding_year', 'rigs_count', 'incidents_count'])]
+#[Fillable(['contact_address', 'contact_phone', 'contact_email', 'founding_year', 'rigs_count', 'incidents_count', 'safety_milestone_year'])]
 class SiteSetting extends Model
 {
     /** @use HasFactory<SiteSettingFactory> */
