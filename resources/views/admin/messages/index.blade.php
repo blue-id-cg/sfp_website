@@ -55,6 +55,9 @@
                         </td>
                         <td class="max-w-90 px-5 py-4 align-top">
                             <a href="{{ route('admin.messages.show', $message) }}" class="block">
+                                <span class="mb-1 inline-flex items-center rounded-full px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide {{ $message->type === 'application' ? 'bg-orange-50 text-orange-700' : 'bg-gray-100 text-gray-600' }}">
+                                    {{ $message->type === 'application' ? 'Candidature' : 'Contact' }}
+                                </span>
                                 <span class="flex items-center gap-2 font-medium text-gray-800">{{ $message->subject ?? 'Demande sans objet' }}
                             @if ($message->cv_path)
                                 <i class="hgi-stroke hgi-file-01 text-gray-400" title="CV joint" aria-label="CV joint"></i>

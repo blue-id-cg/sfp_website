@@ -2071,6 +2071,66 @@
     line-height: 1.6;
 }
 
+.watch-list {
+    display: grid;
+    gap: 0.7rem;
+}
+
+.watch-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.3rem;
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: var(--r-md);
+    transition: border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s;
+}
+
+.watch-item:hover {
+    border-color: transparent;
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.watch-source {
+    flex: 0 0 auto;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--petrol);
+    background: var(--petrol-tint);
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+}
+
+.watch-title {
+    flex: 1 1 auto;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--ink);
+    min-width: 0;
+}
+
+.watch-date {
+    flex: 0 0 auto;
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    white-space: nowrap;
+}
+
+.watch-item i {
+    flex: 0 0 auto;
+    color: var(--ink-3);
+    transition: transform 0.3s var(--ease);
+}
+
+.watch-item:hover i {
+    transform: translate(2px, -2px);
+    color: var(--petrol);
+}
+
 .equip-trades {
     display: flex;
     flex-wrap: wrap;

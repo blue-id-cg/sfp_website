@@ -2,6 +2,7 @@
 
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
+use App\Models\SiteSetting;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +60,43 @@ test('a visitor can submit the contact form with a CV attached', function () {
     Storage::disk('local')->assertExists($contactMessage->cv_path);
 
     Mail::assertQueued(ContactMessageReceived::class);
+});
+
+test('submitting a job application notifies both the admin and the public contact address', function () {
+    Storage::fake('local');
+    Mail::fake();
+
+    config(['mail.admin_address' => 'admin@example.com']);
+    SiteSetting::current()->update(['contact_email' => 'contact@example.com']);
+
+    $this->post('/contact', [
+        'type' => 'application',
+        'name' => 'Alice Kimbembe',
+        'email' => 'alice@example.com',
+        'subject' => 'Candidature — Ingénieur forage',
+        'message' => 'Merci de considérer ma candidature.',
+    ]);
+
+    Mail::assertQueued(ContactMessageReceived::class, function ($mail) {
+        return $mail->hasTo('admin@example.com') && $mail->hasTo('contact@example.com');
+    });
+});
+
+test('a general contact message is only sent to the admin address', function () {
+    Mail::fake();
+
+    config(['mail.admin_address' => 'admin@example.com']);
+    SiteSetting::current()->update(['contact_email' => 'contact@example.com']);
+
+    $this->post('/contact', [
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+        'message' => "Bonjour, je souhaite plus d'informations.",
+    ]);
+
+    Mail::assertQueued(ContactMessageReceived::class, function ($mail) {
+        return $mail->hasTo('admin@example.com') && ! $mail->hasTo('contact@example.com');
+    });
 });
 
 test('the contact form rejects a CV that is not a PDF or Word document', function () {

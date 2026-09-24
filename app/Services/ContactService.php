@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
+use App\Models\SiteSetting;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,7 +21,12 @@ class ContactService
 
         $message = ContactMessage::query()->create($data);
 
-        Mail::to(config('mail.admin_address'))->send(new ContactMessageReceived($message));
+        $recipients = array_unique(array_filter([
+            config('mail.admin_address'),
+            $message->type === 'application' ? SiteSetting::current()->contact_email : null,
+        ]));
+
+        Mail::to($recipients)->send(new ContactMessageReceived($message));
 
         return $message;
     }

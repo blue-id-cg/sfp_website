@@ -18,6 +18,7 @@ class ContactMessageFactory extends Factory
     public function definition(): array
     {
         return [
+            'type' => 'contact',
             'name' => $this->faker->name(),
             'email' => $this->faker->safeEmail(),
             'phone' => $this->faker->optional()->phoneNumber(),
@@ -25,5 +26,10 @@ class ContactMessageFactory extends Factory
             'message' => $this->faker->paragraph(),
             'read_at' => null,
         ];
+    }
+
+    public function application(): static
+    {
+        return $this->state(['type' => 'application']);
     }
 }

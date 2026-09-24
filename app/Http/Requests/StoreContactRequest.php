@@ -17,6 +17,7 @@ class StoreContactRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'type' => ['nullable', 'string', 'in:contact,application'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],

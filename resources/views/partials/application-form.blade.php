@@ -19,6 +19,7 @@
             <i class="hgi-stroke hgi-checkmark-circle-01"></i>
             <span>Merci ! Votre candidature a bien été envoyée. Notre équipe RH vous recontactera.</span>
         </div>
+        <input type="hidden" name="type" value="application" />
         <input type="hidden" name="subject" value="Candidature — {{ $poste ?? 'Candidature spontanée' }}" />
 
         <div class="field-row">

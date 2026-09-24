@@ -90,6 +90,9 @@
     .bento .bento-cap { padding: 1.1rem 1rem; }
     .bento .bento-cap h4 { font-size: 0.95rem; }
 
+    .watch-item { flex-wrap: wrap; }
+    .watch-date { order: 3; flex-basis: 100%; }
+
     .stat-band { grid-template-columns: repeat(2, 1fr); }
     .stat { border-left: none; padding: 1.2rem 0.8rem; }
     .stat:nth-child(3), .stat:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.1); }
