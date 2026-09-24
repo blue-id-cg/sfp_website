@@ -3191,6 +3191,20 @@
     font-size: 1.05rem;
 }
 
+.article ul,
+.article ol {
+    margin: 0 0 1.4rem 1.3rem;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.article ul li,
+.article ol li {
+    color: var(--ink-2);
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
 .article ul.dotted {
     margin: 0 0 1.4rem;
     display: grid;
