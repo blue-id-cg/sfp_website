@@ -27,7 +27,7 @@ test('the create form offers the curated group and icon choices', function () {
     $response = $this->actingAs($user)->get('/admin/content-blocks/create');
 
     $response->assertOk();
-    $response->assertSee(ContentBlock::groupLabel('trades'));
+    $response->assertSee(ContentBlock::groupLabel('instruments'));
     $response->assertSee('data-icon-option="hgi-vest"', false);
 });
 
@@ -47,7 +47,7 @@ test('an icon outside the curated palette is rejected', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->post('/admin/content-blocks', [
-        'group' => 'trades',
+        'group' => 'instruments',
         'icon' => 'hgi-square-01',
         'title' => 'Bloc invalide',
     ]);
@@ -60,7 +60,7 @@ test('an authenticated user can create a content block', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->post('/admin/content-blocks', [
-        'group' => 'trades',
+        'group' => 'instruments',
         'icon' => 'hgi-factory-01',
         'title' => 'Nouveau bloc',
         'description' => 'Un résumé',

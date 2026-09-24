@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\OffreController as AdminOffreController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\RealisationController as AdminRealisationController;
 use App\Http\Controllers\Admin\SiteSettingController as AdminSiteSettingController;
+use App\Http\Controllers\Admin\TradeController as AdminTradeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\CarriereController;
 use App\Http\Controllers\ContactController;
@@ -31,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/a-propos', [AboutController::class, 'index'])->name('about.index');
 Route::get('/metiers', [MetierController::class, 'index'])->name('metiers.index');
+Route::get('/metiers/{trade}', [MetierController::class, 'show'])->name('metiers.show');
 Route::get('/hse', [HseController::class, 'index'])->name('hse.index');
 Route::get('/equipements', [EquipementController::class, 'index'])->name('equipements.index');
 
@@ -67,6 +69,7 @@ Route::middleware('auth')->prefix(config('admin.path'))->name('admin.')->group(f
     Route::resource('content-blocks', AdminContentBlockController::class)->parameters(['content-blocks' => 'contentBlock'])->except('show');
     Route::resource('realisations', AdminRealisationController::class)->except('show');
     Route::resource('milestones', AdminMilestoneController::class)->except('show');
+    Route::resource('trades', AdminTradeController::class)->except('show');
     Route::resource('pages', AdminPageController::class)->only(['index', 'edit', 'update']);
     Route::resource('messages', AdminContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::get('/messages/{message}/cv', [AdminContactMessageController::class, 'cv'])->name('messages.cv');

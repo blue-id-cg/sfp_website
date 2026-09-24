@@ -15,14 +15,7 @@ class ContentBlocksSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->seedGroup('trades', [
-            ['icon' => 'hgi-factory-01', 'title' => 'Forage pétrolier', 'description' => "Réalisation de puits d'exploration, d'évaluation et de production, avec des protocoles de sécurité stricts et un pilotage précis des paramètres."],
-            ['icon' => 'hgi-layers-01', 'title' => 'Complétion', 'description' => 'Équipement et mise en production des puits pour garantir un débit optimal, durable et conforme aux exigences du réservoir.'],
-            ['icon' => 'hgi-refresh', 'title' => 'Work Over', 'description' => 'Reprise, réparation et amélioration des performances des puits existants pour prolonger leur durée de vie et leur productivité.'],
-            ['icon' => 'hgi-chart-line-data-01', 'title' => 'Mud Logging', 'description' => 'Suivi géologique en temps réel et analyse des données de forage pour une prise de décision éclairée à chaque phase.'],
-            ['icon' => 'hgi-filter', 'title' => 'Pompage & Filtration', 'description' => 'Gestion complète des fluides techniques · du pompage à la filtration · pour des opérations propres, stables et efficaces.'],
-            ['icon' => 'hgi-settings-02', 'title' => 'Casing & Tubing', 'description' => 'Descente et vissage de casing et de tubing sur les puits en cours de forage ou de complétion.'],
-        ]);
+        // "trades" is now seeded as a dedicated Trade model — see TradesSeeder.
 
         $this->seedGroup('instruments', [
             ['icon' => 'hgi-dashboard-speed-01', 'title' => 'Surveillance en temps réel', 'description' => 'Contrôle continu des paramètres de forage pour des décisions rapides et sûres.'],

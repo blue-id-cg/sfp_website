@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             GalleryImagesSeeder::class,
             SiteSettingSeeder::class,
             ContentBlocksSeeder::class,
+            TradesSeeder::class,
             RealisationsSeeder::class,
             MilestonesSeeder::class,
             PagesSeeder::class,

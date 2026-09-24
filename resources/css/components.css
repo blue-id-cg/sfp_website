@@ -873,6 +873,7 @@
 }
 
 .trade {
+    display: block;
     position: relative;
     background: #fff;
     border: 1px solid var(--hairline);

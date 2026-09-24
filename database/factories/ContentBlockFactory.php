@@ -18,7 +18,7 @@ class ContentBlockFactory extends Factory
     public function definition(): array
     {
         return [
-            'group' => 'trades',
+            'group' => 'instruments',
             'icon' => 'hgi-factory-01',
             'title' => $this->faker->words(2, true),
             'description' => $this->faker->sentence(12),

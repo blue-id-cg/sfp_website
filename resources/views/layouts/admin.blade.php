@@ -52,6 +52,9 @@
                     </a>
                 @endcan
                 @can('manage pages')
+                    <a href="{{ route('admin.trades.index') }}" class="a-nav-link {{ request()->routeIs('admin.trades.*') ? 'active' : '' }}">
+                        <i class="hgi-stroke hgi-factory-01 w-4 text-center"></i> Métiers
+                    </a>
                     <a href="{{ route('admin.content-blocks.index') }}" class="a-nav-link {{ request()->routeIs('admin.content-blocks.*') ? 'active' : '' }}">
                         <i class="hgi-stroke hgi-dashboard-square-01 w-4 text-center"></i> Blocs de contenu
                     </a>

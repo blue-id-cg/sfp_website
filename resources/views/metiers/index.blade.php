@@ -24,6 +24,7 @@
                         <div class="ico"><i class="hgi-stroke {{ $trade->icon }}"></i></div>
                         <h3>{{ $trade->title }}</h3>
                         <p>{{ $trade->description }}</p>
+                        <a href="{{ route('metiers.show', $trade) }}" class="link-arrow mt-3">En savoir plus <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                     </article>
                 @endforeach
             </div>

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * A single icon+title+description card belonging to a named, repeated group (e.g. "hse_metrics",
- * "trades", "instruments") reused across one or more public pages.
+ * "instruments") reused across one or more public pages.
  */
 #[Fillable(['group', 'icon', 'title', 'description', 'meta', 'position'])]
 class ContentBlock extends Model
@@ -46,7 +46,6 @@ class ContentBlock extends Model
      * @var array<string, string>
      */
     public const GROUP_LABELS = [
-        'trades' => 'Métiers — nos savoir-faire',
         'instruments' => 'Accueil & Métiers — technologie',
         'hse_metrics' => 'Accueil & HSE — indicateurs sécurité',
         'hse_method' => 'HSE — notre méthode',
