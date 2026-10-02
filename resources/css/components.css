@@ -1035,6 +1035,7 @@
     transform: rotate(-6deg);
 }
 
+.trade h2,
 .trade h3 {
     font-size: 1.22rem;
     margin-bottom: 0.55rem;
@@ -2059,6 +2060,7 @@
     color: #fff;
 }
 
+.hse-card .body h2,
 .hse-card .body h3 {
     color: #fff;
     font-size: 1.35rem;
@@ -2325,7 +2327,7 @@
     transform: translateY(0);
 }
 
-.bento .bento-cap h4 {
+.bento .bento-cap p {
     color: #fff;
     font-size: 1.05rem;
     font-weight: 700;
@@ -3796,7 +3798,7 @@
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #15803d;
+    color: var(--success);
 }
 
 .job-ticket-status i {
@@ -3923,7 +3925,7 @@
 }
 
 .field label .req {
-    color: #d64545;
+    color: var(--error);
 }
 
 .field input,
@@ -3956,13 +3958,13 @@
 .field input.invalid,
 .field textarea.invalid,
 .field select.invalid {
-    border-color: #d64545;
-    box-shadow: 0 0 0 4px rgba(214, 69, 69, 0.1);
+    border-color: var(--error);
+    box-shadow: 0 0 0 4px var(--error-tint);
 }
 
 .field .err {
     font-size: 0.75rem;
-    color: #d64545;
+    color: var(--error);
     min-height: 1em;
 }
 
@@ -4053,15 +4055,15 @@
 }
 
 .form-alert.ok {
-    background: rgba(22, 163, 74, 0.1);
-    color: #15803d;
-    border: 1px solid rgba(22, 163, 74, 0.25);
+    background: var(--success-tint);
+    color: var(--success);
+    border: 1px solid var(--success-line);
 }
 
 .form-alert.error {
-    background: rgba(214, 69, 69, 0.1);
-    color: #b42318;
-    border: 1px solid rgba(214, 69, 69, 0.25);
+    background: var(--error-tint);
+    color: var(--error-strong);
+    border: 1px solid var(--error-line);
 }
 
 /* Newsletter (footer) */

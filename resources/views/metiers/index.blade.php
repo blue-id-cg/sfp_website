@@ -22,7 +22,7 @@
                     <article class="trade">
                         <div class="num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
                         <div class="ico"><i class="hgi-stroke {{ $trade->icon }}"></i></div>
-                        <h3>{{ $trade->title }}</h3>
+                        <h2>{{ $trade->title }}</h2>
                         <p>{{ $trade->description }}</p>
                         <a href="{{ route('metiers.show', $trade) }}" class="link-arrow mt-3">En savoir plus <i class="hgi-stroke hgi-arrow-right-01"></i></a>
                     </article>

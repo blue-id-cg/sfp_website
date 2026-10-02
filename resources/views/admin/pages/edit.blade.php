@@ -1,7 +1,15 @@
 <x-app-layout>
     <x-slot name="header">{{ $label }}</x-slot>
 
-    <x-admin.page-header title="{{ $label }}" subtitle="Textes affichés sur cette page publique. Les cartes répétitives se gèrent depuis « Blocs de contenu »." />
+    <x-admin.page-header title="{{ $label }}" subtitle="Textes affichés sur cette page publique. Les cartes répétitives se gèrent depuis « Blocs de contenu ».">
+        <x-slot:actions>
+            @if ($page->publicUrl())
+                <a href="{{ $page->publicUrl() }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:border-gray-400">
+                    Voir la page ↗
+                </a>
+            @endif
+        </x-slot:actions>
+    </x-admin.page-header>
 
     <form method="POST" action="{{ route('admin.pages.update', $page) }}" class="space-y-5">
         @csrf

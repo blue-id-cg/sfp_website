@@ -18,7 +18,7 @@
         <a href="{{ route('galerie.index') }}" class="nav-link @if(request()->routeIs('galerie.*')) active @endif" data-nav="galerie">{{ __('Galerie') }}</a>
         <a href="{{ route('actualites.index') }}" class="nav-link @if(request()->routeIs('actualites.*')) active @endif" data-nav="actualites">{{ __('Actualités') }}</a>
         <a href="{{ route('carrieres.index') }}" class="nav-link @if(request()->routeIs('carrieres.*') || request()->routeIs('offres.*')) active @endif" data-nav="carrieres">{{ __('Carrières') }}</a>
-        @include('partials.language-switcher')
+        {{-- Sélecteur de langue masqué tant que le contenu éditorial n'est pas traduit --}}
         <a href="{{ $homeUrl }}#contact" class="btn btn-primary btn-sm nav-cta">{{ __('Nous contacter') }}</a>
     </div>
 

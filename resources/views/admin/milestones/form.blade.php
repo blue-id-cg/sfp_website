@@ -16,6 +16,8 @@
     <textarea name="description" id="description" rows="3" class="@error('description') invalid @enderror">{{ old('description', $milestone->description ?? '') }}</textarea>
 </x-admin.field>
 
-<x-admin.field name="position" label="Position" hint="Ordre d'affichage sur la frise (les plus petits en premier).">
-    <input type="number" name="position" id="position" value="{{ old('position', $milestone->position ?? '') }}" class="@error('position') invalid @enderror" />
-</x-admin.field>
+<x-admin.advanced>
+    <x-admin.field name="position" label="Position" hint="Ordre d'affichage sur la frise (les plus petits en premier).">
+        <input type="number" name="position" id="position" value="{{ old('position', $milestone->position ?? '') }}" class="@error('position') invalid @enderror" />
+    </x-admin.field>
+</x-admin.advanced>

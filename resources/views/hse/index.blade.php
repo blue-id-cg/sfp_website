@@ -25,7 +25,7 @@
                     </picture>
                     <div class="body">
                         <span class="pill pill-y">Prévention</span>
-                        <h3>Maîtrise des risques</h3>
+                        <h2>Maîtrise des risques</h2>
                         <p>Analyse des risques avant chaque opération, procédures rigoureuses et vigilance permanente sur site.</p>
                     </div>
                 </article>
@@ -36,7 +36,7 @@
                     </picture>
                     <div class="body">
                         <span class="pill pill-y">Protection</span>
-                        <h3>Protection des personnes</h3>
+                        <h2>Protection des personnes</h2>
                         <p>Équipements de protection individuelle, formation continue et culture safety partagée par tous.</p>
                     </div>
                 </article>
@@ -47,7 +47,7 @@
                     </picture>
                     <div class="body">
                         <span class="pill pill-y">Environnement</span>
-                        <h3>Respect de l'environnement</h3>
+                        <h2>Respect de l'environnement</h2>
                         <p>Gestion durable des déchets, réduction des impacts et protection des écosystèmes autour des sites.</p>
                     </div>
                 </article>

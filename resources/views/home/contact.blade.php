@@ -86,7 +86,7 @@
         </div>
 
         <div class="map-frame reveal mt-6">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127638.97754706439!2d15.237412!3d-4.26336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1b6b0a3f6e7d8e0b%3A0x8f5e3c2a1b0d9e6f!2sPointe-Noire%2C%20Congo!5e0!3m2!1sfr!2scg!4v1712345678901" loading="lazy" title="Localisation de la SFP · Pointe-Noire, Congo"></iframe>
+            <iframe src="https://www.google.com/maps?q=6V45%2BH3F+Pointe-Noire,+Congo&output=embed" loading="lazy" title="Localisation de la SFP · Pointe-Noire, Congo"></iframe>
         </div>
     </div>
 </section>

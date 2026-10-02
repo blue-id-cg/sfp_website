@@ -33,6 +33,15 @@
     --hairline: rgba(20, 21, 44, 0.10);
     --hairline-strong: rgba(20, 21, 44, 0.16);
 
+    /* ---- États (formulaires, alertes) ---- */
+    --success: #15803d;
+    --success-tint: rgba(22, 163, 74, 0.1);
+    --success-line: rgba(22, 163, 74, 0.25);
+    --error: #d64545;
+    --error-strong: #b42318;
+    --error-tint: rgba(214, 69, 69, 0.1);
+    --error-line: rgba(214, 69, 69, 0.25);
+
     /* ---- Typographie ---- */
     --font: 'Tw Cen MT', Arial, sans-serif;
 
@@ -705,36 +714,38 @@ p {
     white-space: nowrap;
 }
 
-/* Espacements verticaux */
-.mt-1 {
+/* Espacements verticaux — échelle propre au site vitrine, volontairement distincte de
+   l'échelle Tailwind. Scopée hors de .admin-shell pour ne pas écraser les utilitaires
+   Tailwind natifs (mt-1, mb-4, etc.) utilisés tels quels dans l'interface d'administration. */
+body:not(.admin-shell) .mt-1 {
     margin-top: 0.5rem;
 }
 
-.mt-2 {
+body:not(.admin-shell) .mt-2 {
     margin-top: 0.85rem;
 }
 
-.mt-3 {
+body:not(.admin-shell) .mt-3 {
     margin-top: 1.3rem;
 }
 
-.mt-4 {
+body:not(.admin-shell) .mt-4 {
     margin-top: 1.8rem;
 }
 
-.mt-5 {
+body:not(.admin-shell) .mt-5 {
     margin-top: 2.4rem;
 }
 
-.mt-6 {
+body:not(.admin-shell) .mt-6 {
     margin-top: 3.6rem;
 }
 
-.mb-3 {
+body:not(.admin-shell) .mb-3 {
     margin-bottom: 1.3rem;
 }
 
-.mb-4 {
+body:not(.admin-shell) .mb-4 {
     margin-bottom: 2.2rem;
 }
 

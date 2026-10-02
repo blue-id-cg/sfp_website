@@ -81,6 +81,41 @@ class ContentBlock extends Model
     }
 
     /**
+     * Public page(s) a group's blocks actually render on, so the admin can link straight to
+     * them instead of leaving editors to guess from the group label alone.
+     *
+     * @var array<string, list<array{label: string, route: string}>>
+     */
+    public const GROUP_PAGES = [
+        'instruments' => [
+            ['label' => 'Accueil', 'route' => 'home'],
+            ['label' => 'Métiers', 'route' => 'metiers.index'],
+        ],
+        'hse_metrics' => [
+            ['label' => 'Accueil', 'route' => 'home'],
+            ['label' => 'HSE', 'route' => 'hse.index'],
+        ],
+        'hse_method' => [['label' => 'HSE', 'route' => 'hse.index']],
+        'hse_principles' => [['label' => 'HSE', 'route' => 'hse.index']],
+        'about_expertise' => [['label' => 'À propos', 'route' => 'about.index']],
+        'about_pillars' => [['label' => 'À propos', 'route' => 'about.index']],
+        'about_values' => [['label' => 'À propos', 'route' => 'about.index']],
+        'home_ent_values' => [['label' => 'Accueil', 'route' => 'home']],
+        'equipements_perks' => [['label' => 'Équipements', 'route' => 'equipements.index']],
+        'equipment_specs' => [['label' => 'Accueil', 'route' => 'home']],
+    ];
+
+    /**
+     * @return list<array{label: string, url: string}>
+     */
+    public static function groupPageLinks(string $group): array
+    {
+        return collect(self::GROUP_PAGES[$group] ?? [])
+            ->map(fn (array $page) => ['label' => $page['label'], 'url' => route($page['route'])])
+            ->all();
+    }
+
+    /**
      * Every icon class offered by the picker, flattened for validation.
      *
      * @return array<int, string>

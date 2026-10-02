@@ -3,15 +3,20 @@
 @php
     $groupValue = old('group', $block->group ?? '');
     $iconValue = old('icon', $block->icon ?? '');
+    $groupPageLinks = collect(\App\Models\ContentBlock::GROUP_LABELS)
+        ->keys()
+        ->mapWithKeys(fn ($slug) => [$slug => \App\Models\ContentBlock::groupPageLinks($slug)]);
 @endphp
 
 <x-admin.field name="group" label="Groupe" required hint="Section de contenu à laquelle ce bloc appartient — détermine où il apparaît sur le site public.">
-    <select name="group" id="group" required class="@error('group') invalid @enderror">
+    <select name="group" id="group" required data-group-select class="@error('group') invalid @enderror">
         <option value="" disabled @selected($groupValue === '')>Sélectionner un groupe…</option>
         @foreach (\App\Models\ContentBlock::GROUP_LABELS as $slug => $label)
             <option value="{{ $slug }}" @selected($groupValue === $slug)>{{ $label }}</option>
         @endforeach
     </select>
+    <script type="application/json" data-group-pages>@json($groupPageLinks)</script>
+    <p data-group-preview class="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-gray-500"></p>
 </x-admin.field>
 
 <x-admin.field name="icon" label="Icône" hint="Cliquez pour choisir une icône dans la liste ci-dessous.">
@@ -59,6 +64,8 @@
     <textarea name="meta" id="meta" rows="3" class="@error('meta') invalid @enderror">{{ is_array(old('meta')) ? $metaToLines(old('meta')) : old('meta', $metaToLines($block->meta ?? [])) }}</textarea>
 </x-admin.field>
 
-<x-admin.field name="position" label="Position" hint="Ordre d'affichage au sein du groupe (les plus petits en premier).">
-    <input type="number" name="position" id="position" value="{{ old('position', $block->position ?? '') }}" class="@error('position') invalid @enderror" />
-</x-admin.field>
+<x-admin.advanced>
+    <x-admin.field name="position" label="Position" hint="Ordre d'affichage au sein du groupe (les plus petits en premier).">
+        <input type="number" name="position" id="position" value="{{ old('position', $block->position ?? '') }}" class="@error('position') invalid @enderror" />
+    </x-admin.field>
+</x-admin.advanced>

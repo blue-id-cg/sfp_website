@@ -208,6 +208,37 @@ document.querySelectorAll("[data-icon-picker]").forEach((picker) => {
     select(input.value);
 });
 
+// Aperçu « Visible sur » (bloc de contenu) — montre tout de suite sur quelle(s) page(s)
+// publiques le groupe choisi apparaît, pour qu'un admin non-développeur n'ait pas à deviner
+// ce que signifie un identifiant de groupe technique.
+document.querySelectorAll("[data-group-select]").forEach((select) => {
+    const field = select.closest(".field");
+    const preview = field?.querySelector("[data-group-preview]");
+    const dataEl = field?.querySelector("[data-group-pages]");
+    if (!preview || !dataEl) return;
+
+    const pagesByGroup = JSON.parse(dataEl.textContent || "{}");
+
+    const render = () => {
+        const pages = pagesByGroup[select.value] || [];
+        if (pages.length === 0) {
+            preview.innerHTML = "";
+            return;
+        }
+        preview.innerHTML =
+            "Visible sur : " +
+            pages
+                .map(
+                    (page) =>
+                        `<a href="${page.url}" target="_blank" rel="noopener" class="font-medium text-blue-600 hover:underline">${page.label} ↗</a>`,
+                )
+                .join(", ");
+    };
+
+    select.addEventListener("change", render);
+    render();
+});
+
 // Zone de dépôt de fichier (upload image)
 document.querySelectorAll("[data-file-input]").forEach((input) => {
     const drop = input.closest(".field")?.querySelector("[data-file-drop]");

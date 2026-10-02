@@ -4,10 +4,6 @@
     <input type="text" name="title" id="title" value="{{ old('title', $realisation->title ?? '') }}" required class="@error('title') invalid @enderror" />
 </x-admin.field>
 
-<x-admin.field name="slug" label="Slug" hint="Laisser vide pour une génération automatique à partir du titre.">
-    <input type="text" name="slug" id="slug" value="{{ old('slug', $realisation->slug ?? '') }}" class="@error('slug') invalid @enderror" />
-</x-admin.field>
-
 <x-admin.field name="category" label="Catégorie">
     <input type="text" name="category" id="category" value="{{ old('category', $realisation->category ?? '') }}" class="@error('category') invalid @enderror" />
 </x-admin.field>
@@ -32,12 +28,18 @@
 @endphp
 <x-admin.tag-field name="tags" label="Tags" :value="$tagsValue" />
 
-<x-admin.field name="position" label="Position" hint="Ordre d'affichage (les plus petits en premier).">
-    <input type="number" name="position" id="position" value="{{ old('position', $realisation->position ?? '') }}" class="@error('position') invalid @enderror" />
-</x-admin.field>
-
 <x-admin.field name="published_at" label="Date de publication" hint="Laisser vide pour enregistrer comme brouillon.">
     <input type="date" name="published_at" id="published_at"
            value="{{ old('published_at', isset($realisation) && $realisation->published_at ? $realisation->published_at->format('Y-m-d') : '') }}"
            class="@error('published_at') invalid @enderror" />
 </x-admin.field>
+
+<x-admin.advanced>
+    <x-admin.field name="slug" label="Slug" hint="Laisser vide pour une génération automatique à partir du titre.">
+        <input type="text" name="slug" id="slug" value="{{ old('slug', $realisation->slug ?? '') }}" class="@error('slug') invalid @enderror" />
+    </x-admin.field>
+
+    <x-admin.field name="position" label="Position" hint="Ordre d'affichage (les plus petits en premier).">
+        <input type="number" name="position" id="position" value="{{ old('position', $realisation->position ?? '') }}" class="@error('position') invalid @enderror" />
+    </x-admin.field>
+</x-admin.advanced>

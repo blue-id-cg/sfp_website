@@ -1,7 +1,13 @@
 <x-app-layout>
     <x-slot name="header">Modifier l'étape</x-slot>
 
-    <x-admin.page-header title="Modifier l'étape" subtitle="{{ $milestone->title }}" />
+    <x-admin.page-header title="Modifier l'étape" subtitle="{{ $milestone->title }}">
+        <x-slot:actions>
+            <a href="{{ route('about.index') }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 rounded-md border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:border-gray-400">
+                Voir sur le site ↗
+            </a>
+        </x-slot:actions>
+    </x-admin.page-header>
 
     <div class="form-card max-w-lg">
         <form method="POST" action="{{ route('admin.milestones.update', $milestone) }}">

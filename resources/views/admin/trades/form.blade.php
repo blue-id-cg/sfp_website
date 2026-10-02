@@ -8,10 +8,6 @@
     <input type="text" name="title" id="title" value="{{ old('title', $trade->title ?? '') }}" required class="@error('title') invalid @enderror" />
 </x-admin.field>
 
-<x-admin.field name="slug" label="Slug" hint="Laisser vide pour une génération automatique à partir du titre.">
-    <input type="text" name="slug" id="slug" value="{{ old('slug', $trade->slug ?? '') }}" class="@error('slug') invalid @enderror" />
-</x-admin.field>
-
 <x-admin.field name="icon" label="Icône" hint="Cliquez pour choisir une icône dans la liste ci-dessous.">
     <div data-icon-picker class="relative">
         <input type="hidden" name="icon" id="icon" value="{{ $iconValue }}" data-icon-value />
@@ -50,9 +46,15 @@
     <textarea name="body" id="body" rows="12" data-quill class="@error('body') invalid @enderror">{{ old('body', $trade->body ?? '') }}</textarea>
 </x-admin.field>
 
-<x-admin.field name="position" label="Position" hint="Ordre d'affichage dans la liste des métiers (les plus petits en premier).">
-    <input type="number" name="position" id="position" value="{{ old('position', $trade->position ?? '') }}" class="@error('position') invalid @enderror" />
-</x-admin.field>
+<x-admin.advanced>
+    <x-admin.field name="slug" label="Slug" hint="Laisser vide pour une génération automatique à partir du titre.">
+        <input type="text" name="slug" id="slug" value="{{ old('slug', $trade->slug ?? '') }}" class="@error('slug') invalid @enderror" />
+    </x-admin.field>
+
+    <x-admin.field name="position" label="Position" hint="Ordre d'affichage dans la liste des métiers (les plus petits en premier).">
+        <input type="number" name="position" id="position" value="{{ old('position', $trade->position ?? '') }}" class="@error('position') invalid @enderror" />
+    </x-admin.field>
+</x-admin.advanced>
 
 <div class="mt-6 flex items-center gap-3">
     <button type="submit" class="inline-flex items-center rounded-md bg-[#0C0E22] px-4 py-2 text-sm font-medium text-white hover:bg-black">

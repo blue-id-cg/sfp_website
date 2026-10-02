@@ -4,10 +4,6 @@
     <input type="text" name="title" id="title" value="{{ old('title', $offre->title ?? '') }}" required class="@error('title') invalid @enderror" />
 </x-admin.field>
 
-<x-admin.field name="slug" label="Slug" hint="Laisser vide pour une génération automatique à partir du titre.">
-    <input type="text" name="slug" id="slug" value="{{ old('slug', $offre->slug ?? '') }}" class="@error('slug') invalid @enderror" />
-</x-admin.field>
-
 @php
     $tagsValue = is_array(old('tags'))
         ? implode("\n", old('tags'))
@@ -37,6 +33,12 @@
            value="{{ old('published_at', isset($offre) && $offre->published_at ? $offre->published_at->format('Y-m-d') : '') }}"
            class="@error('published_at') invalid @enderror" />
 </x-admin.field>
+
+<x-admin.advanced>
+    <x-admin.field name="slug" label="Slug" hint="Laisser vide pour une génération automatique à partir du titre.">
+        <input type="text" name="slug" id="slug" value="{{ old('slug', $offre->slug ?? '') }}" class="@error('slug') invalid @enderror" />
+    </x-admin.field>
+</x-admin.advanced>
 
 <div class="mt-6 flex items-center gap-3">
     <button type="submit" class="inline-flex items-center rounded-md bg-[#0C0E22] px-4 py-2 text-sm font-medium text-white hover:bg-black">

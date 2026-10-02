@@ -40,4 +40,23 @@ class Page extends Model
     {
         return data_get($this->content, $path, $default);
     }
+
+    /**
+     * The public page this record's content is rendered on, so the admin can link straight to
+     * it instead of leaving editors to guess what a slug like "metiers" renders as.
+     *
+     * @var array<string, string>
+     */
+    public const ROUTES = [
+        'home' => 'home',
+        'about' => 'about.index',
+        'metiers' => 'metiers.index',
+        'hse' => 'hse.index',
+        'equipements' => 'equipements.index',
+    ];
+
+    public function publicUrl(): ?string
+    {
+        return isset(self::ROUTES[$this->slug]) ? route(self::ROUTES[$this->slug]) : null;
+    }
 }

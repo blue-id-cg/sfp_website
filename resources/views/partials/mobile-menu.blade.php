@@ -16,11 +16,7 @@
         <a href="{{ route('carrieres.index') }}" class="mm-link"><span>{{ __('Carrières') }}</span><span class="idx">08</span></a>
         <a href="{{ $homeUrl }}#contact" class="mm-link"><span>{{ __('Contact') }}</span><span class="idx">09</span></a>
     </nav>
-    <div class="mm-langs">
-        @foreach (config('app.available_locales') as $code => $label)
-            <a href="{{ route('lang.switch', $code) }}" class="mm-lang @if(app()->getLocale() === $code) active @endif">{{ $label }}</a>
-        @endforeach
-    </div>
+    {{-- Sélecteur de langue masqué tant que le contenu éditorial n'est pas traduit --}}
     <div class="mm-foot">
         <div>{{ __('Avenue du Général de Gaulle · Pointe-Noire, Congo') }}</div>
         <a href="{{ $homeUrl }}#contact" class="btn btn-primary">{{ __('Démarrer un projet') }} <i class="hgi-stroke hgi-arrow-right-01"></i></a>

@@ -40,7 +40,7 @@
             <div>
                 <h5>{{ __('Restons en contact') }}</h5>
                 <div class="footer-links">
-                    <a href="https://maps.google.com/?q=Pointe-Noire,Congo" target="_blank" rel="noopener"><i class="hgi-stroke hgi-location-01"></i>&nbsp; {{ __('Pointe-Noire, Congo') }}</a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=6V45%2BH3F+Pointe-Noire,+Congo" target="_blank" rel="noopener"><i class="hgi-stroke hgi-location-01"></i>&nbsp; {{ __('Pointe-Noire, Congo') }}</a>
                     <a href="tel:{{ preg_replace('/\s+/', '', $settings->contact_phone ?? '+242065870728') }}"><i class="hgi-stroke hgi-call"></i>&nbsp; {{ $settings->contact_phone ?? '+242 06 587 07 28' }}</a>
                     <a href="mailto:{{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}"><i class="hgi-stroke hgi-mail-01"></i>&nbsp; {{ $settings->contact_email ?? 'contact@snpc-sfp.net' }}</a>
                 </div>
