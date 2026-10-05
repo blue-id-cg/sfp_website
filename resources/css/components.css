@@ -4035,6 +4035,10 @@
     line-height: 1.5;
 }
 
+.form-note:empty {
+    display: none;
+}
+
 .form-alert {
     display: none;
     align-items: center;
@@ -4070,7 +4074,6 @@
 .newsletter {
     display: flex;
     gap: 0.5rem;
-    margin-top: 1rem;
     max-width: 340px;
 }
 
@@ -4274,8 +4277,27 @@
 
 .footer-top {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+    grid-template-columns: 1.5fr 1fr 1fr 1.3fr;
+    align-items: start;
     gap: 2.5rem;
+}
+
+.footer-col {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    padding-left: 1.4rem;
+}
+
+/* Icônes sociales et newsletter vivent sur leur propre ligne commune, sous les colonnes —
+   plus simple et plus robuste que de les caler dans des colonnes de hauteurs différentes. */
+.footer-connect {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 2.8rem;
+    padding-top: 2.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-brand .footer-logo {
@@ -4298,6 +4320,11 @@
     margin-bottom: 1.2rem;
 }
 
+.footer h5 .tick {
+    margin-right: 0.3rem;
+    font-size: 0.85em;
+}
+
 .footer-links {
     display: grid;
     gap: 0.7rem;
@@ -4316,7 +4343,6 @@
 .socials {
     display: flex;
     gap: 0.6rem;
-    margin-top: 1.4rem;
 }
 
 .socials a {
@@ -4344,8 +4370,28 @@
     gap: 1rem;
     margin-top: 3rem;
     padding-top: 1.6rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
     font-size: 0.82rem;
+}
+
+.footer-bottom::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.footer-bottom::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 3.5rem;
+    height: 3px;
+    background: var(--yellow);
 }
 
 .footer-bottom .legal {

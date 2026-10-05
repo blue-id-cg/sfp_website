@@ -150,6 +150,9 @@
     .job-cta .btn { width: 100%; justify-content: center; }
 
     .footer-top { grid-template-columns: 1fr; }
+    .footer-col { border-left: none; padding-left: 0; padding-top: 1.6rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+    .footer-connect { flex-direction: column; align-items: flex-start; }
+    .footer-newsletter, .newsletter { width: 100%; max-width: none; }
     .footer-bottom { flex-direction: column; align-items: flex-start; }
 
     .depth-gauge { display: none; }

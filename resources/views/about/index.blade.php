@@ -44,8 +44,8 @@
                             </picture>
                         </div>
                         <div class="plate">
-                            <b>SNPC</b>
-                            <span>Filiale du groupe · 100 %</span>
+                            <b>SFP</b>
+                            <span>Filiale du groupe SNPC · 100 %</span>
                         </div>
                         <span class="pill pill-y tag-corner">Depuis 2010</span>
                     </div>
