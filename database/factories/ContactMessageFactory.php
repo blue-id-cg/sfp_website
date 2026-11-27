@@ -24,6 +24,7 @@ class ContactMessageFactory extends Factory
             'phone' => $this->faker->optional()->phoneNumber(),
             'subject' => $this->faker->optional()->sentence(4),
             'message' => $this->faker->paragraph(),
+            'cv_filename' => null,
             'read_at' => null,
         ];
     }

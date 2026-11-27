@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreOffreRequest;
 use App\Http\Requests\Admin\UpdateOffreRequest;
 use App\Models\Offre;
 use App\Services\OffreService;
+use App\Support\LikeSearch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +24,7 @@ class OffreController extends Controller
 
         return view('admin.offres.index', [
             'offres' => Offre::query()
-                ->when($search !== '', fn ($query) => $query->where('title', 'like', "%{$search}%"))
+                ->when($search !== '', fn ($query) => LikeSearch::apply($query, 'title', $search))
                 ->latest('published_at')
                 ->paginate(15)
                 ->withQueryString(),

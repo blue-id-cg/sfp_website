@@ -6,7 +6,9 @@ use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
 use App\Models\SiteSetting;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class ContactService
 {
@@ -15,11 +17,23 @@ class ContactService
      */
     public function submit(array $data, ?UploadedFile $cv = null): ContactMessage
     {
-        if ($cv !== null) {
-            $data['cv_path'] = $cv->store('candidatures');
-        }
+        $cvPath = null;
 
-        $message = ContactMessage::query()->create($data);
+        try {
+            if ($cv !== null) {
+                $cvPath = $cv->store('candidatures');
+                $data['cv_path'] = $cvPath;
+                $data['cv_filename'] = $cv->getClientOriginalName();
+            }
+
+            $message = DB::transaction(fn () => ContactMessage::query()->create($data));
+        } catch (\Throwable $exception) {
+            if ($cvPath !== null) {
+                Storage::disk('local')->delete($cvPath);
+            }
+
+            throw $exception;
+        }
 
         $recipients = array_unique(array_filter([
             config('mail.admin_address'),

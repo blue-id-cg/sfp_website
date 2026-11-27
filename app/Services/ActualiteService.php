@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Actualite;
+use App\Support\ImageOptimizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,7 +44,7 @@ class ActualiteService
 
     private function storeImage(UploadedFile $image): string
     {
-        return $image->store('actualites', 'public');
+        return (new ImageOptimizer)->store($image, 'actualites');
     }
 
     private function deleteImage(Actualite $actualite): void

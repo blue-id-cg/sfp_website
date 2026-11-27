@@ -148,6 +148,7 @@ npm run build
 set_env "APP_URL" "https://${DOMAIN}"
 set_env "APP_ENV" "production"
 set_env "APP_DEBUG" "false"
+set_env "QUEUE_CONNECTION" "database"
 db_write_env
 
 if ! grep -q "^APP_KEY=base64" .env; then
@@ -180,6 +181,27 @@ if [ "$DB_ENGINE" = "sqlite" ]; then
     chmod 664 "$APP_DIR/database/database.sqlite"
     chown www-data:www-data "$APP_DIR/database/database.sqlite"
 fi
+
+step "Worker Laravel"
+cat > /etc/systemd/system/sfp-queue.service <<SYSTEMD
+[Unit]
+Description=SFP Laravel queue worker
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=${APP_DIR}
+ExecStart=/usr/bin/php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+SYSTEMD
+systemctl daemon-reload
+systemctl enable --now sfp-queue.service
 
 step "Configuration du site Nginx"
 cat > "/etc/nginx/sites-available/${DOMAIN}" <<NGINX

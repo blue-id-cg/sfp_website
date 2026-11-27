@@ -50,12 +50,30 @@ test('the messages list can be filtered by status and search term', function () 
     $response->assertDontSee('Jean Moukala');
 });
 
-test('an authenticated user can delete a message', function () {
+test('the messages search treats percent and underscore as literal characters', function () {
     $user = User::factory()->create();
-    $message = ContactMessage::factory()->create();
+    ContactMessage::factory()->create(['name' => 'Alice_100']);
+    ContactMessage::factory()->create(['name' => 'Alice200']);
+
+    $response = $this->actingAs($user)->get('/admin/messages?q=_');
+
+    $response->assertOk();
+    $response->assertSee('Alice_100');
+    $response->assertDontSee('Alice200');
+});
+
+test('an authenticated user can delete a message', function () {
+    Storage::fake('local');
+    $user = User::factory()->create();
+    Storage::disk('local')->put('candidatures/cv.pdf', 'cv');
+    $message = ContactMessage::factory()->create([
+        'cv_path' => 'candidatures/cv.pdf',
+        'cv_filename' => 'cv.pdf',
+    ]);
 
     $response = $this->actingAs($user)->delete(route('admin.messages.destroy', $message));
 
     $response->assertRedirect(route('admin.messages.index'));
     $this->assertModelMissing($message);
+    Storage::disk('local')->assertMissing('candidatures/cv.pdf');
 });

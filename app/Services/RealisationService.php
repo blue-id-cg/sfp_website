@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Realisation;
+use App\Support\ImageOptimizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -43,7 +44,7 @@ class RealisationService
 
     private function storeImage(UploadedFile $image): string
     {
-        return $image->store('realisations', 'public');
+        return (new ImageOptimizer)->store($image, 'realisations');
     }
 
     private function deleteImage(Realisation $realisation): void

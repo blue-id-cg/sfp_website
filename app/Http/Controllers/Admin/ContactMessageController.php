@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
 use App\Services\ContactService;
+use App\Support\LikeSearch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,10 +24,15 @@ class ContactMessageController extends Controller
 
         return view('admin.messages.index', [
             'messages' => ContactMessage::query()
-                ->when($search !== '', fn ($query) => $query->where(fn ($q) => $q
-                    ->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('subject', 'like', "%{$search}%")))
+                ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
+                    LikeSearch::apply($query, 'name', $search);
+                    $query->orWhere(function ($query) use ($search) {
+                        LikeSearch::apply($query, 'email', $search);
+                    });
+                    $query->orWhere(function ($query) use ($search) {
+                        LikeSearch::apply($query, 'subject', $search);
+                    });
+                }))
                 ->when($status === 'unread', fn ($query) => $query->whereNull('read_at'))
                 ->when($status === 'read', fn ($query) => $query->whereNotNull('read_at'))
                 ->latest()
@@ -49,6 +55,10 @@ class ContactMessageController extends Controller
     public function destroy(ContactMessage $message): RedirectResponse
     {
         $this->authorize('delete', $message);
+
+        if ($message->cv_path !== null) {
+            Storage::disk('local')->delete($message->cv_path);
+        }
 
         $message->delete();
 

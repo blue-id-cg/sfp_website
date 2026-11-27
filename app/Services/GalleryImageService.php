@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\GalleryImage;
+use App\Support\ImageOptimizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +14,7 @@ class GalleryImageService
      */
     public function create(array $data, UploadedFile $image): GalleryImage
     {
-        $data['image'] = $image->store('gallery', 'public');
+        $data['image'] = (new ImageOptimizer)->store($image, 'gallery');
         $data['position'] ??= $this->nextPosition();
 
         return GalleryImage::query()->create($data);
@@ -26,7 +27,7 @@ class GalleryImageService
     {
         if ($image) {
             $this->deleteImage($galleryImage);
-            $data['image'] = $image->store('gallery', 'public');
+            $data['image'] = (new ImageOptimizer)->store($image, 'gallery');
         }
 
         $galleryImage->update($data);

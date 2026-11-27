@@ -12,7 +12,8 @@ Site institutionnel de la **SFP** (Société de Forages Pétroliers), filiale du
 
 ## Pour les développeurs
 
-Prérequis : PHP 8.2+, Composer, Node.js 18+.
+Prérequis : PHP 8.3+, avec les extensions `gd`, `mbstring`, `xml`, `sqlite3` ou le pilote choisi,
+Composer, Node.js 18+.
 
 ```bash
 composer install

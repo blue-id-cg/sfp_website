@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreActualiteRequest;
 use App\Http\Requests\Admin\UpdateActualiteRequest;
 use App\Models\Actualite;
 use App\Services\ActualiteService;
+use App\Support\LikeSearch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +24,7 @@ class ActualiteController extends Controller
 
         return view('admin.actualites.index', [
             'actualites' => Actualite::query()
-                ->when($search !== '', fn ($query) => $query->where('title', 'like', "%{$search}%"))
+                ->when($search !== '', fn ($query) => LikeSearch::apply($query, 'title', $search))
                 ->latest('published_at')
                 ->paginate(15)
                 ->withQueryString(),

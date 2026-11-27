@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreRealisationRequest;
 use App\Http\Requests\Admin\UpdateRealisationRequest;
 use App\Models\Realisation;
 use App\Services\RealisationService;
+use App\Support\LikeSearch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -23,7 +24,7 @@ class RealisationController extends Controller
 
         return view('admin.realisations.index', [
             'realisations' => Realisation::query()
-                ->when($search !== '', fn ($query) => $query->where('title', 'like', "%{$search}%"))
+                ->when($search !== '', fn ($query) => LikeSearch::apply($query, 'title', $search))
                 ->orderBy('position')
                 ->paginate(15)
                 ->withQueryString(),

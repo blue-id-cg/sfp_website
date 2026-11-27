@@ -34,7 +34,11 @@ npm install
 npm run build
 
 step "Migrations et mise en cache de la configuration"
+set_env "QUEUE_CONNECTION" "database"
 laravel_migrate_and_cache
+if systemctl list-unit-files --type=service | grep -q '^sfp-queue.service'; then
+    systemctl restart sfp-queue.service
+fi
 
 step "Permissions"
 if ! chmod -R 775 storage bootstrap/cache 2>/dev/null; then

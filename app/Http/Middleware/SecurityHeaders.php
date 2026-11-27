@@ -16,6 +16,14 @@ class SecurityHeaders
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+        $response->headers->set(
+            'Content-Security-Policy-Report-Only',
+            "default-src 'self'; base-uri 'self'; form-action 'self'; ".
+            "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; ".
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.hugeicons.com https://cdnjs.cloudflare.com; ".
+            "font-src 'self' data: https://fonts.gstatic.com https://cdn.hugeicons.com https://cdnjs.cloudflare.com; ".
+            "img-src 'self' data: https: blob:; frame-src https://www.google.com; connect-src 'self'"
+        );
 
         if ($request->isSecure()) {
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');

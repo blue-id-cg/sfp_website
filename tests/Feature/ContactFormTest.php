@@ -57,6 +57,7 @@ test('a visitor can submit the contact form with a CV attached', function () {
 
     $contactMessage = ContactMessage::query()->where('email', 'alice@example.com')->first();
     expect($contactMessage->cv_path)->not->toBeNull();
+    expect($contactMessage->cv_filename)->toBe('cv-alice.pdf');
     Storage::disk('local')->assertExists($contactMessage->cv_path);
 
     Mail::assertQueued(ContactMessageReceived::class);
@@ -141,5 +142,6 @@ test('public responses include security headers', function () {
     $response->assertHeader('X-Content-Type-Options', 'nosniff')
         ->assertHeader('X-Frame-Options', 'SAMEORIGIN')
         ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin')
-        ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+        ->assertHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+        ->assertHeader('Content-Security-Policy-Report-Only');
 });

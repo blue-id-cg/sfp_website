@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Actualite;
 use App\Models\Offre;
+use App\Models\Trade;
 use Illuminate\Http\Response;
 
 class SeoController extends Controller
@@ -37,11 +38,27 @@ class SeoController extends Controller
         ];
 
         foreach (Actualite::query()->published()->get() as $actualite) {
-            $urls[] = ['loc' => route('actualites.show', $actualite), 'priority' => '0.6'];
+            $urls[] = [
+                'loc' => route('actualites.show', $actualite),
+                'priority' => '0.6',
+                'lastmod' => $actualite->updated_at?->toAtomString(),
+            ];
         }
 
         foreach (Offre::query()->published()->get() as $offre) {
-            $urls[] = ['loc' => route('offres.show', $offre), 'priority' => '0.6'];
+            $urls[] = [
+                'loc' => route('offres.show', $offre),
+                'priority' => '0.6',
+                'lastmod' => $offre->updated_at?->toAtomString(),
+            ];
+        }
+
+        foreach (Trade::query()->orderBy('position')->get() as $trade) {
+            $urls[] = [
+                'loc' => route('metiers.show', $trade),
+                'priority' => '0.6',
+                'lastmod' => $trade->updated_at?->toAtomString(),
+            ];
         }
 
         $xml = view('sitemap', ['urls' => $urls])->render();
