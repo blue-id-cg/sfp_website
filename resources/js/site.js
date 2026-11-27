@@ -70,8 +70,13 @@ document.addEventListener("alpine:init", () => {
                 this.$el.reset();
                 this.errors = {};
             } catch (error) {
-                this.errors = error.response?.data?.errors ?? {
-                    form: "Une erreur est survenue. Veuillez réessayer.",
+                const responseData = error.response?.data;
+                this.errors = responseData?.errors ?? {
+                    form:
+                        (error.response?.status === 503
+                            ? responseData?.message
+                            : null) ??
+                        "Une erreur est survenue. Veuillez réessayer.",
                 };
             } finally {
                 this.processing = false;

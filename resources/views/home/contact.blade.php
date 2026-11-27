@@ -33,10 +33,13 @@
                     <h3 class="title-md mb-3">Envoyez-nous un message</h3>
 
                     @if (session('contact_sent'))
-                        <div class="form-alert ok show"><i class="hgi-stroke hgi-checkmark-circle-01"></i> <span>Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.</span></div>
+                        <div class="form-alert ok show"><i class="hgi-stroke hgi-checkmark-circle-01"></i> <span>Merci, votre demande a bien été enregistrée. Notre équipe vous recontactera.</span></div>
                         @push('scripts')
                             <script>document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });</script>
                         @endpush
+                    @endif
+                    @if (session('contact_error'))
+                        <div class="form-alert error show" role="alert"><i class="hgi-stroke hgi-alert-02"></i> <span>{{ session('contact_error') }}</span></div>
                     @endif
 
                     <form method="POST" action="{{ route('contact.store') }}" novalidate x-data="validatedForm" @submit.prevent="submit">
@@ -47,7 +50,7 @@
                         </div>
                         <div class="form-alert ok" x-show="success" x-cloak role="status">
                             <i class="hgi-stroke hgi-checkmark-circle-01"></i>
-                            <span>Merci, votre message a bien été envoyé. Nous vous répondrons rapidement.</span>
+                            <span>Merci, votre demande a bien été enregistrée. Notre équipe vous recontactera.</span>
                         </div>
                         <div class="field-row">
                             <div class="field">

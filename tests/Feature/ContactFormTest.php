@@ -1,11 +1,14 @@
 <?php
 
+use App\Exceptions\ContactNotificationUnavailable;
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
 use App\Models\SiteSetting;
+use App\Services\ContactService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\Mailer\Exception\TransportException;
 
 test('a visitor can submit the contact form', function () {
     Mail::fake();
@@ -38,7 +41,46 @@ test('a visitor can submit the contact form over ajax', function () {
     ]);
 
     $response->assertSuccessful()
-        ->assertJson(['message' => 'Votre demande a bien été envoyée.']);
+        ->assertJson(['message' => 'Votre demande a bien été enregistrée. Notre équipe vous recontactera.']);
+});
+
+test('a visitor is told when the email notification fails after saving the contact request', function () {
+    Mail::shouldReceive('to')
+        ->once()
+        ->andThrow(new TransportException('SMTP connection failed.'));
+
+    $response = $this->withHeader('Accept', 'application/json')->post('/contact', [
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+        'message' => 'Bonjour, je souhaite plus d\'informations.',
+    ]);
+
+    $response->assertStatus(503)
+        ->assertJson([
+            'message' => "Votre demande a été enregistrée, mais l'e-mail de notification n'a pas pu être envoyé. Vous pouvez nous contacter directement à l'adresse indiquée sur le site.",
+        ]);
+
+    $this->assertDatabaseHas('contact_messages', [
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+    ]);
+});
+
+test('contact requests are not treated as delivered when the mailer only logs messages', function () {
+    config(['mail.default' => 'log']);
+    $this->app->detectEnvironment(fn () => 'local');
+
+    expect(fn () => app(ContactService::class)->submit([
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+        'message' => 'Bonjour, je souhaite plus d\'informations.',
+        'type' => 'contact',
+    ]))->toThrow(ContactNotificationUnavailable::class);
+
+    $this->assertDatabaseHas('contact_messages', [
+        'name' => 'Jean Dupont',
+        'email' => 'jean@example.com',
+    ]);
 });
 
 test('a visitor can submit the contact form with a CV attached', function () {

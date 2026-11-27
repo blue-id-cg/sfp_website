@@ -6,7 +6,10 @@
     <h3 class="title-md mb-3">{{ $heading ?? 'Postuler à cette offre' }}</h3>
 
     @if (session('contact_sent'))
-        <div class="form-alert ok show"><i class="hgi-stroke hgi-checkmark-circle-01"></i> <span>Merci ! Votre candidature a bien été envoyée. Notre équipe RH vous recontactera.</span></div>
+        <div class="form-alert ok show"><i class="hgi-stroke hgi-checkmark-circle-01"></i> <span>Merci ! Votre candidature a bien été enregistrée. Notre équipe RH vous recontactera.</span></div>
+    @endif
+    @if (session('contact_error'))
+        <div class="form-alert error show" role="alert"><i class="hgi-stroke hgi-alert-02"></i> <span>{{ session('contact_error') }}</span></div>
     @endif
 
     <form method="POST" action="{{ route('contact.store') }}" enctype="multipart/form-data" novalidate x-data="validatedForm" @submit.prevent="submit">
@@ -17,7 +20,7 @@
         </div>
         <div class="form-alert ok" x-show="success" x-cloak role="status">
             <i class="hgi-stroke hgi-checkmark-circle-01"></i>
-            <span>Merci ! Votre candidature a bien été envoyée. Notre équipe RH vous recontactera.</span>
+            <span>Merci ! Votre candidature a bien été enregistrée. Notre équipe RH vous recontactera.</span>
         </div>
         <input type="hidden" name="type" value="application" />
         <input type="hidden" name="subject" value="Candidature — {{ $poste ?? 'Candidature spontanée' }}" />

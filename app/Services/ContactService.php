@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ContactNotificationUnavailable;
 use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
 use App\Models\SiteSetting;
@@ -39,6 +40,10 @@ class ContactService
             config('mail.admin_address'),
             $message->type === 'application' ? SiteSetting::current()->contact_email : null,
         ]));
+
+        if (in_array(config('mail.default'), ['log', 'array'], true) && ! app()->environment('testing')) {
+            throw new ContactNotificationUnavailable;
+        }
 
         Mail::to($recipients)->send(new ContactMessageReceived($message));
 
